@@ -3,15 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amurtas <amurtas@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mg <mg@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 15:52:15 by amurtas           #+#    #+#             */
-/*   Updated: 2026/02/11 16:10:55 by amurtas          ###   ########.fr       */
+/*   Updated: 2026/02/12 12:51:10 by mg               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
+
+typedef struct s_envp_data {
+    char *keyword;
+    char *value;
+    t_envp_data *next;
+} t_envp_data;
+
 # include <stdio.h>
 # include <readline/readline.h>
 # include <readline/history.h>
@@ -27,6 +34,8 @@
 # include <termios.h>
 # include <curses.h>
 # include <term.h>
-# include "Libft/libft.h"
+# include "libft/libft/libft.h"
+#include "libft/gnl/get_next_line.h"
+#include "libft/ft_printf/libftprintf.h"
 
 #endif
