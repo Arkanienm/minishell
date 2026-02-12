@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mg <mg@student.42.fr>                      +#+  +:+       +#+        */
+/*   By: amurtas <amurtas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 15:52:15 by amurtas           #+#    #+#             */
-/*   Updated: 2026/02/12 13:46:06 by mg               ###   ########.fr       */
+/*   Updated: 2026/02/12 15:37:24 by amurtas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,6 @@ typedef struct s_envp_data {
 # include <termios.h>
 # include <curses.h>
 # include <term.h>
-# include "libft/libft/libft.h"
-# include "libft/gnl/get_next_line.h"
-# include "libft/ft_printf/libftprintf.h"
+# include "Libft/libft.h"
 
 #endif
