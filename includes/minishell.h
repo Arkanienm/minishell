@@ -6,7 +6,7 @@
 /*   By: mg <mg@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 15:52:15 by amurtas           #+#    #+#             */
-/*   Updated: 2026/02/12 12:51:10 by mg               ###   ########.fr       */
+/*   Updated: 2026/02/12 13:46:06 by mg               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 typedef struct s_envp_data {
     char *keyword;
     char *value;
-    t_envp_data *next;
+    struct s_envp_data *next;
 } t_envp_data;
 
 # include <stdio.h>
@@ -35,7 +35,7 @@ typedef struct s_envp_data {
 # include <curses.h>
 # include <term.h>
 # include "libft/libft/libft.h"
-#include "libft/gnl/get_next_line.h"
-#include "libft/ft_printf/libftprintf.h"
+# include "libft/gnl/get_next_line.h"
+# include "libft/ft_printf/libftprintf.h"
 
 #endif

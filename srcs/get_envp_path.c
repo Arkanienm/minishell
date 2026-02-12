@@ -6,7 +6,7 @@
 /*   By: mg <mg@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/12 12:45:13 by mg                #+#    #+#             */
-/*   Updated: 2026/02/12 13:22:50 by mg               ###   ########.fr       */
+/*   Updated: 2026/02/12 13:48:00 by mg               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 int get_envp_size(char **envp)
 {
     int i;
+
+    i = 0;
     while(envp[i])
         i++;
     return i;
@@ -64,9 +66,11 @@ t_envp_data *get_envp_path(char **envp)
     int i;
     t_envp_data *data;
     t_envp_data *new;
+    t_envp_data *initial;
 
     i = 0;
     data = malloc(sizeof(t_envp_data));
+    initial = data;
     while(envp[i])
     {
         data->keyword = get_keyword(envp[i]);
@@ -81,4 +85,20 @@ t_envp_data *get_envp_path(char **envp)
         }
         i++;
     }
+    return initial;
+}
+
+int main(int argc, char **argv, char **envp)
+{
+    (void)argc;
+    (void)argv;
+    t_envp_data *data;
+
+    data = get_envp_path(envp);
+    while(data)
+    {
+        printf("%s\n", data->keyword);
+        data = data->next;
+    }
+    return 0;
 }
