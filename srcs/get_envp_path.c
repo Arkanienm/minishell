@@ -6,7 +6,7 @@
 /*   By: mageneix <mageneix@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/12 12:45:13 by mg                #+#    #+#             */
-/*   Updated: 2026/02/13 14:30:45 by mageneix         ###   ########.fr       */
+/*   Updated: 2026/02/13 15:35:39 by mageneix         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ int len_before_equal(char *str)
     i = 0;
     while (str[i] && str[i] != '=')
         i++;
-    return i + 1;
+    return i;
 }
 
 int len_value(char *str)
@@ -74,23 +74,18 @@ t_envp_data *get_envp_path(char **envp)
     while(envp[i])
     {
         data->keyword = get_keyword(envp[i]);
-        data->value = ft_substr(envp[i], len_before_equal(envp[i]), len_value(envp[i]));
+        data->value = ft_substr(envp[i], len_before_equal(envp[i]) + 1, len_value(envp[i]));
         if(envp[i + 1] == NULL)
             data->next = NULL;
         else
         {
             new = malloc(sizeof(t_envp_data));
             data->next = new;
-            new = data;
+            data = new;
         }
         i++;
     }
     return initial;
-}
-
-int main()
-{
-	printf("%d\n", len_value("PATH=/bin/ls:/usr/bin/ls"));
 }
 
 
@@ -103,7 +98,11 @@ int main()
 //    data = get_envp_path(envp);
 //    while(data)
 //    {
-//        printf("%s\n", data->keyword);
+//		if(ft_strncmp("PWD", data->keyword, 4) == 0)
+//		{
+//        	printf("%s", data->keyword);
+//			printf(" ----- %s\n", data->value);
+//		}
 //        data = data->next;
 //    }
 //    return 0;
