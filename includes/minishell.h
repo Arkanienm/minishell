@@ -6,7 +6,7 @@
 /*   By: amurtas <amurtas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 15:52:15 by amurtas           #+#    #+#             */
-/*   Updated: 2026/02/12 15:37:24 by amurtas          ###   ########.fr       */
+/*   Updated: 2026/02/13 14:45:33 by amurtas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,10 @@ typedef struct s_envp_data {
     char *value;
     struct s_envp_data *next;
 } t_envp_data;
+
+typedef struct s_data {
+    char **args;
+} t_data;
 
 # include <stdio.h>
 # include <readline/readline.h>
