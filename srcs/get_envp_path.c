@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_envp_path.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mg <mg@student.42.fr>                      +#+  +:+       +#+        */
+/*   By: mageneix <mageneix@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/12 12:45:13 by mg                #+#    #+#             */
-/*   Updated: 2026/02/12 13:48:00 by mg               ###   ########.fr       */
+/*   Updated: 2026/02/13 14:30:45 by mageneix         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ int len_value(char *str)
         j++;
     while(str[i + j])
         i++;
-    return i;
+    return i - 1;
 }
 
 t_envp_data *get_envp_path(char **envp)
@@ -88,17 +88,23 @@ t_envp_data *get_envp_path(char **envp)
     return initial;
 }
 
-int main(int argc, char **argv, char **envp)
+int main()
 {
-    (void)argc;
-    (void)argv;
-    t_envp_data *data;
-
-    data = get_envp_path(envp);
-    while(data)
-    {
-        printf("%s\n", data->keyword);
-        data = data->next;
-    }
-    return 0;
+	printf("%d\n", len_value("PATH=/bin/ls:/usr/bin/ls"));
 }
+
+
+//int main(int argc, char **argv, char **envp)
+//{
+//    (void)argc;
+//    (void)argv;
+//    t_envp_data *data;
+
+//    data = get_envp_path(envp);
+//    while(data)
+//    {
+//        printf("%s\n", data->keyword);
+//        data = data->next;
+//    }
+//    return 0;
+//}

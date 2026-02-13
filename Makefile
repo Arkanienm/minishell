@@ -6,16 +6,16 @@ CFLAGS      = -Wall -Wextra -Werror -g -I.
 SRCS        = srcs/minishell.c srcs/get_envp_path.c
 
 
-OBJ_DIR     = obj/
+OBJ_DIR     = .obj/
 
 OBJS        = $(SRCS:%.c=$(OBJ_DIR)%.o)
 
-LIBFT       	= ./includes/libft/libft/libft.a
+LIBFT       	= ./includes/Libft/libft.a
 
 all: $(NAME)
 
 $(NAME): $(OBJS)
-	make -C ./includes/libft/libft
+	make -C ./includes/Libft/
 	$(CC) $(CFLAGS) $(OBJS) $(LIBFT) -o $(NAME)
 
 $(OBJ_DIR)%.o: %.c
