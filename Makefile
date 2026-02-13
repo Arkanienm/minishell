@@ -3,32 +3,34 @@ NAME        = minishell
 CC          = cc
 CFLAGS      = -Wall -Wextra -Werror -g -I.
 
-SRCS        = srcs/minishell.c srcs/get_envp_path.c
-
-
+SRCS_DIR    = srcs/
 OBJ_DIR     = .obj/
+LIBFT_DIR   = ./includes/Libft/
 
-OBJS        = $(SRCS:%.c=$(OBJ_DIR)%.o)
+SRCS        = $(SRCS_DIR)minishell.c $(SRCS_DIR)get_envp_path.c
+OBJS        = $(SRCS:$(SRCS_DIR)%.c=$(OBJ_DIR)%.o)
+LIBFT       = $(LIBFT_DIR)libft.a
 
-LIBFT       	= ./includes/Libft/libft.a
 
 all: $(NAME)
 
-$(NAME): $(OBJS)
-	make -C ./includes/Libft/
-	$(CC) $(CFLAGS) $(OBJS) $(LIBFT) -o $(NAME)
+$(NAME): $(LIBFT) $(OBJS)
+	@$(CC) $(CFLAGS) $(OBJS) $(LIBFT) -o $(NAME)
 
-$(OBJ_DIR)%.o: %.c
-		@mkdir -p $(dir $@)
-		$(CC) $(CFLAGS) -c $< -o $@
+$(LIBFT):
+	@make -C $(LIBFT_DIR)
+
+$(OBJ_DIR)%.o: $(SRCS_DIR)%.c
+	@mkdir -p $(dir $@)
+	@$(CC) $(CFLAGS) -c $< -o $@
 
 clean:
-	rm -rf $(OBJ_DIR)
-	make clean -C ./includes/Libft
+	@rm -rf $(OBJ_DIR)
+	@make clean -C $(LIBFT_DIR)
 
 fclean: clean
-	rm -f $(NAME)
-	make clean -C ./includes/Libft
+	@rm -f $(NAME)
+	@make fclean -C $(LIBFT_DIR)
 
 re: fclean all
 

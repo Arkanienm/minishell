@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_envp_path.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mageneix <mageneix@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mg <mg@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/12 12:45:13 by mg                #+#    #+#             */
-/*   Updated: 2026/02/13 15:35:39 by mageneix         ###   ########.fr       */
+/*   Updated: 2026/02/13 20:56:20 by mg               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,21 +89,21 @@ t_envp_data *get_envp_path(char **envp)
 }
 
 
-//int main(int argc, char **argv, char **envp)
-//{
-//    (void)argc;
-//    (void)argv;
-//    t_envp_data *data;
+int main(int argc, char **argv, char **envp)
+{
+   (void)argc;
+   (void)argv;
+   t_envp_data *data;
 
-//    data = get_envp_path(envp);
-//    while(data)
-//    {
-//		if(ft_strncmp("PWD", data->keyword, 4) == 0)
-//		{
-//        	printf("%s", data->keyword);
-//			printf(" ----- %s\n", data->value);
-//		}
-//        data = data->next;
-//    }
-//    return 0;
-//}
+   data = get_envp_path(envp);
+   while(data)
+   {
+		if(ft_strncmp("PWD", data->keyword, 4) == 0)
+		{
+       	printf("%s", data->keyword);
+			printf(" ----- %s\n", data->value);
+		}
+       data = data->next;
+   }
+   return 0;
+}

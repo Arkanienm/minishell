@@ -15,12 +15,10 @@
 char	*ft_strtrim(char const *s1, char const *set)
 {
 	int		i;
-	int		a;
 	int		s1len;
 	char	*str;
 
 	i = 0;
-	a = 0;
 	if (!s1 || !set)
 		return (NULL);
 	s1len = ft_strlen(s1);
