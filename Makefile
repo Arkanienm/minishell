@@ -3,7 +3,7 @@ NAME        = minishell
 CC          = cc
 CFLAGS      = -Wall -Wextra -Werror -g -I.
 
-SRCS        = srcs/minishell.c srcs/get_envp_path.c
+SRCS        = srcs/minishell.c srcs/get_envp_path.c srcs/parsing.c
 
 
 OBJ_DIR     = .obj/

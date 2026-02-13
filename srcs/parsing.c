@@ -6,13 +6,15 @@
 /*   By: amurtas <amurtas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 15:51:20 by amurtas           #+#    #+#             */
-/*   Updated: 2026/02/13 14:34:43 by amurtas          ###   ########.fr       */
+/*   Updated: 2026/02/13 15:14:21 by amurtas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-int	parsing(char **argv)
+int	tokenizer(char **)
+
+int	parsing(int argc, char **argv)
 {
 	
 }

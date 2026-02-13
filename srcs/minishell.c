@@ -3,15 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mg <mg@student.42.fr>                      +#+  +:+       +#+        */
+/*   By: amurtas <amurtas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/02/11 15:51:20 by amurtas           #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2026/02/13 14:34:41 by amurtas          ###   ########.fr       */
-=======
-/*   Updated: 2026/02/12 13:40:46 by mg               ###   ########.fr       */
->>>>>>> main
+/*   Created: 2026/02/13 14:49:39 by amurtas           #+#    #+#             */
+/*   Updated: 2026/02/13 14:51:37 by amurtas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+
+int	main(int argc, char **argv, char **envp)
+{
+	if (!parsing(argc, argv))
+		return (0);
+}

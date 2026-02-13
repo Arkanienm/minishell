@@ -6,7 +6,7 @@
 /*   By: amurtas <amurtas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 15:52:15 by amurtas           #+#    #+#             */
-/*   Updated: 2026/02/13 14:45:33 by amurtas          ###   ########.fr       */
+/*   Updated: 2026/02/13 14:59:51 by amurtas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,26 @@
 # define MINISHELL_H
 
 typedef struct s_envp_data {
-    char *keyword;
-    char *value;
-    struct s_envp_data *next;
+	char *keyword;
+	char *value;
+	struct s_envp_data *next;
 } t_envp_data;
 
-typedef struct s_data {
-    char **args;
-} t_data;
+typedef enum e_token_type {
+	WORD,
+	PIPE,
+	REDIR_IN,
+	REDIR_OUT,
+	HEREDOC,
+	APPEND
+} t_token_type;
+
+typedef struct s_token
+{
+    char			*content;
+    t_token_type	type;
+    struct s_token	*next;
+}   t_token;
 
 # include <stdio.h>
 # include <readline/readline.h>
@@ -39,5 +51,7 @@ typedef struct s_data {
 # include <curses.h>
 # include <term.h>
 # include "Libft/libft.h"
+
+int	parsing(int argc, char **argv);
 
 #endif
