@@ -6,12 +6,23 @@
 /*   By: amurtas <amurtas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 15:52:15 by amurtas           #+#    #+#             */
-/*   Updated: 2026/02/11 16:10:55 by amurtas          ###   ########.fr       */
+/*   Updated: 2026/02/13 14:45:33 by amurtas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
+
+typedef struct s_envp_data {
+    char *keyword;
+    char *value;
+    struct s_envp_data *next;
+} t_envp_data;
+
+typedef struct s_data {
+    char **args;
+} t_data;
+
 # include <stdio.h>
 # include <readline/readline.h>
 # include <readline/history.h>

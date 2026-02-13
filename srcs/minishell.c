@@ -3,16 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amurtas <amurtas@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mg <mg@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 15:51:20 by amurtas           #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2026/02/13 14:34:41 by amurtas          ###   ########.fr       */
+=======
+/*   Updated: 2026/02/12 13:40:46 by mg               ###   ########.fr       */
+>>>>>>> main
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
-
-int	main(void)
-{
-	printf("slt");
-}
