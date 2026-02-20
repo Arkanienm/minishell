@@ -6,7 +6,7 @@
 /*   By: amurtas <amurtas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/14 10:23:09 by amurtas           #+#    #+#             */
-/*   Updated: 2025/10/27 10:35:57 by amurtas          ###   ########.fr       */
+/*   Updated: 2026/02/20 13:34:15 by amurtas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 # include <stdlib.h>
 # include <unistd.h>
 # include <stddef.h>
-
+# include "../minishell.h"
 typedef struct s_list
 {
 	void			*content;
