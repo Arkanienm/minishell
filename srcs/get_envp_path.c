@@ -6,7 +6,7 @@
 /*   By: mg <mg@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/12 12:45:13 by mg                #+#    #+#             */
-/*   Updated: 2026/02/13 21:58:25 by mg               ###   ########.fr       */
+/*   Updated: 2026/02/23 15:39:09 by mg               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,8 @@ int len_value(char *str)
 
     i = 0;
     j = 0;
+    if(str[0] == '/0')
+        return 0;
     while (str[j] && str[j] != '=')
         j++;
     while(str[i + j])
@@ -70,6 +72,8 @@ t_envp_data *get_envp_path(char **envp)
     t_envp_data *new;
     t_envp_data *initial;
 
+    if(!envp || !envp[0])
+        return NULL;
     i = 0;
     data = malloc(sizeof(t_envp_data));
     if(!data)
