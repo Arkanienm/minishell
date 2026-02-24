@@ -6,7 +6,7 @@
 /*   By: amurtas <amurtas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 15:52:15 by amurtas           #+#    #+#             */
-/*   Updated: 2026/02/17 15:35:32 by amurtas          ###   ########.fr       */
+/*   Updated: 2026/02/24 13:45:29 by amurtas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ typedef struct s_token
 # include <term.h>
 # include "Libft/libft.h"
 
-int	parsing(int argc, char **argv);
+int			parsing(int argc, char **argv);
+t_envp_data	*get_envp_path(char **envp);
 
 #endif

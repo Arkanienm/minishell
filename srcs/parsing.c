@@ -6,7 +6,7 @@
 /*   By: amurtas <amurtas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 15:51:20 by amurtas           #+#    #+#             */
-/*   Updated: 2026/02/23 14:16:09 by amurtas          ###   ########.fr       */
+/*   Updated: 2026/02/24 15:30:11 by amurtas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -152,5 +152,41 @@ t_token	*tokenizer(char *str)
 
 t_token	expander(t_token *head, char **envp)
 {
+	int			q_state;
+	int			i;
+	char		*value;
+	int			len;
+	t_envp_data	*env;
 	
+	env = get_envp_path(envp);
+	i = 0;
+	q_state = 0;
+	len = 0;
+	while (head->content[i])
+	{
+		if (head->content[i] == 39 && q_state == 0)
+			q_state = 1;
+		else if (head->content[i] == 39 && q_state == 1)
+			q_state = 0;
+		else if (head->content[i] == 34 && q_state == 0)
+			q_state = 2;
+		else if (head->content[i] == 34 && q_state == 2)
+			q_state = 0;
+		if(head->content[i] == '$' && (q_state == 0 || q_state == 2))
+		{
+			if (head->content[i + 1] == '?')
+			{
+				/* code */
+			}
+			if (head->content[i + 1] == ' ' || head->content[i + 1] == '\0' || head->content[i + 1] == 39)
+			{
+				/* code */
+			}
+			len = i;
+			while (ft_isalnum(head->content[len]) || head->content[len] == '_')
+				len++;
+			ft_substr(head->content, 0, (i - 1));
+			ft_strjoin()
+		}
+	}
 }
