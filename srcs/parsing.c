@@ -6,7 +6,7 @@
 /*   By: amurtas <amurtas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 15:51:20 by amurtas           #+#    #+#             */
-/*   Updated: 2026/02/24 16:22:22 by amurtas          ###   ########.fr       */
+/*   Updated: 2026/02/27 18:25:59 by amurtas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -150,43 +150,81 @@ t_token	*tokenizer(char *str)
 	return (head);
 }
 
-t_token	expander(t_token *head, char **envp)
+void	ft_error(void)
+{
+	
+}
+
+void	expander(t_token *head, char **envp, t_envp_data *env)
 {
 	int			q_state;
 	int			i;
-	char		*value;
+	char		*key;
 	int			len;
-	t_envp_data	*env;
+	char 		*s1;
+	char		*s2;
+	char		*s3;
+	char		*val;
+	t_envp_data *tmp_env;
+	t_token *current;
 	
-	env = get_envp_path(envp);
-	i = 0;
-	q_state = 0;
+	val = "";
 	len = 0;
-	while (head->content[i])
+	current = head;
+	while (current)
 	{
-		if (head->content[i] == 39 && q_state == 0)
-			q_state = 1;
-		else if (head->content[i] == 39 && q_state == 1)
-			q_state = 0;
-		else if (head->content[i] == 34 && q_state == 0)
-			q_state = 2;
-		else if (head->content[i] == 34 && q_state == 2)
-			q_state = 0;
-		if(head->content[i] == '$' && (q_state == 0 || q_state == 2))
+		q_state = 0;
+		i = 0;
+		while (current->content[i])
 		{
-			if (head->content[i + 1] == '?')
+			if (current->content[i] == 39 && q_state == 0)
+				q_state = 1;
+			else if (current->content[i] == 39 && q_state == 1)
+				q_state = 0;
+			else if (current->content[i] == 34 && q_state == 0)
+				q_state = 2;
+			else if (current->content[i] == 34 && q_state == 2)
+				q_state = 0;
+			if(current->content[i] == '$' && (q_state == 0 || q_state == 2))
 			{
-				/* code */
-			}
-			if (head->content[i + 1] == ' ' || head->content[i + 1] == '\0' || head->content[i + 1] == 39)
-			{
-				/* code */
-			}
-			len = i;
-			while (ft_isalnum(head->content[len]) || head->content[len] == '_')
-				len++;
-			ft_substr(head->content, 0, (i - 1));
-			ft_strjoin()
+				if (current->content[i + 1] == '?')
+				{
+					current->content[i + 1] = '0';
+					i += 2;
+				}
+				else if (current->content[i + 1] == ' ' || current->content[i + 1] == '\0' || current->content[i + 1] == 39)
+				{}
+				else
+				{
+					len = i + 1;
+					while (ft_isalnum(current->content[len]) || current->content[len] == '_')
+						len++;
+					key = ft_substr(current->content, i + 1, (len - (i + 1)));
+					tmp_env = env;
+					while (tmp_env && ft_strcmp(tmp_env->keyword, key) != 0)
+						tmp_env = tmp_env->next;
+					s1 = ft_substr(current->content, 0, i);
+					if (tmp_env)
+					{
+						s2 = ft_strjoin(s1, tmp_env->value);
+						i += ft_strlen(tmp_env->value) - 1;
+					}
+					else
+					{
+						s2 = ft_strjoin(s1, val);
+						i--;
+					}
+					free(s1);
+					s1 = ft_substr(current->content, len, ft_strlen(current->content));
+					s3 = ft_strjoin(s2, s1);
+					free(current->content);
+					free(s1);
+					free(s2);
+					free(key);
+					current->content = s3;
+				}
+			i++;
 		}
+		current = current->next;
 	}
 }
