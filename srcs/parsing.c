@@ -6,7 +6,7 @@
 /*   By: amurtas <amurtas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 15:51:20 by amurtas           #+#    #+#             */
-/*   Updated: 2026/02/27 18:25:59 by amurtas          ###   ########.fr       */
+/*   Updated: 2026/02/28 18:34:54 by amurtas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,29 +147,75 @@ t_token	*tokenizer(char *str)
 		ft_lstadd_back(&head, new_node);
 		i += ft_strlen(word);
 	}
+	i += 2;
 	return (head);
 }
 
-void	ft_error(void)
+void	replace_status(t_token *current, int *i)
 {
+	char	*status;
+	char	*s1;
+	char	*s2;
+	char	*s3;
+	int		len;
 	
+	len = (*i) + 2;
+
+	status = ft_itoa(g_status);
+	s1 = ft_substr(current->content, 0, (*i));
+	s2 = ft_strjoin(s1, status);
+	free(s1);
+	s1 = ft_substr(current->content, len, ft_strlen(current->content));
+	s3 = ft_strjoin(s2, s1);
+	free (current->content);
+	current->content = s3;
+	free (s1);
+	free (s2);
+	(*i) += ft_strlen(status) - 1;
+	free (status);
+}
+
+void replace_word(t_token *current, int *i, t_envp_data *env)
+{
+	int len;
+	char *s1;
+	char *s2;
+	char *s3;
+	char *key;
+	
+	len = (*i) + 1;
+	while (ft_isalnum(current->content[len]) || current->content[len] == '_')
+		len++;
+	key = ft_substr(current->content, (*i) + 1, (len - ((*i) + 1)));
+	while (env && ft_strcmp(env->keyword, key) != 0)
+		env = env->next;
+	s1 = ft_substr(current->content, 0, (*i));
+	if (env)
+	{
+		s2 = ft_strjoin(s1, env->value);
+		(*i) += ft_strlen(env->value) - 1;
+	}
+	else
+	{
+		s2 = ft_strjoin(s1, "");
+		(*i)--;
+	}
+	free(s1);
+	s1 = ft_substr(current->content, len, ft_strlen(current->content));
+	s3 = ft_strjoin(s2, s1);
+	free(current->content);
+	free(s1);
+	free(s2);
+	free(key);
+	current->content = s3;
 }
 
 void	expander(t_token *head, char **envp, t_envp_data *env)
 {
 	int			q_state;
 	int			i;
-	char		*key;
-	int			len;
-	char 		*s1;
-	char		*s2;
-	char		*s3;
-	char		*val;
-	t_envp_data *tmp_env;
 	t_token *current;
 	
-	val = "";
-	len = 0;
 	current = head;
 	while (current)
 	{
@@ -188,41 +234,12 @@ void	expander(t_token *head, char **envp, t_envp_data *env)
 			if(current->content[i] == '$' && (q_state == 0 || q_state == 2))
 			{
 				if (current->content[i + 1] == '?')
-				{
-					current->content[i + 1] = '0';
-					i += 2;
-				}
+					replace_status(current, &i);
 				else if (current->content[i + 1] == ' ' || current->content[i + 1] == '\0' || current->content[i + 1] == 39)
 				{}
 				else
-				{
-					len = i + 1;
-					while (ft_isalnum(current->content[len]) || current->content[len] == '_')
-						len++;
-					key = ft_substr(current->content, i + 1, (len - (i + 1)));
-					tmp_env = env;
-					while (tmp_env && ft_strcmp(tmp_env->keyword, key) != 0)
-						tmp_env = tmp_env->next;
-					s1 = ft_substr(current->content, 0, i);
-					if (tmp_env)
-					{
-						s2 = ft_strjoin(s1, tmp_env->value);
-						i += ft_strlen(tmp_env->value) - 1;
-					}
-					else
-					{
-						s2 = ft_strjoin(s1, val);
-						i--;
-					}
-					free(s1);
-					s1 = ft_substr(current->content, len, ft_strlen(current->content));
-					s3 = ft_strjoin(s2, s1);
-					free(current->content);
-					free(s1);
-					free(s2);
-					free(key);
-					current->content = s3;
-				}
+					replace_word(current, &i, env);
+			}
 			i++;
 		}
 		current = current->next;

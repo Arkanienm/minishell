@@ -6,12 +6,14 @@
 /*   By: amurtas <amurtas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 15:52:15 by amurtas           #+#    #+#             */
-/*   Updated: 2026/02/24 13:45:29 by amurtas          ###   ########.fr       */
+/*   Updated: 2026/02/28 15:23:58 by amurtas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
+
+extern int g_status;
 
 typedef struct s_envp_data {
 	char *keyword;
