@@ -6,7 +6,7 @@
 /*   By: amurtas <amurtas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 15:52:15 by amurtas           #+#    #+#             */
-/*   Updated: 2026/03/02 14:48:33 by amurtas          ###   ########.fr       */
+/*   Updated: 2026/03/02 16:15:08 by amurtas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,12 @@ typedef struct s_token
     t_token_type	type;
     struct s_token	*next;
 }   t_token;
+
+typedef struct s_cmd
+{
+	char 			**cmd;
+	struct s_cmd	*next;
+}	t_cmd;
 
 # include <stdio.h>
 # include <readline/readline.h>
