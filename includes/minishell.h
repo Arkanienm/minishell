@@ -6,7 +6,7 @@
 /*   By: amurtas <amurtas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 15:52:15 by amurtas           #+#    #+#             */
-/*   Updated: 2026/02/28 15:23:58 by amurtas          ###   ########.fr       */
+/*   Updated: 2026/03/02 14:48:33 by amurtas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,14 @@ typedef struct s_token
 # include <term.h>
 # include "Libft/libft.h"
 
-int			parsing(int argc, char **argv);
 t_envp_data	*get_envp_path(char **envp);
+void		ft_error(char *str, t_token *head);
+void		ft_free_struct(t_token *lst);
+int			update_quotes(int q_state, int len, char *str);
+int			check_meta_char(char c, int q_state);
+t_token		*tokenizer(char *str);
+void		expander(t_token *head, t_envp_data *env);
+int			ft_strcmp(char *s1, char *s2);
+void		remove_quotes(t_token *head);
 
 #endif

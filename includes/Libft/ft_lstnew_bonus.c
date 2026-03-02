@@ -6,7 +6,7 @@
 /*   By: amurtas <amurtas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/23 13:41:38 by amurtas           #+#    #+#             */
-/*   Updated: 2026/02/20 13:34:47 by amurtas          ###   ########.fr       */
+/*   Updated: 2026/03/02 12:36:03 by amurtas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ t_token	*ft_lstnew(void *content)
 {
 	t_token	*nbloc;
 
-	nbloc = malloc(sizeof(t_list));
+	nbloc = malloc(sizeof(t_token));
 	if (!nbloc)
 		return (NULL);
 	nbloc->content = content;

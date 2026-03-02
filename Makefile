@@ -1,21 +1,22 @@
 NAME        = minishell
 
 CC          = cc
-CFLAGS      = -Wall -Wextra -Werror -g -I.
+CFLAGS      = -Wall -Wextra -Werror -g -I. 
 
 SRCS_DIR    = srcs/
 OBJ_DIR     = .obj/
 LIBFT_DIR   = ./includes/Libft/
 
-SRCS        = $(SRCS_DIR)minishell.c $(SRCS_DIR)get_envp_path.c
+SRCS        = $(SRCS_DIR)minishell.c $(SRCS_DIR)get_envp_path.c $(SRCS_DIR)expander.c \
+              $(SRCS_DIR)lexer.c $(SRCS_DIR)parsing.c $(SRCS_DIR)quotes_utils.c
 OBJS        = $(SRCS:$(SRCS_DIR)%.c=$(OBJ_DIR)%.o)
-LIBFT       = $(LIBFT_DIR)libft.a
+LIBFT       = $(LIBFT_DIR)/libft.a
 
 
 all: $(NAME)
 
-$(NAME): $(LIBFT) $(OBJS)
-	@$(CC) $(CFLAGS) $(OBJS) $(LIBFT) -o $(NAME)
+$(NAME): $(OBJS) $(LIBFT) 
+	@$(CC) $(CFLAGS) $(OBJS) $(LIBFT) -lreadline -o $(NAME)
 
 $(LIBFT):
 	@make -C $(LIBFT_DIR)
