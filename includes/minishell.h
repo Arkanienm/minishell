@@ -6,7 +6,7 @@
 /*   By: amurtas <amurtas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 15:52:15 by amurtas           #+#    #+#             */
-/*   Updated: 2026/03/03 14:29:12 by amurtas          ###   ########.fr       */
+/*   Updated: 2026/03/03 15:48:11 by amurtas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,7 @@ int			ft_strcmp(char *s1, char *s2);
 void		remove_quotes(t_token *head);
 void		free_cmd_struct(t_cmd *lst);
 void		parser(t_token *head, t_cmd **cmd_lst);
+void	ft_free_data(t_envp_data *data);
 
 
 

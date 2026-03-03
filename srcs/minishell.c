@@ -6,13 +6,30 @@
 /*   By: amurtas <amurtas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/13 14:49:39 by amurtas           #+#    #+#             */
-/*   Updated: 2026/03/03 14:41:57 by amurtas          ###   ########.fr       */
+/*   Updated: 2026/03/03 15:52:38 by amurtas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
 int	g_status = 0;
+
+void	ft_free_data(t_envp_data *data)
+{
+	t_envp_data	*nnext;
+
+	while (data)
+	{
+		nnext = data->next;
+		if (data->keyword)
+			free(data->keyword);
+		if (data->value)
+			free (data->value);
+		free (data);
+		data = nnext;
+	}
+	
+}
 
 void	print_token(t_token *head)
 {
@@ -56,7 +73,11 @@ int	minishell_loop(t_envp_data *env)
 		cmd = NULL;
 		line = readline("minishell> ");
 		if (line == NULL)
+		{
+			free (line);
+			ft_free_data(env);
 			exit (0);
+		}
 		if (line)
 			add_history(line);
 		token = tokenizer(line);
