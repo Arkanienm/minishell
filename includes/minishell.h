@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mg <mg@student.42.fr>                      +#+  +:+       +#+        */
+/*   By: mageneix <mageneix@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 15:52:15 by amurtas           #+#    #+#             */
-/*   Updated: 2026/03/03 13:55:14 by mg               ###   ########.fr       */
+/*   Updated: 2026/03/03 17:34:38 by mageneix         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,5 +43,6 @@ void copy_tab_tab(char **src, char **dest);
 int len_value(char *str);
 int len_before_equal(char *str);
 char *get_keyword(char *str);
+int unset(char *key, t_envp_data **envp);
 
 #endif
