@@ -6,7 +6,7 @@
 /*   By: amurtas <amurtas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 15:51:20 by amurtas           #+#    #+#             */
-/*   Updated: 2026/03/03 14:47:58 by amurtas          ###   ########.fr       */
+/*   Updated: 2026/03/03 17:48:46 by amurtas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,13 +71,28 @@ int	count_args(t_token *head)
 	i = 0;
 	while (current && current->type != PIPE)
 	{
-		current = current->next;
-		i++;
+		if (current->type == REDIR_OUT || current->type == REDIR_IN
+			|| current->type == HEREDOC || current->type == APPEND)
+		{
+			current = current->next;
+			if (current->next)
+				current = current->next;
+		}
+		else
+		{
+			current = current->next;
+			i++;
+		}
 	}
 	return (i);
 }
 
-void	parser(t_token *head, t_cmd **cmd_lst)
+void	add_redir(t_redir **redir, int type, char *str)
+{
+	
+}
+
+void	parser(t_token *head, t_cmd **cmd_lst, t_redir **redir)
 {
 	int		count;
 	int		i;
