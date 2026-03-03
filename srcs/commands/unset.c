@@ -31,26 +31,6 @@ static int unset_struct(char *key, t_envp_data **envp)
     return 0;
 }
 
-int count_tab_tab(char **envp)
-{
-    int i;
-
-    i = 0;
-    while(envp[i])
-        i++;
-    return i;
-}
-
-static void free_tab_tab(char **envp)
-{
-    int i;
-
-    i = 0;
-    while(envp[i])
-        free(envp[i]);
-    free(envp);
-}
-
 static int unset_envp(char *key, char ***envp)
 {
     char **dest;
