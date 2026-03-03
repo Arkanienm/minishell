@@ -6,7 +6,7 @@
 /*   By: amurtas <amurtas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 15:51:20 by amurtas           #+#    #+#             */
-/*   Updated: 2026/03/02 12:17:56 by amurtas          ###   ########.fr       */
+/*   Updated: 2026/03/03 14:33:20 by amurtas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,8 @@ t_token	*lexer(char *str)
 
 int	set_len_word(char *str, int i, char **word)
 {
-	int len;
-	
+	int	len;
+
 	if ((str[i] == '>' && str[i + 1] == '>' ) || (str[i] == '<'
 			&& str[i + 1] == '<'))
 		len = 2;

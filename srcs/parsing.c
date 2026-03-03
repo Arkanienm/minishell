@@ -6,7 +6,7 @@
 /*   By: amurtas <amurtas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 15:51:20 by amurtas           #+#    #+#             */
-/*   Updated: 2026/03/02 11:47:22 by amurtas          ###   ########.fr       */
+/*   Updated: 2026/03/03 14:47:58 by amurtas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,5 +32,75 @@ void	ft_free_struct(t_token *lst)
 			free(lst->content);
 		free(lst);
 		lst = nnext;
+	}
+}
+
+void	free_cmd_struct(t_cmd *lst)
+{
+	t_cmd	*nnext;
+	int		i;
+
+	i = 0;
+	nnext = lst;
+	if (!lst)
+		return ;
+	while (lst)
+	{
+		nnext = lst->next;
+		if (lst->cmd)
+		{
+			i = 0;
+			while (lst->cmd[i])
+			{
+				free(lst->cmd[i]);
+				i++;
+			}
+			free(lst->cmd);
+		}
+		free(lst);
+		lst = nnext;
+	}
+}
+
+int	count_args(t_token *head)
+{
+	t_token	*current;
+	int		i;
+
+	current = head;
+	i = 0;
+	while (current && current->type != PIPE)
+	{
+		current = current->next;
+		i++;
+	}
+	return (i);
+}
+
+void	parser(t_token *head, t_cmd **cmd_lst)
+{
+	int		count;
+	int		i;
+	t_cmd	*nnode;
+	t_token	*current;
+	char	**tab_cmd;
+
+	current = head;
+	while (current)
+	{
+		i = 0;
+		count = count_args(current) + 1;
+		tab_cmd = malloc(sizeof(char *) * count);
+		while (current && current->type != PIPE)
+		{
+			tab_cmd[i] = ft_strdup(current->content);
+			current = current->next;
+			i++;
+		}
+		tab_cmd[i] = NULL;
+		nnode = ft_lstnew_cmd(tab_cmd);
+		ft_lstadd_back_cmd(cmd_lst, nnode);
+		if (current && current->type == PIPE)
+			current = current->next;
 	}
 }

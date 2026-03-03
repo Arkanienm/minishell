@@ -6,7 +6,7 @@
 /*   By: amurtas <amurtas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 15:51:20 by amurtas           #+#    #+#             */
-/*   Updated: 2026/03/02 14:47:45 by amurtas          ###   ########.fr       */
+/*   Updated: 2026/03/03 14:33:03 by amurtas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,11 +65,11 @@ int	ft_strcmp(char *s1, char *s2)
 	return (rvalue);
 }
 
-void	replace(int	q_state, t_token *current, char *s1)
+void	replace(int q_state, t_token *current, char *s1)
 {
-	int i;
-	int a;
-	int q_state_new;
+	int	i;
+	int	a;
+	int	q_state_new;
 
 	i = 0;
 	a = 0;
@@ -87,12 +87,12 @@ void	replace(int	q_state, t_token *current, char *s1)
 	s1[a] = '\0';
 }
 
-void remove_quotes(t_token *head)
+void	remove_quotes(t_token *head)
 {
-	t_token *current;
-	char *s1;
-	int q_state;
-	
+	t_token	*current;
+	char	*s1;
+	int		q_state;
+
 	current = head;
 	while (current)
 	{

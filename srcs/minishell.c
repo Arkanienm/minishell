@@ -6,17 +6,17 @@
 /*   By: amurtas <amurtas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/13 14:49:39 by amurtas           #+#    #+#             */
-/*   Updated: 2026/03/02 14:53:57 by amurtas          ###   ########.fr       */
+/*   Updated: 2026/03/03 14:41:57 by amurtas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-int g_status = 0;
+int	g_status = 0;
 
-void print_token(t_token *head)
+void	print_token(t_token *head)
 {
-	t_token *current;
+	t_token	*current;
 
 	current = head;
 	while (current)
@@ -26,13 +26,34 @@ void print_token(t_token *head)
 	}
 }
 
+void	print_cmd(t_cmd	*cmd)
+{
+	t_cmd	*current;
+	int i;
+
+	current = cmd;
+	while (current)
+	{
+		i = 0;
+		while (current->cmd[i])
+		{
+			printf("command [%s] ", current->cmd[i]);
+			i++;
+		}
+		printf("\n");
+		current = current->next;
+	}
+}
+
 int	minishell_loop(t_envp_data *env)
 {
-	t_token		*token;
-	char *line;
-	
+	t_token	*token;
+	t_cmd	*cmd;
+	char	*line;
+
 	while (1)
 	{
+		cmd = NULL;
 		line = readline("minishell> ");
 		if (line == NULL)
 			exit (0);
@@ -44,16 +65,19 @@ int	minishell_loop(t_envp_data *env)
 			expander(token, env);
 			remove_quotes(token);
 			print_token(token);
+			parser(token, &cmd);
+			print_cmd(cmd);
 		}
 		ft_free_struct(token);
+		free_cmd_struct(cmd);
 		free(line);
 	}
 }
 
 int	main(int argc, char **argv, char **envp)
 {
-	t_envp_data *env;
-	
+	t_envp_data	*env;
+
 	if (argc != 1)
 		return (0);
 	(void)argv;

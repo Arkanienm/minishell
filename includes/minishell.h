@@ -6,7 +6,7 @@
 /*   By: amurtas <amurtas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 15:52:15 by amurtas           #+#    #+#             */
-/*   Updated: 2026/03/02 14:48:33 by amurtas          ###   ########.fr       */
+/*   Updated: 2026/03/03 14:29:12 by amurtas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,12 @@ typedef struct s_token
     struct s_token	*next;
 }   t_token;
 
+typedef struct s_cmd
+{
+	char 			**cmd;
+	struct s_cmd	*next;
+}	t_cmd;
+
 # include <stdio.h>
 # include <readline/readline.h>
 # include <readline/history.h>
@@ -63,5 +69,9 @@ t_token		*tokenizer(char *str);
 void		expander(t_token *head, t_envp_data *env);
 int			ft_strcmp(char *s1, char *s2);
 void		remove_quotes(t_token *head);
+void		free_cmd_struct(t_cmd *lst);
+void		parser(t_token *head, t_cmd **cmd_lst);
+
+
 
 #endif
