@@ -8,7 +8,7 @@ OBJ_DIR     = .obj/
 LIBFT_DIR   = ./includes/Libft/
 
 SRCS        = $(SRCS_DIR)minishell.c $(SRCS_DIR)get_envp_path.c $(SRCS_DIR)expander.c \
-              $(SRCS_DIR)lexer.c $(SRCS_DIR)parsing.c $(SRCS_DIR)quotes_utils.c
+              $(SRCS_DIR)lexer.c $(SRCS_DIR)parsing.c $(SRCS_DIR)quotes_utils.c $(SRCS_DIR)minishell_utils.c
 OBJS        = $(SRCS:$(SRCS_DIR)%.c=$(OBJ_DIR)%.o)
 LIBFT       = $(LIBFT_DIR)/libft.a
 

@@ -6,7 +6,7 @@
 /*   By: amurtas <amurtas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/13 14:49:39 by amurtas           #+#    #+#             */
-/*   Updated: 2026/03/03 15:55:25 by amurtas          ###   ########.fr       */
+/*   Updated: 2026/03/04 11:59:00 by amurtas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,23 +43,42 @@ void	print_token(t_token *head)
 	}
 }
 
-void	print_cmd(t_cmd	*cmd)
+void   print_cmd(t_cmd *cmd)
 {
-	t_cmd	*current;
-	int i;
+    t_cmd   *current;
+    t_redir *current_redir;
+    int     i;
 
-	current = cmd;
-	while (current)
-	{
-		i = 0;
-		while (current->cmd[i])
-		{
-			printf("command [%s] ", current->cmd[i]);
-			i++;
-		}
-		printf("\n");
-		current = current->next;
-	}
+    current = cmd;
+    while (current)
+    {
+        printf("--- NOUVELLE COMMANDE ---\n");
+        
+        // 1. Affichage des arguments (Le tableau)
+        i = 0;
+        printf("Arguments : ");
+        while (current->cmd && current->cmd[i])
+        {
+            printf("[%s] ", current->cmd[i]);
+            i++;
+        }
+        printf("\n");
+
+        // 2. Affichage des redirections (La sous-liste)
+        current_redir = current->redir;
+        if (current_redir)
+            printf("Redirections :\n");
+        while (current_redir)
+        {
+            printf("  -> Type: %d | Fichier: [%s]\n", current_redir->type, current_redir->file);
+            current_redir = current_redir->next;
+        }
+        
+        current = current->next;
+        if (current)
+            printf("           |\n           v (PIPE)\n");
+    }
+    printf("-------------------------\n");
 }
 
 int	minishell_loop(t_envp_data *env)
@@ -76,6 +95,7 @@ int	minishell_loop(t_envp_data *env)
 		{
 			free (line);
 			ft_free_data(env);
+			rl_clear_history();
 			exit (0);
 		}
 		if (line)

@@ -6,7 +6,7 @@
 /*   By: amurtas <amurtas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 15:52:15 by amurtas           #+#    #+#             */
-/*   Updated: 2026/03/03 17:10:43 by amurtas          ###   ########.fr       */
+/*   Updated: 2026/03/04 11:38:48 by amurtas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,9 @@ void		expander(t_token *head, t_envp_data *env);
 int			ft_strcmp(char *s1, char *s2);
 void		remove_quotes(t_token *head);
 void		free_cmd_struct(t_cmd *lst);
+void		ft_free_struct(t_token *lst);
 void		parser(t_token *head, t_cmd **cmd_lst);
+void		ft_free_redir(t_redir *lst);
 
 
 
