@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amurtas <amurtas@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mageneix <mageneix@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 15:52:15 by amurtas           #+#    #+#             */
-/*   Updated: 2026/03/03 15:48:11 by amurtas          ###   ########.fr       */
+/*   Updated: 2026/03/05 17:59:33 by mageneix         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,10 @@
 extern int g_status;
 
 typedef struct s_envp_data {
-	char *keyword;
-	char *value;
-	struct s_envp_data *next;
+    char *keyword;
+    char *value;
+	char ***envp;
+    struct s_envp_data *next;
 } t_envp_data;
 
 typedef enum e_token_type {
@@ -72,7 +73,12 @@ void		remove_quotes(t_token *head);
 void		free_cmd_struct(t_cmd *lst);
 void		parser(t_token *head, t_cmd **cmd_lst);
 void	ft_free_data(t_envp_data *data);
-
-
+int count_tab_tab(char **envp);
+void free_tab_tab(char **envp);
+void copy_tab_tab(char **src, char **dest);
+int len_value(char *str);
+int len_before_equal(char *str);
+char *get_keyword(char *str);
+int unset(char *key, t_envp_data **envp);
 
 #endif

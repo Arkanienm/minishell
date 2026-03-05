@@ -3,10 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amurtas <amurtas@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mageneix <mageneix@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/14 10:23:09 by amurtas           #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2026/03/03 14:44:40 by amurtas          ###   ########.fr       */
+=======
+/*   Updated: 2026/03/02 15:49:02 by mageneix         ###   ########.fr       */
+>>>>>>> mageneix
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,5 +72,7 @@ void	ft_lstiter(t_list *lst, void (*f)(void *));
 t_cmd	*ft_lstnew_cmd(void *content);
 void	ft_lstadd_back_cmd(t_cmd **lst, t_cmd *new);
 // t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *));
+t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *));
+int	ft_strcmp(const char *s1, const char *s2);
 
 #endif

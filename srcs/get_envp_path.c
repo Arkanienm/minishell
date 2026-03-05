@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_envp_path.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amurtas <amurtas@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mageneix <mageneix@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/12 12:45:13 by mg                #+#    #+#             */
-/*   Updated: 2026/03/03 15:49:08 by amurtas          ###   ########.fr       */
+/*   Updated: 2026/03/05 18:00:48 by mageneix         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,7 @@ t_envp_data *get_envp_path(char **envp)
     initial = data;
     while(envp[i])
     {
+		data->envp = &envp;
         data->keyword = get_keyword(envp[i]);
         data->value = ft_substr(envp[i], len_before_equal(envp[i]) + 1, len_value(envp[i]));
         if(envp[i + 1] == NULL)
