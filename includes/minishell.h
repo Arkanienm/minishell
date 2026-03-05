@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mageneix <mageneix@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mg <mg@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 15:52:15 by amurtas           #+#    #+#             */
-/*   Updated: 2026/03/03 17:34:38 by mageneix         ###   ########.fr       */
+/*   Updated: 2026/03/04 21:20:44 by mg               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,5 +44,6 @@ int len_value(char *str);
 int len_before_equal(char *str);
 char *get_keyword(char *str);
 int unset(char *key, t_envp_data **envp);
+long long int	ft_atol_exit(const char *str, int *error);
 
 #endif
