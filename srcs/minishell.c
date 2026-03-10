@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amurtas <amurtas@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mageneix <mageneix@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/13 14:49:39 by amurtas           #+#    #+#             */
-/*   Updated: 2026/03/10 12:33:34 by amurtas          ###   ########.fr       */
+/*   Updated: 2026/03/10 14:21:56 by mageneix         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-int	g_status = 0;
+int		g_status = 0;
 
 void	ft_free_data(t_envp_data *data)
 {
@@ -24,11 +24,10 @@ void	ft_free_data(t_envp_data *data)
 		if (data->keyword)
 			free(data->keyword);
 		if (data->value)
-			free (data->value);
-		free (data);
+			free(data->value);
+		free(data);
 		data = nnext;
 	}
-	
 }
 
 void	print_token(t_token *head)
@@ -43,42 +42,40 @@ void	print_token(t_token *head)
 	}
 }
 
-void   print_cmd(t_cmd *cmd)
+void	print_cmd(t_cmd *cmd)
 {
-    t_cmd   *current;
-    t_redir *current_redir;
-    int     i;
+	t_cmd	*current;
+	t_redir	*current_redir;
+	int		i;
 
-    current = cmd;
-    while (current)
-    {
-        printf("--- NOUVELLE COMMANDE ---\n");
-        
-        // 1. Affichage des arguments (Le tableau)
-        i = 0;
-        printf("Arguments : ");
-        while (current->cmd && current->cmd[i])
-        {
-            printf("[%s] ", current->cmd[i]);
-            i++;
-        }
-        printf("\n");
-
-        // 2. Affichage des redirections (La sous-liste)
-        current_redir = current->redir;
-        if (current_redir)
-            printf("Redirections :\n");
-        while (current_redir)
-        {
-            printf("  -> Type: %d | Fichier: [%s]\n", current_redir->type, current_redir->file);
-            current_redir = current_redir->next;
-        }
-        
-        current = current->next;
-        if (current)
-            printf("           |\n           v (PIPE)\n");
-    }
-    printf("-------------------------\n");
+	current = cmd;
+	while (current)
+	{
+		printf("--- NOUVELLE COMMANDE ---\n");
+		// 1. Affichage des arguments (Le tableau)
+		i = 0;
+		printf("Arguments : ");
+		while (current->cmd && current->cmd[i])
+		{
+			printf("[%s] ", current->cmd[i]);
+			i++;
+		}
+		printf("\n");
+		// 2. Affichage des redirections (La sous-liste)
+		current_redir = current->redir;
+		if (current_redir)
+			printf("Redirections :\n");
+		while (current_redir)
+		{
+			printf("  -> Type: %d | Fichier: [%s]\n", current_redir->type,
+				current_redir->file);
+			current_redir = current_redir->next;
+		}
+		current = current->next;
+		if (current)
+			printf("           |\n           v (PIPE)\n");
+	}
+	printf("-------------------------\n");
 }
 
 int	minishell_loop(t_envp_data *env)
@@ -93,9 +90,9 @@ int	minishell_loop(t_envp_data *env)
 		line = readline("minishell> ");
 		if (line == NULL)
 		{
-			free (line);
+			free(line);
 			ft_free_data(env);
-			exit (0);
+			exit(0);
 		}
 		if (line)
 			add_history(line);

@@ -1,10 +1,8 @@
 #include "../../includes/minishell.h"
 
-void print_env(t_envp_data *envp)
+void	print_env(t_envp_data *envp)
 {
-	int i;
-	
-	while(envp)
+	while (envp)
 	{
 		ft_putstr_fd(envp->keyword, 1);
 		write(1, "=", 1);
