@@ -6,11 +6,7 @@
 /*   By: amurtas <amurtas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/13 14:49:39 by amurtas           #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2026/03/03 15:52:38 by amurtas          ###   ########.fr       */
-=======
-/*   Updated: 2026/03/04 11:59:00 by amurtas          ###   ########.fr       */
->>>>>>> amurtas1
+/*   Updated: 2026/03/10 12:33:34 by amurtas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,10 +95,6 @@ int	minishell_loop(t_envp_data *env)
 		{
 			free (line);
 			ft_free_data(env);
-<<<<<<< HEAD
-=======
-			rl_clear_history();
->>>>>>> amurtas1
 			exit (0);
 		}
 		if (line)
