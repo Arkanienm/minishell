@@ -6,7 +6,7 @@
 /*   By: amurtas <amurtas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 15:52:15 by amurtas           #+#    #+#             */
-/*   Updated: 2026/03/10 12:29:16 by amurtas          ###   ########.fr       */
+/*   Updated: 2026/03/10 12:30:10 by amurtas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,10 +38,18 @@ typedef struct s_token
     struct s_token	*next;
 }   t_token;
 
+typedef struct s_redir
+{
+	int				type;
+	char 			*file;
+	struct s_redir	*next;
+}	t_redir;
+
 typedef struct s_cmd
 {
 	char 			**cmd;
 	struct s_cmd	*next;
+	t_redir	*redir;
 }	t_cmd;
 
 # include <stdio.h>
@@ -70,14 +78,9 @@ t_token		*tokenizer(char *str);
 void		expander(t_token *head, t_envp_data *env);
 void		remove_quotes(t_token *head);
 void		free_cmd_struct(t_cmd *lst);
+void		ft_free_struct(t_token *lst);
 void		parser(t_token *head, t_cmd **cmd_lst);
-void	ft_free_data(t_envp_data *data);
-int count_tab_tab(char **envp);
-void free_tab_tab(char **envp);
-void copy_tab_tab(char **src, char **dest);
-int len_value(char *str);
-int len_before_equal(char *str);
-char *get_keyword(char *str);
-int unset(char *key, t_envp_data **envp);
+
+
 
 #endif
