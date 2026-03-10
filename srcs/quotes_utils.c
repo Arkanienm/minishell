@@ -6,7 +6,7 @@
 /*   By: amurtas <amurtas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 15:51:20 by amurtas           #+#    #+#             */
-/*   Updated: 2026/03/03 14:33:03 by amurtas          ###   ########.fr       */
+/*   Updated: 2026/03/10 12:27:51 by amurtas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,26 +43,6 @@ int	update_quotes(int q_state, int len, char *str)
 	else if (str[len] == 39 && q_state == 1)
 		q_state = 0;
 	return (q_state);
-}
-
-int	ft_strcmp(char *s1, char *s2)
-{
-	int	i;
-	int	rvalue;
-
-	i = 0;
-	rvalue = 0;
-	while (s1[i] != '\0' && s2[i] != '\0')
-	{
-		if (s1[i] != s2[i])
-		{
-			rvalue = s1[i] - s2[i];
-			return (rvalue);
-		}
-		i++;
-	}
-	rvalue = s1[i] - s2[i];
-	return (rvalue);
 }
 
 void	replace(int q_state, t_token *current, char *s1)
