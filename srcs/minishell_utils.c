@@ -6,7 +6,7 @@
 /*   By: amurtas <amurtas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/12 12:45:13 by mg                #+#    #+#             */
-/*   Updated: 2026/03/04 11:41:17 by amurtas          ###   ########.fr       */
+/*   Updated: 2026/03/10 11:43:18 by amurtas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,8 +74,8 @@ void	free_cmd_struct(t_cmd *lst)
 			}
 			free(lst->cmd);
 		}
-        if (lst->redir)
-            ft_free_redir(lst->redir);
+		if (lst->redir)
+			ft_free_redir(lst->redir);
 		free(lst);
 		lst = nnext;
 	}
