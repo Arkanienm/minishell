@@ -1,4 +1,4 @@
-#include "minishell.h"
+#include "../../includes/minishell.h"
 
 static int add_envp(char *str, t_envp_data **envp)
 {

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mageneix <mageneix@student.42.fr>          +#+  +:+       +#+        */
+/*   By: amurtas <amurtas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/17 16:32:16 by mageneix          #+#    #+#             */
-/*   Updated: 2026/02/28 15:11:56 by mageneix         ###   ########.fr       */
+/*   Updated: 2026/03/10 12:41:01 by amurtas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void print_pwd(t_envp_data *data)
 		else
 			data = data->next;
 	}
-	if(data = NULL)
+	if(data == NULL)
 		perror("PWD");
 	return ;
 }

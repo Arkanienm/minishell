@@ -1,4 +1,4 @@
-#include "minishell.h"
+#include "../../includes/minishell.h"
 
 char *find_line_envp(char *to_find, t_envp_data *envp)
 {

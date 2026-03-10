@@ -1,4 +1,4 @@
-#include "minishell.h"
+#include "../../includes/minishell.h"
 
 void echo(int if_n, int fd, char *content)
 {
