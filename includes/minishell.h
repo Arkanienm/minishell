@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mageneix <mageneix@student.42.fr>          +#+  +:+       +#+        */
+/*   By: amurtas <amurtas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 15:52:15 by amurtas           #+#    #+#             */
-/*   Updated: 2026/03/05 17:59:33 by mageneix         ###   ########.fr       */
+/*   Updated: 2026/03/10 12:29:16 by amurtas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,6 @@ int			update_quotes(int q_state, int len, char *str);
 int			check_meta_char(char c, int q_state);
 t_token		*tokenizer(char *str);
 void		expander(t_token *head, t_envp_data *env);
-int			ft_strcmp(char *s1, char *s2);
 void		remove_quotes(t_token *head);
 void		free_cmd_struct(t_cmd *lst);
 void		parser(t_token *head, t_cmd **cmd_lst);
