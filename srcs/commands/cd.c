@@ -1,9 +1,23 @@
 #include "../../includes/minishell.h"
 
-char	*find_line_envp(char *to_find, t_envp_data *envp)
+int find_num_envp(char *to_find, t_envp_data *envp)
 {
-	while (envp && (strncmp(to_find, envp->keyword, ft_strlen(to_find)) != 0
-			|| ft_strlen(to_find) != ft_strlen(envp->keyword)))
+    int i;
+
+    i = 0;
+    while(envp && (strncmp(to_find, envp->keyword, ft_strlen(to_find)) != 0 || ft_strlen(to_find) != ft_strlen(envp->keyword)))
+    {
+        i++;
+        envp = envp->next;
+    }
+    if(envp != NULL)
+        return i;
+    return -1;
+}
+
+char *find_line_envp(char *to_find, t_envp_data *envp)
+{
+	while (envp && (strncmp(to_find, envp->keyword, ft_strlen(to_find)) != 0 || ft_strlen(to_find) != ft_strlen(envp->keyword)))
 		envp = envp->next;
 	if (envp != NULL)
 		return (envp->value);
@@ -12,60 +26,52 @@ char	*find_line_envp(char *to_find, t_envp_data *envp)
 
 int find_index_in_array(char **env_array, char *keyword)
 {
-    int i;
-    int len;
+	int i;
+	int len;
 
-    i = 0;
-    len = ft_strlen(keyword);
-    while (env_array && env_array[i])
-    {
-        if (strncmp(env_array[i], keyword, len) == 0 && env_array[i][len] == '=')
-            return (i);
-        i++;
-    }
-    return (-1);
+	i = 0;
+	len = ft_strlen(keyword);
+	while (env_array && env_array[i])
+	{
+		if (strncmp(env_array[i], keyword, len) == 0 && env_array[i][len] == '=')
+			return (i);
+		i++;
+	}
+	return (-1);
 }
 
-void    update_var(t_envp_data *envp, char buffer[4096], char *old_path)
+void update_var(t_envp_data *envp, char buffer[4096], char *old_path)
 {
-    t_envp_data    *current;
-    int            num_envp;
-    char *cwd;
+	t_envp_data *current;
+	int num_envp;
 
-    current = envp;
-    cwd = getcwd(buffer, 4096);
-    while (current)
-    {
-        if (strncmp("PWD", current->keyword, ft_strlen("PWD")) == 0
-            && ft_strlen("PWD") == ft_strlen(current->keyword))
-        {
-            num_envp = find_index_in_array(*(current->envp), "PWD");
-            free((*current->envp)[num_envp]);
-            (*current->envp)[num_envp] = ft_strjoin("PWD=", cwd);
-            free(current->value);
-            current->value = ft_strdup(cwd);
-        }
-        if (strncmp("OLDPWD", current->keyword, ft_strlen("OLDPWD")) == 0
-            && ft_strlen("OLDPWD") == ft_strlen(current->keyword))
-        {
-            num_envp = find_index_in_array(*(current->envp), "OLDPWD");
-            free((*current->envp)[num_envp]);
-            (*current->envp)[num_envp] = ft_strjoin("OLDPWD=", old_path);
-            free(current->value);
-            current->value = ft_strdup(old_path);
-        }
-        current = current->next;
-    }
-    free(old_path);
+	current = envp;
+	while (current)
+	{
+		if (strncmp("PWD", current->keyword, ft_strlen("PWD")) == 0 && ft_strlen("PWD") == ft_strlen(current->keyword))
+		{
+			num_envp = find_num_envp("PWD", envp);
+			free(current->value);
+			current->value = ft_strdup(getcwd(buffer, 4096));
+		}
+		if (strncmp("OLDPWD", current->keyword, ft_strlen("OLDPWD")) == 0 && ft_strlen("OLDPWD") == ft_strlen(current->keyword))
+		{
+			num_envp = find_num_envp("OLDPWD", envp);
+			free(current->value);
+			current->value = ft_strdup(old_path);
+		}
+		current = current->next;
+	}
+	free(old_path);
 }
 
-int	cd(char *path, t_envp_data *envp)
+int cd(char *path, t_envp_data *envp)
 {
-	char	*old_path;
-	char	buffer[4096];
-	char	*tmp_path;
-	char	*home_path;
-	char	*home_for_tilde;
+	char *old_path;
+	char buffer[4096];
+	char *tmp_path;
+	char *home_path;
+	char *home_for_tilde;
 
 	tmp_path = NULL;
 	if (!find_line_envp("PWD", envp))

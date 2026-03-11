@@ -6,7 +6,7 @@
 /*   By: amurtas <amurtas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/13 14:49:39 by amurtas           #+#    #+#             */
-/*   Updated: 2026/03/11 15:46:55 by amurtas          ###   ########.fr       */
+/*   Updated: 2026/03/11 17:48:24 by amurtas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,8 +93,6 @@ int	minishell_loop(t_envp_data *envp)
 		if (line == NULL)
 		{
 			free(line);
-			if (*(env->envp))
-				free_tab_tab(env->envp);
 			ft_free_data(env);
 			exit(0);
 		}
@@ -108,8 +106,27 @@ int	minishell_loop(t_envp_data *envp)
 			print_token(token);
 			parser(token, &cmd);
 			print_cmd(cmd);
-		if (!strcmp(cmd->cmd[0], "cd"))
-			cd(cmd->cmd[1], env);
+			if (!ft_strcmp(cmd->cmd[0], "cd"))
+				cd(cmd->cmd[1], env);
+			if (!ft_strcmp(cmd->cmd[0], "unset"))
+			{
+				if (!cmd->cmd[1])
+					ft_putstr_fd("unset: not enough arguments\n", 2);
+				else
+					unset(cmd->cmd[1], &envp);
+			}
+			if (!ft_strcmp(cmd->cmd[0], "export"))
+			{
+				export(cmd->cmd[1], &envp);
+				print_env(env);
+			}
+			if (!ft_strcmp(cmd->cmd[0], "pwd"))
+			{
+				if (cmd->cmd[1])
+					ft_putstr_fd("pwd: too many arguments\n", 2);
+				else
+				pwd(1);
+			}
 		}
 		ft_free_struct(token);
 		free_cmd_struct(cmd);
