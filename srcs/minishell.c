@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mageneix <mageneix@student.42.fr>          +#+  +:+       +#+        */
+/*   By: amurtas <amurtas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/13 14:49:39 by amurtas           #+#    #+#             */
-/*   Updated: 2026/03/10 14:21:56 by mageneix         ###   ########.fr       */
+/*   Updated: 2026/03/11 15:46:55 by amurtas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,11 +78,13 @@ void	print_cmd(t_cmd *cmd)
 	printf("-------------------------\n");
 }
 
-int	minishell_loop(t_envp_data *env)
+int	minishell_loop(t_envp_data *envp)
 {
 	t_token	*token;
 	t_cmd	*cmd;
 	char	*line;
+	t_envp_data *env;
+	env = envp;
 
 	while (1)
 	{
@@ -91,6 +93,8 @@ int	minishell_loop(t_envp_data *env)
 		if (line == NULL)
 		{
 			free(line);
+			if (*(env->envp))
+				free_tab_tab(env->envp);
 			ft_free_data(env);
 			exit(0);
 		}
@@ -104,6 +108,8 @@ int	minishell_loop(t_envp_data *env)
 			print_token(token);
 			parser(token, &cmd);
 			print_cmd(cmd);
+		if (!strcmp(cmd->cmd[0], "cd"))
+			cd(cmd->cmd[1], env);
 		}
 		ft_free_struct(token);
 		free_cmd_struct(cmd);

@@ -18,7 +18,10 @@ void	free_tab_tab(char **envp)
 
 	i = 0;
 	while (envp[i])
+	{
 		free(envp[i]);
+		i++;
+	}
 	free(envp);
 }
 

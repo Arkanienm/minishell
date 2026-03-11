@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_envp_path.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mageneix <mageneix@student.42.fr>          +#+  +:+       +#+        */
+/*   By: amurtas <amurtas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/12 12:45:13 by mg                #+#    #+#             */
-/*   Updated: 2026/03/10 14:20:48 by mageneix         ###   ########.fr       */
+/*   Updated: 2026/03/11 15:42:10 by amurtas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,39 +65,42 @@ int	len_value(char *str)
 	return (i - 1);
 }
 
-t_envp_data	*get_envp_path(char **envp)
+t_envp_data    *get_envp_path(char **envp)
 {
-	int			i;
-	t_envp_data	*data;
-	t_envp_data	*new;
-	t_envp_data	*initial;
+    int            i;
+    t_envp_data    *data;
+    t_envp_data    *new;
+    t_envp_data    *initial;
+    char **envp_cpy;
 
-	if (!envp || !envp[0])
-		return (NULL);
-	i = 0;
-	data = malloc(sizeof(t_envp_data));
-	if (!data)
-		return (NULL);
-	initial = data;
-	while (envp[i])
-	{
-		data->envp = &envp;
-		data->keyword = get_keyword(envp[i]);
-		data->value = ft_substr(envp[i], len_before_equal(envp[i]) + 1,
-				len_value(envp[i]));
-		if (envp[i + 1] == NULL)
-			data->next = NULL;
-		else
-		{
-			new = malloc(sizeof(t_envp_data));
-			if (!new)
-				return (NULL);
-			data->next = new;
-			data = new;
-		}
-		i++;
-	}
-	return (initial);
+    if (!envp || !envp[0])
+        return (NULL);
+    envp_cpy = malloc(sizeof(char *) * (count_tab_tab(envp) + 1));
+    copy_tab_tab(envp, envp_cpy);
+    i = 0;
+    data = malloc(sizeof(t_envp_data));
+    if (!data)
+        return (NULL);
+    initial = data;
+    while (envp_cpy[i])
+    {
+        data->envp = envp_cpy;
+        data->keyword = get_keyword(envp_cpy[i]);
+        data->value = ft_substr(envp_cpy[i], len_before_equal(envp_cpy[i]) + 1,
+                len_value(envp_cpy[i]));
+        if (envp_cpy[i + 1] == NULL)
+            data->next = NULL;
+        else
+        {
+            new = malloc(sizeof(t_envp_data));
+            if (!new)
+                return (NULL);
+            data->next = new;
+            data = new;
+        }
+        i++;
+    }
+    return (initial);
 }
 
 // int main(int argc, char **argv, char **envp)
