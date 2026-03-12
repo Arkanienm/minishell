@@ -6,7 +6,7 @@
 /*   By: amurtas <amurtas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/13 14:49:39 by amurtas           #+#    #+#             */
-/*   Updated: 2026/03/11 17:48:24 by amurtas          ###   ########.fr       */
+/*   Updated: 2026/03/12 11:26:43 by amurtas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,7 +113,10 @@ int	minishell_loop(t_envp_data *envp)
 				if (!cmd->cmd[1])
 					ft_putstr_fd("unset: not enough arguments\n", 2);
 				else
+				{
 					unset(cmd->cmd[1], &envp);
+					print_env(envp);
+				}
 			}
 			if (!ft_strcmp(cmd->cmd[0], "export"))
 			{
@@ -127,6 +130,15 @@ int	minishell_loop(t_envp_data *envp)
 				else
 				pwd(1);
 			}
+			if (!ft_strcmp(cmd->cmd[0], "echo"))
+			{
+				ft_echo(0, 1, cmd->cmd[1]);
+			}
+			if (!ft_strcmp(cmd->cmd[0], "echo") && !ft_strcmp(cmd->cmd[1], "-n"))
+			{
+				ft_echo(1, 1, cmd->cmd[2]);
+			}
+			
 		}
 		ft_free_struct(token);
 		free_cmd_struct(cmd);
