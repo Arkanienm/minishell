@@ -6,7 +6,7 @@
 /*   By: amurtas <amurtas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/13 14:49:39 by amurtas           #+#    #+#             */
-/*   Updated: 2026/03/12 11:26:43 by amurtas          ###   ########.fr       */
+/*   Updated: 2026/03/16 14:08:22 by amurtas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,8 +84,10 @@ int	minishell_loop(t_envp_data *envp)
 	t_cmd	*cmd;
 	char	*line;
 	t_envp_data *env;
+	int i;
 	env = envp;
 
+	i = 0;
 	while (1)
 	{
 		cmd = NULL;
@@ -106,39 +108,51 @@ int	minishell_loop(t_envp_data *envp)
 			print_token(token);
 			parser(token, &cmd);
 			print_cmd(cmd);
-			if (!ft_strcmp(cmd->cmd[0], "cd"))
-				cd(cmd->cmd[1], env);
-			if (!ft_strcmp(cmd->cmd[0], "unset"))
+			if (cmd && cmd->cmd[0])
 			{
-				if (!cmd->cmd[1])
-					ft_putstr_fd("unset: not enough arguments\n", 2);
-				else
+				if (!ft_strcmp(cmd->cmd[0], "cd"))
+					cd(cmd->cmd[1], env);
+				if (!ft_strcmp(cmd->cmd[0], "unset"))
 				{
-					unset(cmd->cmd[1], &envp);
-					print_env(envp);
+					if (!cmd->cmd[1])
+						ft_putstr_fd("unset: not enough arguments\n", 2);
+					else
+					{
+						unset(cmd->cmd[1], &envp);
+						print_env(envp);
+					}
 				}
-			}
-			if (!ft_strcmp(cmd->cmd[0], "export"))
-			{
-				export(cmd->cmd[1], &envp);
-				print_env(env);
-			}
-			if (!ft_strcmp(cmd->cmd[0], "pwd"))
-			{
-				if (cmd->cmd[1])
-					ft_putstr_fd("pwd: too many arguments\n", 2);
-				else
-				pwd(1);
-			}
-			if (!ft_strcmp(cmd->cmd[0], "echo"))
-			{
-				ft_echo(0, 1, cmd->cmd[1]);
-			}
-			if (!ft_strcmp(cmd->cmd[0], "echo") && !ft_strcmp(cmd->cmd[1], "-n"))
-			{
-				ft_echo(1, 1, cmd->cmd[2]);
-			}
-			
+				if (!ft_strcmp(cmd->cmd[0], "export"))
+				{
+					export(cmd->cmd[1], &envp);
+					print_env(env);
+				}
+				if (!ft_strcmp(cmd->cmd[0], "pwd"))
+				{
+					if (cmd->cmd[1])
+						ft_putstr_fd("pwd: too many arguments\n", 2);
+					else
+					pwd(1);
+				}
+				if (!ft_strcmp(cmd->cmd[0], "echo") && cmd->cmd[1] && !ft_strcmp(cmd->cmd[1], "-n"))
+				{
+					i = 2;
+					while(cmd->cmd[i])
+					{
+						ft_echo(1, 1, cmd->cmd[i]);
+						i++;
+					}
+				}
+				else if (!ft_strcmp(cmd->cmd[0], "echo"))
+				{
+					i = 1;
+					while(cmd->cmd[i])
+					{
+						ft_echo(0, 1, cmd->cmd[i]);
+						i++;
+					}
+				}
+			}	
 		}
 		ft_free_struct(token);
 		free_cmd_struct(cmd);
