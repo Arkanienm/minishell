@@ -6,7 +6,7 @@
 /*   By: amurtas <amurtas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 15:52:15 by amurtas           #+#    #+#             */
-/*   Updated: 2026/03/17 17:49:03 by amurtas          ###   ########.fr       */
+/*   Updated: 2026/03/17 18:07:47 by amurtas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,10 @@ int unset(char *key, t_envp_data **envp);
 long long int ft_atol_exit(const char *str, int *error);
 void pwd(int fd);
 void	setup_signals(void);
-
+t_cmd	*ft_lstnew_cmd(void *content);
+void	ft_lstadd_back_cmd(t_cmd **lst, t_cmd *new);
+void	ft_lstadd_back_redir(t_redir **lst, t_redir *new);
+void	ft_lstadd_back(t_token **lst, t_token *new);
+t_token	*ft_lstnew(void *content);
 
 #endif

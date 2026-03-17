@@ -6,7 +6,7 @@
 /*   By: amurtas <amurtas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 15:51:20 by amurtas           #+#    #+#             */
-/*   Updated: 2026/03/17 17:48:44 by amurtas          ###   ########.fr       */
+/*   Updated: 2026/03/17 18:25:35 by amurtas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,15 @@ void handler(int sig)
 	rl_redisplay();
 }
 
+void	set_sign_def(struct sigaction sa_int)
+{
+	sa_int.sa_handler = SIG_DFL;
+	sigemptyset(&sa_int.sa_mask);
+	sa_int.sa_flags = S
+}
 void	setup_signals(void)
 {
 	struct sigaction sa_int;
-	struct sigaction sa_quit;
 
 	sa_int.sa_handler = handler;
 	sigemptyset(&sa_int.sa_mask);

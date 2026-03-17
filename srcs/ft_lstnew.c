@@ -1,39 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strjoin.c                                       :+:      :+:    :+:   */
+/*   ft_lstnew.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: amurtas <amurtas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/10/17 14:38:56 by amurtas           #+#    #+#             */
-/*   Updated: 2025/10/29 10:05:10 by amurtas          ###   ########.fr       */
+/*   Created: 2025/10/23 13:41:38 by amurtas           #+#    #+#             */
+/*   Updated: 2026/03/17 18:09:09 by amurtas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../includes/minishell.h"
 
-char	*ft_strjoin(char const *s1, char const *s2)
+t_token	*ft_lstnew(void *content)
 {
-	int		i;
-	char	*cs;
+	t_token	*nbloc;
 
-	if (!s1 || !s2)
+	nbloc = malloc(sizeof(t_token));
+	if (!nbloc)
 		return (NULL);
-	cs = ft_calloc(sizeof(char), (ft_strlen(s1) + ft_strlen(s2) + 1));
-	if (!cs)
+	nbloc->content = content;
+	nbloc->next = NULL;
+	return (nbloc);
+}
+
+t_cmd	*ft_lstnew_cmd(void *content)
+{
+	t_cmd	*nbloc;
+
+	nbloc = malloc(sizeof(t_cmd));
+	if (!nbloc)
 		return (NULL);
-	i = 0;
-	while ((s1)[i] != '\0')
-	{
-		cs[i] = (s1)[i];
-		i++;
-	}
-	i = 0;
-	while ((s2)[i] != '\0')
-	{
-		cs[ft_strlen(s1) + i] = (s2)[i];
-		i++;
-	}
-	cs[ft_strlen(s1) + i] = '\0';
-	return (cs);
+	nbloc->cmd = content;
+	nbloc->next = NULL;
+	return (nbloc);
 }
