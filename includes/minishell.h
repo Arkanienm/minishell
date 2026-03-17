@@ -6,12 +6,29 @@
 /*   By: amurtas <amurtas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 15:52:15 by amurtas           #+#    #+#             */
-/*   Updated: 2026/03/11 17:37:51 by amurtas          ###   ########.fr       */
+/*   Updated: 2026/03/17 17:49:03 by amurtas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 #define MINISHELL_H
+
+#include <signal.h>
+#include "Libft/libft.h"
+#include <curses.h>
+#include <dirent.h>
+#include <fcntl.h>
+#include <readline/history.h>
+#include <readline/readline.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <sys/ioctl.h>
+#include <sys/stat.h>
+#include <sys/types.h>
+#include <sys/wait.h>
+#include <term.h>
+#include <termios.h>
+#include <unistd.h>
 
 extern int g_status;
 
@@ -53,22 +70,7 @@ typedef struct s_cmd
 	t_redir *redir;
 } t_cmd;
 
-#include "Libft/libft.h"
-#include <curses.h>
-#include <dirent.h>
-#include <fcntl.h>
-#include <readline/history.h>
-#include <readline/readline.h>
-#include <signal.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <sys/ioctl.h>
-#include <sys/stat.h>
-#include <sys/types.h>
-#include <sys/wait.h>
-#include <term.h>
-#include <termios.h>
-#include <unistd.h>
+
 
 t_envp_data *get_envp_path(char **envp);
 void ft_error(char *str, t_token *head);
@@ -94,5 +96,7 @@ char *get_keyword(char *str);
 int unset(char *key, t_envp_data **envp);
 long long int ft_atol_exit(const char *str, int *error);
 void pwd(int fd);
+void	setup_signals(void);
+
 
 #endif
