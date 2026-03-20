@@ -1,39 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strjoin.c                                       :+:      :+:    :+:   */
+/*   ft_strjoin_pipex.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mageneix <mageneix@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/10/17 14:38:56 by amurtas           #+#    #+#             */
-/*   Updated: 2026/03/17 14:32:34 by mageneix         ###   ########.fr       */
+/*   Created: 2026/01/19 10:40:32 by mageneix          #+#    #+#             */
+/*   Updated: 2026/03/17 12:32:05 by mageneix         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "pipex.h"
 
-char	*ft_strjoin(char const *s1, char const *s2)
+char	*ft_strjoin_pipex(char *s1, char *s2)
 {
+	char	*line;
 	int		i;
-	char	*cs;
+	int		j;
 
-	if (!s1 || !s2)
-		return (NULL);
-	cs = ft_calloc(sizeof(char), (ft_strlen(s1) + ft_strlen(s2) + 1));
-	if (!cs)
+	line = malloc((sizeof(char) * ((ft_strlen(s1) + 1) + ft_strlen(s2))));
+	if (!line)
 		return (NULL);
 	i = 0;
-	while ((s1)[i] != '\0')
+	while (s1 && s1[i])
 	{
-		cs[i] = (s1)[i];
+		line[i] = s1[i];
 		i++;
 	}
-	i = 0;
-	while ((s2)[i] != '\0')
+	j = 0;
+	while (s2 && s2[j])
 	{
-		cs[ft_strlen(s1) + i] = (s2)[i];
-		i++;
+		line[i + j] = s2[j];
+		j++;
 	}
-	cs[ft_strlen(s1) + i] = '\0';
-	return (cs);
+	line[i + j] = '\0';
+	return (line);
 }
