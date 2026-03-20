@@ -31,7 +31,11 @@ static int unset_struct(char *key, t_envp_data **envp)
 	return (0);
 }
 
+<<<<<<< Updated upstream
 int unset(char *key, t_envp_data **envp)
+=======
+int	unset(char *key, t_envp_data **envp)
+>>>>>>> Stashed changes
 {
 	if (unset_struct(key, envp) == -1)
 		return (-1);

@@ -6,7 +6,11 @@
 /*   By: amurtas <amurtas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 15:52:15 by amurtas           #+#    #+#             */
+<<<<<<< Updated upstream
 /*   Updated: 2026/03/11 17:37:51 by amurtas          ###   ########.fr       */
+=======
+/*   Updated: 2026/03/11 15:53:07 by mageneix         ###   ########.fr       */
+>>>>>>> Stashed changes
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +21,17 @@ extern int g_status;
 
 typedef struct s_envp_data
 {
+<<<<<<< Updated upstream
 	char *keyword;
 	char *value;
 	struct s_envp_data *next;
 } t_envp_data;
+=======
+	char				*keyword;
+	char				*value;
+	struct s_envp_data	*next;
+}						t_envp_data;
+>>>>>>> Stashed changes
 
 typedef enum e_token_type
 {
