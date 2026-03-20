@@ -1,16 +1,10 @@
 #include "../../includes/minishell.h"
 
-<<<<<<< Updated upstream
-static int add_struct(char *str, t_envp_data **envp)
-{
-	t_envp_data *current;
-	t_envp_data *nnode;
-=======
+
 static int	add_struct(char *str, t_envp_data **envp)
 {
 	t_envp_data	*current;
 	t_envp_data	*nnode;
->>>>>>> Stashed changes
 
 	current = (*envp);
 	nnode = malloc(sizeof(t_envp_data));

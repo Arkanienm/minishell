@@ -6,7 +6,7 @@
 /*   By: amurtas <amurtas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/13 14:49:39 by amurtas           #+#    #+#             */
-/*   Updated: 2026/03/16 14:08:22 by amurtas          ###   ########.fr       */
+/*   Updated: 2026/03/17 17:49:29 by amurtas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -167,7 +167,9 @@ int	main(int argc, char **argv, char **envp)
 	if (argc != 1)
 		return (0);
 	(void)argv;
+	setup_signals();
 	env = get_envp_path(envp);
 	g_status = 0;
 	minishell_loop(env);
+	return (0);
 }
