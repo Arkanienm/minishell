@@ -1,19 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   get_envp_path.c                                    :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: amurtas <amurtas@student.42.fr>            +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/02/12 12:45:13 by mg                #+#    #+#             */
-<<<<<<< Updated upstream
-/*   Updated: 2026/03/11 16:06:08 by amurtas          ###   ########.fr       */
-=======
-/*   Updated: 2026/03/11 15:54:41 by mageneix         ###   ########.fr       */
->>>>>>> Stashed changes
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "../includes/minishell.h"
 
 int    get_envp_size(char **envp)
@@ -71,36 +55,6 @@ int    len_value(char *str)
 
 t_envp_data    *get_envp_path(char **envp)
 {
-<<<<<<< Updated upstream
-    int            i;
-    t_envp_data    *data;
-    t_envp_data    *new;
-    t_envp_data    *initial;
-    
-    i = 0;
-    data = malloc(sizeof(t_envp_data));
-    if (!data)
-        return (NULL);
-    initial = data;
-    while (envp[i])
-    {
-        data->keyword = get_keyword(envp[i]);
-        data->value = ft_substr(envp[i], len_before_equal(envp[i]) + 1,
-                len_value(envp[i]));
-        if (envp[i + 1] == NULL)
-            data->next = NULL;
-        else
-        {
-            new = malloc(sizeof(t_envp_data));
-            if (!new)
-                return (NULL);
-            data->next = new;
-            data = new;
-        }
-        i++;
-    }
-    return (initial);
-=======
 	int			i;
 	t_envp_data	*data;
 	t_envp_data	*new;
@@ -129,5 +83,4 @@ t_envp_data    *get_envp_path(char **envp)
 		i++;
 	}
 	return (initial);
->>>>>>> Stashed changes
 }
