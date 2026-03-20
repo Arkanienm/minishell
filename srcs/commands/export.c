@@ -40,6 +40,11 @@ void export(char *str, t_envp_data **envp)
 {
 	char *keyword;
 
+	if (!str)
+	{
+		printf("test reussi");
+		return ;
+	}
 	keyword = get_keyword(str);
 	if (is_already_exist(keyword, (*envp)) == 1)
 		unset(keyword, envp);
