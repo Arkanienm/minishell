@@ -110,24 +110,26 @@ int	minishell_loop(t_envp_data *envp)
 						print_env(envp);
 					}
 				}
-				if (!ft_strcmp(cmd->cmd[0], "export"))
+				else if (!ft_strcmp(cmd->cmd[0], "export"))
 				{
 					export(cmd->cmd[1], &envp);
 					print_env(env);
 				}
-				if (!ft_strcmp(cmd->cmd[0], "pwd"))
+				else if (!ft_strcmp(cmd->cmd[0], "pwd"))
 				{
 					if (cmd->cmd[1])
 						ft_putstr_fd("pwd: too many arguments\n", 2);
 					else
 					pwd(1);
 				}
-				if (!ft_strcmp(cmd->cmd[0], "echo") && cmd->cmd[1] && !ft_strcmp(cmd->cmd[1], "-n"))
+				else if (!ft_strcmp(cmd->cmd[0], "echo") && cmd->cmd[1] && !ft_strcmp(cmd->cmd[1], "-n"))
 				{
 					i = 2;
 					while(cmd->cmd[i])
 					{
-						ft_echo(1, 1, cmd->cmd[i]);
+						ft_echo(1, cmd->cmd[i]);
+						if(cmd->cmd[i + 1] != NULL)
+							write(1, " ", 1);
 						i++;
 					}
 				}
@@ -136,11 +138,16 @@ int	minishell_loop(t_envp_data *envp)
 					i = 1;
 					while(cmd->cmd[i])
 					{
-						ft_echo(0, 1, cmd->cmd[i]);
+						ft_echo(1, cmd->cmd[i]);
+						if(cmd->cmd[i + 1] != NULL)
+							write(1, " ", 1);
 						i++;
 					}
+					write(1, "\n", 1);
 				}
-			}	
+				else if (!ft_strcmp(cmd->cmd[0], "env"))
+					print_env(envp);
+			}
 		}
 		ft_free_struct(token);
 		free_cmd_struct(cmd);
