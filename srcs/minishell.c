@@ -129,38 +129,49 @@ int execute_builtin(t_cmd *cmd, t_envp_data **envp)
 	return 0;
 }
 
-int	minishell_loop(t_envp_data *envp)
+int    minishell_loop(t_envp_data *envp, int g_status)
 {
-	t_token	*token;
-	t_cmd	*cmd;
-	char	*line;
+    t_token    *token;
+    t_cmd    *cmd;
+    char    *line;
 
-	while (1)
-	{
-		cmd = NULL;
-		line = readline("minishell> ");
-		if (line == NULL)
-		{
-			free(line);
-			ft_free_data(envp);
-			exit(0);
-		}
-		if (line)
-			add_history(line);
-		token = tokenizer(line);
-		if (token)
-		{
-			expander(token, envp);
-			remove_quotes(token);
-			print_token(token);
-			parser(token, &cmd);
-			print_cmd(cmd);
-			execute_builtin(cmd, &envp);
-		}
-		ft_free_struct(token);
-		free_cmd_struct(cmd);
-		free(line);
-	}
+    while (1)
+    {
+        cmd = NULL;
+        line = readline("minishell> ");
+        if (line == NULL)
+        {
+            free(line);
+            ft_free_data(envp);
+            exit(0);
+        }
+        if (line)
+            add_history(line);
+        token = tokenizer(line);
+        if (token)
+        {
+            expander(token, envp);
+            remove_quotes(token);
+            print_token(token);
+            parser(token, &cmd);
+            print_cmd(cmd);
+            if (cmd && cmd->cmd[0])
+            {
+                if(cmd->next)
+                    g_status = pipex(envp, cmd);
+                else
+                {
+                    if(execute_builtin(cmd, &envp) == 0)
+                        g_status = pipex(envp, cmd);
+                }
+            }
+        }
+        ft_free_struct(token);
+        free_cmd_struct(cmd);
+        free(line);
+    }
+    if(g_status)
+        return g_status;
 }
 
 int	main(int argc, char **argv, char **envp)
@@ -173,6 +184,6 @@ int	main(int argc, char **argv, char **envp)
 	setup_signals();
 	env = get_envp_path(envp);
 	g_status = 0;
-	minishell_loop(env);
+	minishell_loop(env, g_status);
 	return (0);
 }
