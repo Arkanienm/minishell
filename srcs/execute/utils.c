@@ -19,7 +19,7 @@ void	perror_exit(char *error_message, int code_exit)
 	exit(code_exit);
 }
 
-void	redirect(t_data *data, int *offset)
+void	redirect(t_data *data, t_cmd *cmds)
 {
 	int	null_fd;
 
@@ -32,48 +32,32 @@ void	redirect(t_data *data, int *offset)
 	else
 	{
 		dup2(data->previous_read, STDIN_FILENO);
-		if (data->previous_read != -1)
-			close(data->previous_read);
-		data->previous_read = -1;
+		close(data->previous_read);
 	}
-	cmd_loop(data);
-	*offset = 2;
-	if (data->is_heredoc == 1)
-		*offset = 3;
+	cmd_loop(data, cmds);
+	loop_redir(data, cmds->redir);
 }
 
-void	pid_compose(t_data *data, char **argv, char **envp)
+static void	pid_compose(t_data *data, char **envp, t_cmd *cmds)
 {
 	char	*path;
-	int		offset;
-	char	**path_split;
 
-	redirect(data, &offset);
-	path_split = ft_split(argv[data->i + offset], ' ');
-	if (!path_split || !path_split[0])
-	{
-		if (path_split)
-			free_tab(path_split);
-		close_all(data);
-		error_exit("Command not found\n", 127);
-	}
-	path = return_path(path_split[0], envp);
+	redirect(data, cmds);
+	path = return_path(cmds->cmd[0], envp);
 	if (!path)
 	{
-		free_tab(path_split);
 		close_all(data);
 		error_exit("Command not found\n", 127);
 	}
-	execve(path, path_split, envp);
-	free_tab(path_split);
+	execve(path, cmds->cmd, envp);
 	close_all(data);
 	free(path);
 	error_exit("Command not found\n", 127);
 }
 
-void	exec_loop(t_data *data, char **argv, char **envp)
+void	exec_loop(t_data *data, char **envp, t_cmd *cmds)
 {
-	if (data->i < data->nb_cmd - 1)
+	if (cmds->next)
 	{
 		if (pipe(data->end) == -1)
 			perror_exit("Pipe failed", 1);
@@ -82,13 +66,13 @@ void	exec_loop(t_data *data, char **argv, char **envp)
 	if (data->pid == -1)
 		perror_exit("Fork failed", 1);
 	if (data->pid == 0)
-		pid_compose(data, argv, envp);
+		pid_compose(data, envp, cmds);
 	else
 	{
 		if (data->previous_read != -1)
 			close(data->previous_read);
 		data->previous_read = -1;
-		if (data->i < data->nb_cmd - 1)
+		if (cmds->next)
 		{
 			if (data->end[1] != -1)
 				close(data->end[1]);
@@ -96,7 +80,6 @@ void	exec_loop(t_data *data, char **argv, char **envp)
 			data->end[1] = -1;
 			data->end[0] = -1;
 		}
-		data->i++;
 	}
 }
 

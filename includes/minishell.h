@@ -69,6 +69,7 @@ int check_meta_char(char c, int q_state);
 t_token *tokenizer(char *str);
 void expander(t_token *head, t_envp_data *env);
 void remove_quotes(t_token *head);
+int execute_builtin(t_cmd *cmd, t_envp_data **envp);
 void free_cmd_struct(t_cmd *lst);
 void ft_free_struct(t_token *lst);
 void parser(t_token *head, t_cmd **cmd_lst);
@@ -92,4 +93,5 @@ void	ft_lstadd_back_redir(t_redir **lst, t_redir *new);
 void	ft_lstadd_back(t_token **lst, t_token *new);
 t_token	*ft_lstnew(void *content);
 
+#include "pipex.h"
 #endif
