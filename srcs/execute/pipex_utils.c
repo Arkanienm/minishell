@@ -1,4 +1,4 @@
-#include "pipex.h"
+#include "includes/minishell.h"
 
 static void	close_all(t_data *data)
 {
@@ -81,46 +81,4 @@ void	exec_loop(t_data *data, char **envp, t_cmd *cmds)
 			data->end[0] = -1;
 		}
 	}
-}
-
-int count_args(char **str)
-{
-	int i;
-	
-	i = 0;
-	if(str[i] == NULL)
-		return 0;
-	while (str[i])
-		i++;
-	return i;
-}
-
-char **struct_to_envp(t_envp_data *data)
-{
-	int count;
-	int i;
-	char **dest;
-	char *tmp;
-
-	if(!data)
-		return NULL;
-	count = ft_lstsize(data);
-	i = 0;
-	dest = malloc(sizeof(char *) * (count + 1));
-	while(i < count)
-	{
-		if(data->value)
-		{
-			tmp = ft_strjoin(data->keyword, "=");
-			dest[i] = ft_strjoin(tmp, data->value);
-			free(tmp);
-		}
-		else
-			dest[i] = ft_strjoin(data->keyword, "=");
-			
-		data = data->next;
-		i++;
-	}
-	dest[i] = NULL;
-	return dest;
 }

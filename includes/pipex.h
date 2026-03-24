@@ -24,6 +24,8 @@ void loop_redir(t_data *data, t_redir *redir);
 void	redirect(t_data *data, t_cmd *cmds);
 int	pipex(t_envp_data *envp, t_cmd *cmds);
 char **struct_to_envp(t_envp_data *envp);
+void apply_redir(t_data *data, t_redir *redir);
+void	handle_heredoc(t_data *data, t_redir *redir);
 
 
 

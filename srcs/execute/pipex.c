@@ -1,4 +1,4 @@
-#include "pipex.h"
+#include "includes/minishell.h"
 
 int	pipex(t_envp_data *envp, t_cmd *cmds)
 {
@@ -12,7 +12,7 @@ int	pipex(t_envp_data *envp, t_cmd *cmds)
 	envp_tab = struct_to_envp(envp);
 	while (current)
 	{
-		exec_loop(&data, envp, current);
+		exec_loop(&data, envp_tab, current);
 		current = current->next;
 	}
 	if (data.outfile >= 0)

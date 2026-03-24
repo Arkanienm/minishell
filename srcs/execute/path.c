@@ -1,4 +1,4 @@
-#include "pipex.h"
+#include "includes/minishell.h"
 
 static char	**find_line_path(char **env)
 {
@@ -43,9 +43,9 @@ void	free_tab(char **tab_to_free)
 	int	i;
 
 	i = 0;
-	while (tab[i])
+	while (tab_to_free[i])
 	{
-		free(tab[i]);
+		free(tab_to_free[i]);
 		i++;
 	}
 	free(tab);

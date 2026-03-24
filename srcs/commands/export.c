@@ -1,5 +1,60 @@
 #include "../../includes/minishell.h"
 
+void    print_sorted_env(t_envp_data *envp)
+{
+    t_envp_data **data;
+    int i;
+    t_envp_data *tmp;
+    int size;
+    int verif;
+    
+    verif = 1;
+    size = ft_lstsize_data(envp);
+    i = 0;
+    if (size == 0)
+        return ;
+    data = malloc(sizeof(t_envp_data *) * size);
+    while (envp)
+    {
+        data[i] = envp;
+        i++;
+        envp = envp->next;
+    }
+    i = 0;
+    while (verif == 1)
+    {
+        verif = 0;
+        i = 0;
+        while (i < size - 1)
+        {
+            if (ft_strcmp(data[i]->keyword, data[i + 1]->keyword) > 0)
+            {
+                tmp = data[i];
+                data[i] = data[i + 1];
+                data[i + 1] = tmp;
+                verif = 1;
+            }
+            i++;
+        }
+    }
+    i = 0;
+    while (i < size)
+    {
+        write(1, "declare -x ", 11);
+        ft_putstr_fd(data[i]->keyword, 1);
+        if (data[i]->value)
+        {
+            write(1, "=", 1);
+            write(1, "\"", 1);
+            ft_putstr_fd(data[i]->value, 1);
+            write(1, "\"", 1);
+        }
+        write(1, "\n", 1);
+        i++;
+    }
+    free(data);
+    return ;
+}
 
 static int	add_struct(char *str, t_envp_data **envp)
 {
@@ -42,7 +97,7 @@ void export(char *str, t_envp_data **envp)
 
 	if (!str)
 	{
-		printf("test reussi");
+		print_sorted_env((*envp));
 		return ;
 	}
 	keyword = get_keyword(str);

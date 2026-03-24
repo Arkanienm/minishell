@@ -1,4 +1,4 @@
-#include "minishell.h"
+#include "includes/minishell.h"
 
 int	is_good_size(char *limiter, char *line)
 {
@@ -19,7 +19,7 @@ void loop_redir(t_data *data, t_redir *redir)
 	}
 }
 
-static void apply_redir(t_data *data, t_redir *redir)
+void apply_redir(t_data *data, t_redir *redir)
 {
 	if(redir->type == REDIR_IN)
 	{
