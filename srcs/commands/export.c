@@ -1,27 +1,5 @@
 #include "../../includes/minishell.h"
 
-
-void	ft_sort_in_tab(int *str, int size)
-{
-	int	temp;
-	int	i;
-
-	i = 0;
-	temp = 0;
-	while (i < size - 1)
-	{
-		if (str[i + 1] < str[i])
-		{
-			temp = str[i + 1];
-			str[i + 1] = str[i];
-			str[i] = temp;
-			i = 0;
-		}
-		else
-			i++;
-	}
-}
-
 void	print_sorted_env(t_envp_data *envp)
 {
 	t_envp_data **data;
@@ -119,7 +97,7 @@ void export(char *str, t_envp_data **envp)
 
 	if (!str)
 	{
-		printf("test reussi");
+		print_sorted_env((*envp));
 		return ;
 	}
 	keyword = get_keyword(str);

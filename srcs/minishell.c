@@ -129,12 +129,11 @@ int execute_builtin(t_cmd *cmd, t_envp_data **envp)
 	return 0;
 }
 
-int	minishell_loop(t_envp_data *envp, int g_status)
+int	minishell_loop(t_envp_data *envp)
 {
 	t_token	*token;
 	t_cmd	*cmd;
 	char	*line;
-	int i;
 
 	while (1)
 	{
@@ -156,58 +155,12 @@ int	minishell_loop(t_envp_data *envp, int g_status)
 			print_token(token);
 			parser(token, &cmd);
 			print_cmd(cmd);
-			if (cmd && cmd->cmd[0])
-			{
-				if (!ft_strcmp(cmd->cmd[0], "cd"))
-					cd(cmd->cmd[1], envp);
-				if (!ft_strcmp(cmd->cmd[0], "unset"))
-				{
-					if (!cmd->cmd[1])
-						ft_putstr_fd("unset: not enough arguments\n", 2);
-					else
-					{
-						unset(cmd->cmd[1], &envp);
-						print_env(envp);
-					}
-				}
-				if (!ft_strcmp(cmd->cmd[0], "export"))
-				{
-					export(cmd->cmd[1], &envp);
-					print_env(envp);
-				}
-				if (!ft_strcmp(cmd->cmd[0], "pwd"))
-				{
-					if (cmd->cmd[1])
-						ft_putstr_fd("pwd: too many arguments\n", 2);
-					else
-					pwd(1);
-				}
-				if (!ft_strcmp(cmd->cmd[0], "echo") && cmd->cmd[1] && !ft_strcmp(cmd->cmd[1], "-n"))
-				{
-					i = 2;
-					while(cmd->cmd[i])
-					{
-						ft_echo(1, cmd->cmd[i]);
-						i++;
-					}
-				}
-				else if (!ft_strcmp(cmd->cmd[0], "echo"))
-				{
-					i = 1;
-					while(cmd->cmd[i])
-					{
-						ft_echo(1, cmd->cmd[i]);
-						i++;
-					}
-				}
-			}
+			execute_builtin(cmd, &envp);
 		}
 		ft_free_struct(token);
 		free_cmd_struct(cmd);
 		free(line);
 	}
-	if(g_status)
-		return g_status;
 }
 
 int	main(int argc, char **argv, char **envp)
@@ -220,6 +173,6 @@ int	main(int argc, char **argv, char **envp)
 	setup_signals();
 	env = get_envp_path(envp);
 	g_status = 0;
-	minishell_loop(env, g_status);
+	minishell_loop(env);
 	return (0);
 }
