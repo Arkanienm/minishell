@@ -34,8 +34,8 @@ void	redirect(t_data *data, t_cmd *cmds)
 		dup2(data->previous_read, STDIN_FILENO);
 		close(data->previous_read);
 	}
-	cmd_loop(data, cmds);
 	loop_redir(data, cmds->redir);
+	cmd_loop(data, cmds);
 }
 
 static void	pid_compose(t_data *data, char **envp, t_cmd *cmds)

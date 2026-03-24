@@ -29,6 +29,7 @@ static char	*get_path(char *cmd, char **path)
 	{
 		path_part = ft_strjoin_pipex(path[i], "/");
 		exec = ft_strjoin(path_part, cmd);
+		free(path_part);
 		if (access(exec, F_OK | X_OK) == 0)
 			return (exec);
 		i++;
@@ -48,7 +49,7 @@ void	free_tab(char **tab_to_free)
 		free(tab_to_free[i]);
 		i++;
 	}
-	free(tab);
+	free(tab_to_free);
 	return ;
 }
 
@@ -60,6 +61,8 @@ char	*return_path(char *cmd, char **env)
 	if (!cmd)
 		return (NULL);
 	path = find_line_path(env);
+	if(!path)
+		return NULL;
 	final_path = get_path(cmd, path);
 	free_tab(path);
 	return (final_path);
