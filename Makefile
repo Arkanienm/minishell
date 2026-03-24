@@ -12,7 +12,7 @@ SRCS        = $(SRCS_DIR)minishell.c $(SRCS_DIR)get_envp_path.c $(SRCS_DIR)expan
               $(SRCS_DIR)lexer.c $(SRCS_DIR)parsing.c $(SRCS_DIR)quotes_utils.c $(COMMANDS_DIR)cd.c \
 			  $(COMMANDS_DIR)commands_utils.c $(COMMANDS_DIR)echo.c $(COMMANDS_DIR)env.c $(COMMANDS_DIR)export.c \
 			  $(COMMANDS_DIR)pwd.c $(COMMANDS_DIR)unset.c $(SRCS_DIR)minishell_utils.c $(SRCS_DIR)signals.c \
-			  $(SRCS_DIR)ft_lstadd_back.c $(SRCS_DIR)ft_lstnew.c
+			  $(SRCS_DIR)ft_lstadd_back.c $(SRCS_DIR)ft_lstnew.c $(SRCS_DIR)ft_lstsize_data.c
 OBJS        = $(SRCS:$(SRCS_DIR)%.c=$(OBJ_DIR)%.o)
 LIBFT       = $(LIBFT_DIR)/libft.a
 

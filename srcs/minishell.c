@@ -112,8 +112,13 @@ int	minishell_loop(t_envp_data *envp)
 				}
 				if (!ft_strcmp(cmd->cmd[0], "export"))
 				{
-					export(cmd->cmd[1], &envp);
-					print_env(env);
+					if (!cmd->cmd[1])
+						print_sorted_env(envp);
+					else
+					{
+						export(cmd->cmd[1], &envp);
+						print_env(env);
+					}
 				}
 				if (!ft_strcmp(cmd->cmd[0], "pwd"))
 				{

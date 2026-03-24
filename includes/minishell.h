@@ -91,5 +91,7 @@ void	ft_lstadd_back_cmd(t_cmd **lst, t_cmd *new);
 void	ft_lstadd_back_redir(t_redir **lst, t_redir *new);
 void	ft_lstadd_back(t_token **lst, t_token *new);
 t_token	*ft_lstnew(void *content);
+int	ft_lstsize_data(t_envp_data *data);
+void	print_sorted_env(t_envp_data *envp);
 
 #endif
