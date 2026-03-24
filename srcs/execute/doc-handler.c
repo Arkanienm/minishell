@@ -1,4 +1,4 @@
-#include "pipex_bonus.h"
+#include "minishell.h"
 
 int	is_good_size(char *limiter, char *line)
 {
@@ -7,19 +7,57 @@ int	is_good_size(char *limiter, char *line)
 	return (0);
 }
 
-void	handle_heredoc(t_data *data, char **argv)
+void loop_redir(t_data *data, t_redir *redir)
+{
+	t_redir *current;
+
+	current = redir;
+	while(current)
+	{
+		apply_redir(data, current);
+		current = current->next;
+	}
+}
+
+static void apply_redir(t_data *data, t_redir *redir)
+{
+	if(redir->type == REDIR_IN)
+	{
+		data->infile = open(redir->file, O_RDONLY);
+		dup2(data->infile, STDIN_FILENO);
+		close(data->infile);
+	}
+	else if(redir->type == REDIR_OUT)
+	{
+		data->outfile = open(redir->file, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+		dup2(data->outfile, STDOUT_FILENO);
+		close(data->outfile);
+	}
+	else if(redir->type == HEREDOC)
+	{
+		handle_heredoc(data, redir);
+		dup2(data->previous_read, STDIN_FILENO);
+		close(data->previous_read);
+	}
+	else if (redir->type == APPEND)
+	{
+		data->outfile = open(redir->file, O_WRONLY | O_CREAT | O_APPEND, 0644);
+		dup2(data->outfile, STDOUT_FILENO);
+		close(data->outfile);
+	}
+}
+
+void	handle_heredoc(t_data *data, t_redir *redir)
 {
 	int		end[2];
 	char	*line;
 
-	if (data->is_heredoc == 0)
-		return ;
 	pipe(end);
 	while (1)
 	{
 		line = get_next_line(0);
-		if (!line || (is_good_size(argv[2], line) && ft_strncmp(argv[2], line,
-					ft_strlen(argv[2])) == 0))
+		if (!line || (is_good_size(redir->file, line) && ft_strncmp(redir->file, line,
+					ft_strlen(redir->file)) == 0))
 		{
 			free(line);
 			break ;
@@ -31,9 +69,9 @@ void	handle_heredoc(t_data *data, char **argv)
 	data->previous_read = end[0];
 }
 
-void	cmd_loop(t_data *data)
+void	cmd_loop(t_data *data, t_cmd *current)
 {
-	if (data->i < data->nb_cmd - 1)
+	if (current->next)
 	{
 		dup2(data->end[1], STDOUT_FILENO);
 		if (data->end[1] != -1)

@@ -38,7 +38,7 @@ static char	*get_path(char *cmd, char **path)
 	return (NULL);
 }
 
-void	free_tab(char **tab)
+void	free_tab(char **tab_to_free)
 {
 	int	i;
 

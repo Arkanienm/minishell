@@ -69,10 +69,11 @@ int check_meta_char(char c, int q_state);
 t_token *tokenizer(char *str);
 void expander(t_token *head, t_envp_data *env);
 void remove_quotes(t_token *head);
+int execute_builtin(t_cmd *cmd, t_envp_data **envp);
 void free_cmd_struct(t_cmd *lst);
 void ft_free_struct(t_token *lst);
 void parser(t_token *head, t_cmd **cmd_lst);
-void ft_echo(int if_n, int fd, char *content);
+void ft_echo(int fd, char *content);
 int cd(char *path, t_envp_data *envp);
 void print_env(t_envp_data *envp);
 void export(char *str, t_envp_data **envp);
@@ -94,4 +95,5 @@ t_token	*ft_lstnew(void *content);
 int	ft_lstsize_data(t_envp_data *data);
 void	print_sorted_env(t_envp_data *envp);
 
+#include "pipex.h"
 #endif
