@@ -66,6 +66,16 @@ void	print_cmd(t_cmd *cmd)
 	printf("-------------------------\n");
 }
 
+int need_redir(t_redir *redir)
+{
+	int in_save;
+	int out_save;
+
+	dup2(STDIN_FILENO, in_save);
+	dup2(STDOUT_FILENO, out_save);
+	if(redir->type == APPEND || redir->type == HEREDOC || redir->type == REDIR_IN || redir->type == REDIR_OUT)
+}
+
 int execute_builtin(t_cmd *cmd, t_envp_data **envp)
 {
 	int i;
