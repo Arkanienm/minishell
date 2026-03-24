@@ -10,10 +10,12 @@ void	replace_status(t_token *current, int *i)
 
 	len = (*i) + 2;
 	status = ft_itoa(g_status);
+	if (!status)
+		return ;
 	s1 = ft_substr(current->content, 0, (*i));
 	s2 = ft_strjoin(s1, status);
 	free(s1);
-	s1 = ft_substr(current->content, len, ft_strlen(current->content));
+	s1 = ft_substr(current->content, len, ft_strlen(current->content) - len);
 	s3 = ft_strjoin(s2, s1);
 	free (current->content);
 	current->content = s3;

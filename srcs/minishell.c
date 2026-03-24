@@ -129,7 +129,7 @@ int execute_builtin(t_cmd *cmd, t_envp_data **envp)
 	return 0;
 }
 
-int	minishell_loop(t_envp_data *envp, int g_status)
+int	minishell_loop(t_envp_data *envp)
 {
 	t_token	*token;
 	t_cmd	*cmd;
@@ -155,23 +155,12 @@ int	minishell_loop(t_envp_data *envp, int g_status)
 			print_token(token);
 			parser(token, &cmd);
 			print_cmd(cmd);
-			if (cmd && cmd->cmd[0])
-			{
-				if(cmd->next)
-					g_status = pipex(envp, cmd);
-				else
-				{
-					if(execute_builtin(cmd, &envp) == 0)
-						g_status = pipex(envp, cmd);
-				}
-			}
+			execute_builtin(cmd, &envp);
 		}
 		ft_free_struct(token);
 		free_cmd_struct(cmd);
 		free(line);
 	}
-	if(g_status)
-		return g_status;
 }
 
 int	main(int argc, char **argv, char **envp)
@@ -184,6 +173,6 @@ int	main(int argc, char **argv, char **envp)
 	setup_signals();
 	env = get_envp_path(envp);
 	g_status = 0;
-	minishell_loop(env, g_status);
+	minishell_loop(env);
 	return (0);
 }
