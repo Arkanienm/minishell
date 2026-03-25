@@ -16,10 +16,9 @@ void	print_pwd(t_envp_data *data)
 
 char	*get_pwd(t_envp_data *data)
 {
-	t_envp_data *current;
-	
+	t_envp_data	*current;
+
 	current = data;
-	
 	while (current)
 	{
 		if (ft_strncmp("PWD", current->keyword, 3))
@@ -39,9 +38,10 @@ char	*get_old_pwd(t_envp_data *data)
 	}
 	return (NULL);
 }
-void pwd(int fd)
+
+void	pwd(int fd)
 {
-	char pwd[4096];
+	char	pwd[4096];
 
 	getcwd(pwd, sizeof(pwd));
 	write(fd, pwd, ft_strlen(pwd));

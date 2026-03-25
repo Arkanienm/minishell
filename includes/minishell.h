@@ -96,6 +96,8 @@ int						path_not_found(char **home_p, char **old_p, t_envp_data **envp, char *p
 int						path_error(char **path, char **old_path);
 int						verif_pwd(t_envp_data **envp);
 char					*find_line_envp(char *to_find, t_envp_data *envp);
+void					exp_tmp(int *verif, int *size, t_envp_data **data, t_envp_data **tmp);
+void					printing_sorted_env(t_envp_data **data, int size);
 
 # include "pipex.h"
 #endif

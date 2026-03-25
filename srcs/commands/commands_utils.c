@@ -27,7 +27,7 @@ void	free_tab_tab(char **envp)
 
 void	copy_tab_tab(char **src, char **dest)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	if (!src || !src[0])

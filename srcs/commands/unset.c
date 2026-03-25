@@ -1,9 +1,15 @@
 #include "../../includes/minishell.h"
 
-static int unset_struct(char *key, t_envp_data **envp)
+static void	set_current(t_envp_data **current, t_envp_data **node_save)
 {
-	t_envp_data *node_save;
-	t_envp_data *current;
+	(*node_save) = (*current);
+	(*current) = (*current)->next;
+}
+
+static int	unset_struct(char *key, t_envp_data **envp)
+{
+	t_envp_data	*node_save;
+	t_envp_data	*current;
 
 	if (!envp || !*envp || !key)
 		return (-1);
@@ -18,10 +24,7 @@ static int unset_struct(char *key, t_envp_data **envp)
 		return (0);
 	}
 	while (current && ft_strcmp(key, current->keyword) != 0)
-	{
-		node_save = current;
-		current = current->next;
-	}
+		set_current(&current, &node_save);
 	if (current == NULL)
 		return (0);
 	free(current->keyword);
