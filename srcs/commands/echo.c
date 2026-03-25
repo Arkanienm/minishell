@@ -2,7 +2,7 @@
 
 void	ft_echo(int fd, char *content)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (content[i])
