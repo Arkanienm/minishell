@@ -91,6 +91,11 @@ void					ft_lstadd_back_redir(t_redir **lst, t_redir *new);
 void					ft_lstadd_back(t_token **lst, t_token *new);
 t_token					*ft_lstnew(void *content);
 int						ft_lstsize_data(t_envp_data *data);
+int						path_home(char **path, char **old_p, char **tmp_p, t_envp_data **envp);
+int						path_not_found(char **home_p, char **old_p, t_envp_data **envp, char *path);
+int						path_error(char **path, char **old_path);
+int						verif_pwd(t_envp_data **envp);
+char					*find_line_envp(char *to_find, t_envp_data *envp);
 
 # include "pipex.h"
 #endif
