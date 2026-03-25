@@ -7,47 +7,33 @@ int	is_good_size(char *limiter, char *line)
 	return (0);
 }
 
-int loop_redir(t_data *data, t_redir *redir)
+int	loop_redir(t_data *data, t_redir *redir)
 {
-	t_redir *current;
+	t_redir	*current;
 
 	current = redir;
-	while(current)
+	while (current)
 	{
-		if(apply_redir(data, current) == -1)
-			return -1;
+		if (apply_redir(data, current) == -1)
+			return (-1);
 		current = current->next;
 	}
-	return 0;
+	return (0);
 }
 
-int apply_redir(t_data *data, t_redir *redir)
+int	apply_redir(t_data *data, t_redir *redir)
 {
-	if(redir->type == REDIR_IN)
+	if (redir->type == REDIR_IN)
 	{
-		data->infile = open(redir->file, O_RDONLY);
-		if(data->infile < 0)
-		{
-			perror(redir->file);
-			return -1;
-		}
-		dup2(data->infile, STDIN_FILENO);
-		close(data->infile);
-		data->infile = -1;
+		if (manage_redir_in(&data, &redir) == -1)
+			return (-1);
 	}
-	else if(redir->type == REDIR_OUT)
+	else if (redir->type == REDIR_OUT)
 	{
-		data->outfile = open(redir->file, O_WRONLY | O_CREAT | O_TRUNC, 0644);
-		if(data->outfile < 0)
-		{
-			perror(redir->file);
-			return -1;
-		}
-		dup2(data->outfile, STDOUT_FILENO);
-		close(data->outfile);
-		data->outfile = -1;
+		if (manage_redir_out(&data, &redir) == -1)
+			return (-1);
 	}
-	else if(redir->type == HEREDOC)
+	else if (redir->type == HEREDOC)
 	{
 		handle_heredoc(data, redir);
 		dup2(data->previous_read, STDIN_FILENO);
@@ -56,17 +42,10 @@ int apply_redir(t_data *data, t_redir *redir)
 	}
 	else if (redir->type == APPEND)
 	{
-		data->outfile = open(redir->file, O_WRONLY | O_CREAT | O_APPEND, 0644);
-		if(data->outfile < 0)
-		{
-			perror(redir->file);
-			return -1;
-		}
-		dup2(data->outfile, STDOUT_FILENO);
-		close(data->outfile);
-		data->outfile = -1;
+		if (manage_redir_append(&data, &redir) == -1)
+			return (-1);
 	}
-	return 0;
+	return (0);
 }
 
 void	handle_heredoc(t_data *data, t_redir *redir)
@@ -78,10 +57,10 @@ void	handle_heredoc(t_data *data, t_redir *redir)
 	while (1)
 	{
 		line = get_next_line(0);
-		if(!line)
+		if (!line)
 			break ;
-		if (is_good_size(redir->file, line) && ft_strncmp(redir->file, line,
-					ft_strlen(redir->file)) == 0)
+		if (is_good_size(redir->file, line)
+			&& ft_strncmp(redir->file, line, ft_strlen(redir->file)) == 0)
 		{
 			free(line);
 			break ;

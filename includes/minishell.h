@@ -98,6 +98,10 @@ int						verif_pwd(t_envp_data **envp);
 char					*find_line_envp(char *to_find, t_envp_data *envp);
 void					exp_tmp(int *verif, int *size, t_envp_data **data, t_envp_data **tmp);
 void					printing_sorted_env(t_envp_data **data, int size);
+int						manage_redir_in(t_data **data, t_redir **redir);
+int						manage_redir_out(t_data **data, t_redir **redir);
+int						manage_redir_append(t_data **data, t_redir **redir);
+
 
 # include "pipex.h"
 #endif
