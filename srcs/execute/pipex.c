@@ -23,11 +23,15 @@ int	pipex(t_envp_data *envp, t_cmd *cmds)
 	if (data.outfile >= 0)
 		close(data.outfile);
 	data.outfile = -1;
+	if(data.last_was_builtin)
+		return(data.last_status);
 	waitpid(data.pid, &status, 0);
 	while (wait(NULL) > 0)
 		;
 	if (WIFEXITED(status))
 		return (WEXITSTATUS(status));
+	if(WIFSIGNALED(status) && WTERMSIG(status) == SIGPIPE)
+		return 0;
 	return (1);
 }
 

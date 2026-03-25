@@ -44,7 +44,6 @@ void pwd(int fd)
 	char pwd[4096];
 
 	getcwd(pwd, sizeof(pwd));
-	write(fd, "PWD=", 4);
 	write(fd, pwd, ft_strlen(pwd));
 	write(fd, "\n", 1);
 }

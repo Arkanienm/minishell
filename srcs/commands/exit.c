@@ -68,7 +68,7 @@ void	ft_exit(t_cmd *cmd)
 	if (!is_numeric(cmd->cmd[1]))
 	{
 		ft_putstr_fd("exit: numeric argument required\n", 2);
-		exit(255);
+		exit(2);
 	}
 	if (count_tab_tab(cmd->cmd) > 2)
 	{

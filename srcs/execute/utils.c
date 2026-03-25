@@ -47,17 +47,26 @@ void	redirect(t_data *data, t_cmd *cmds)
 		data->previous_read = -1;
 	}
 	cmd_loop(data, cmds);
-	loop_redir(data, cmds->redir);
+	if(loop_redir(data, cmds->redir) == -1)
+		exit(1);
 }
 
 static void	pid_compose(t_data *data, char **envp, t_cmd *cmds)
 {
 	char	*path;
+	struct stat st;
 
 	redirect(data, cmds);
 	path = return_path(cmds->cmd[0], envp);
 	if (!path)
 	{
+		if(cmds->cmd[0][0] == '/' || (cmds->cmd[0][0] == '.' && cmds->cmd[0][1] == '/'))
+		{
+			if(stat(cmds->cmd[0], &st) == 0 && S_ISDIR(st.st_mode))
+				error_exit("Is a directory\n", 126);
+			if(access(cmds->cmd[0], F_OK) == 0)
+				error_exit("Permission denied\n", 126);
+		}
 		close_all(data);
 		error_exit("Command not found\n", 127);
 	}
@@ -93,36 +102,74 @@ void	exec_loop(t_data *data, char **envp, t_cmd *cmds,
 		if (pipe(data->end) == -1)
 			perror_exit("Pipe failed", 1);
 	}
-	if(detect_builtin(cmds) == 1)
+	if (detect_builtin(cmds) == 1)
 	{
-		save_fds(&in, &out);
-		if (data->previous_read == -1)
+		if (cmds->next != NULL || data->previous_read != -1)
 		{
-			null_fd = open("/dev/null", O_RDONLY);
-			dup2(null_fd, STDIN_FILENO);
-			close(null_fd);
+			data->pid = fork();
+			if (data->pid == -1)
+				perror_exit("Fork failed", 1);
+			if (data->pid == 0)
+			{
+				redirect(data, cmds);
+				execute_builtin(cmds, envp_struct);
+				exit(g_status);
+			}
+			else
+			{
+				if (data->previous_read != -1)
+					close(data->previous_read);
+				data->previous_read = -1;
+				if (cmds->next)
+				{
+					if (data->end[1] != -1)
+						close(data->end[1]);
+					data->previous_read = data->end[0];
+					data->end[1] = -1;
+					data->end[0] = -1;
+				}
+			}
+			return ;
 		}
 		else
 		{
-			dup2(data->previous_read, STDIN_FILENO);
-			close(data->previous_read);
-			data->previous_read = -1;
+			save_fds(&in, &out);
+			if (data->previous_read == -1)
+			{
+				null_fd = open("/dev/null", O_RDONLY);
+				dup2(null_fd, STDIN_FILENO);
+				close(null_fd);
+			}
+			else
+			{
+				dup2(data->previous_read, STDIN_FILENO);
+				close(data->previous_read);
+				data->previous_read = -1;
+			}
+			if (cmds->next)
+			{
+				dup2(data->end[1], STDOUT_FILENO);
+				close(data->end[1]);
+				data->end[1] = -1;
+				data->previous_read = data->end[0];
+				data->end[0] = -1;
+			}
+			if (loop_redir(data, cmds->redir) == -1)
+			{
+				data->last_was_builtin = 1;
+				restore_fds(&in, &out);
+				data->last_status = 1;
+				return ;
+			}
+			execute_builtin(cmds, envp_struct);
+			data->last_was_builtin = 1;
+			data->last_status = g_status;
+			if (data->end[0] != -1)
+				close(data->end[0]);
+			if (data->end[1] != -1)
+				close(data->end[1]);
+			restore_fds(&in, &out);
 		}
-		if(cmds->next)
-		{
-			dup2(data->end[1], STDOUT_FILENO);
-			close(data->end[1]);
-			data->end[1] = -1;
-			data->previous_read = data->end[0];
-			data->end[0] = -1;
-		}
-		loop_redir(data, cmds->redir);
-		execute_builtin(cmds, envp_struct);
-		if(data->end[0] != -1)
-			close(data->end[0]);
-		if(data->end[1] != -1)
-			close(data->end[1]);
-		restore_fds(&in, &out);
 	}
 	else
 	{

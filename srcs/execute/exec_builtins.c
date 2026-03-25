@@ -6,30 +6,37 @@ int execute_builtin(t_cmd *cmd, t_envp_data **envp)
 
 	if (!ft_strcmp(cmd->cmd[0], "cd"))
 	{
-		if(cmd->next)
+		if(cmd->cmd[1] && cmd->cmd[2])
 		{
 			ft_putstr_fd("too many arguments", 2);
 			g_status = 1;
+			return 1;
 		}
-		cd(cmd->cmd[1], *envp);
-		return 1;
+		else
+		{
+			if(cd(cmd->cmd[1], *envp) == -1)
+				g_status = 1;
+			else
+				g_status = 0;
+		}
 	}
 	else if (!ft_strcmp(cmd->cmd[0], "unset"))
 	{
-		if (!cmd->cmd[1])
-			ft_putstr_fd("unset: not enough arguments\n", 2);
-		else
+		if(cmd->cmd[1])
 			unset(cmd->cmd[1], envp);
+		g_status = 0;
 		return 1;
 	}
 	else if (!ft_strcmp(cmd->cmd[0], "export"))
 	{
 		export(cmd->cmd[1], envp);
+		g_status = 0;
 		return 1;
 	}
 	else if (!ft_strcmp(cmd->cmd[0], "pwd"))
 	{
 		pwd(1);
+		g_status = 0;
 		return 1;
 	}
 	else if (!ft_strcmp(cmd->cmd[0], "echo") && cmd->cmd[1] && !ft_strcmp(cmd->cmd[1], "-n"))
@@ -42,6 +49,7 @@ int execute_builtin(t_cmd *cmd, t_envp_data **envp)
 				write(1, " ", 1);
 			i++;
 		}
+		g_status = 0;
 		return 1;
 	}
 	else if (!ft_strcmp(cmd->cmd[0], "echo"))
@@ -54,12 +62,14 @@ int execute_builtin(t_cmd *cmd, t_envp_data **envp)
 				write(1, " ", 1);
 			i++;
 		}
+		g_status = 0;
 		write(1, "\n", 1);
 		return 1;
 	}
 	else if (!ft_strcmp(cmd->cmd[0], "env"))
 	{
 		print_env(*envp);
+		g_status = 0;
 		return 1;
 	}
 	else if (!ft_strcmp(cmd->cmd[0], "exit"))
