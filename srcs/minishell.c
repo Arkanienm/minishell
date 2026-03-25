@@ -66,79 +66,6 @@ void	print_cmd(t_cmd *cmd)
 	printf("-------------------------\n");
 }
 
-int need_redir(t_redir *redir)
-{
-	int in_save;
-	int out_save;
-
-	dup2(STDIN_FILENO, in_save);
-	dup2(STDOUT_FILENO, out_save);
-	if(redir->type == APPEND || redir->type == HEREDOC || redir->type == REDIR_IN || redir->type == REDIR_OUT)
-}
-
-int execute_builtin(t_cmd *cmd, t_envp_data **envp)
-{
-	int i;
-
-	if (!ft_strcmp(cmd->cmd[0], "cd"))
-	{
-		cd(cmd->cmd[1], *envp);
-		return 1;
-	}
-	if (!ft_strcmp(cmd->cmd[0], "unset"))
-	{
-		if (!cmd->cmd[1])
-			ft_putstr_fd("unset: not enough arguments\n", 2);
-		else
-			unset(cmd->cmd[1], envp);
-		return 1;
-	}
-	else if (!ft_strcmp(cmd->cmd[0], "export"))
-	{
-		export(cmd->cmd[1], envp);
-		return 1;
-	}
-	else if (!ft_strcmp(cmd->cmd[0], "pwd"))
-	{
-		if (cmd->cmd[1])
-			ft_putstr_fd("pwd: too many arguments\n", 2);
-		else
-		pwd(1);
-		return 1;
-	}
-	else if (!ft_strcmp(cmd->cmd[0], "echo") && cmd->cmd[1] && !ft_strcmp(cmd->cmd[1], "-n"))
-	{
-		i = 2;
-		while(cmd->cmd[i])
-		{
-			ft_echo(1, cmd->cmd[i]);
-			if(cmd->cmd[i + 1] != NULL)
-				write(1, " ", 1);
-			i++;
-		}
-		return 1;
-	}
-	else if (!ft_strcmp(cmd->cmd[0], "echo"))
-	{
-		i = 1;
-		while(cmd->cmd[i])
-		{
-			ft_echo(1, cmd->cmd[i]);
-			if(cmd->cmd[i + 1] != NULL)
-				write(1, " ", 1);
-			i++;
-		}
-		write(1, "\n", 1);
-		return 1;
-	}
-	else if (!ft_strcmp(cmd->cmd[0], "env"))
-	{
-		print_env(*envp);
-		return 1;
-	}
-	return 0;
-}
-
 int    minishell_loop(t_envp_data *envp, int g_status)
 {
     t_token    *token;
@@ -166,15 +93,7 @@ int    minishell_loop(t_envp_data *envp, int g_status)
             parser(token, &cmd);
             print_cmd(cmd);
             if (cmd && cmd->cmd[0])
-            {
-                if(cmd->next)
-                    g_status = pipex(envp, cmd);
-                else
-                {
-                    if(execute_builtin(cmd, &envp) == 0)
-                        g_status = pipex(envp, cmd);
-                }
-            }
+				pipex(envp, cmd);
         }
         ft_free_struct(token);
         free_cmd_struct(cmd);

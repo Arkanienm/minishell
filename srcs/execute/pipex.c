@@ -12,7 +12,7 @@ int	pipex(t_envp_data *envp, t_cmd *cmds)
 	envp_tab = struct_to_envp(envp);
 	while (current)
 	{
-		exec_loop(&data, envp_tab, current);
+		exec_loop(&data, envp_tab, current, &envp);
 		current = current->next;
 	}
 	if (data.outfile >= 0)

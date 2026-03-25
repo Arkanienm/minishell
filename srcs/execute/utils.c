@@ -1,4 +1,4 @@
-#include "includes/minishell.h"
+#include "pipex.h"
 
 static void	close_all(t_data *data)
 {
@@ -34,11 +34,11 @@ void	redirect(t_data *data, t_cmd *cmds)
 		dup2(data->previous_read, STDIN_FILENO);
 		close(data->previous_read);
 	}
-	loop_redir(data, cmds->redir);
 	cmd_loop(data, cmds);
+	loop_redir(data, cmds->redir);
 }
 
-static void	pid_compose(t_data *data, char **envp, t_cmd *cmds)
+static void	pid_compose(t_data *data, char **envp, t_cmd *cmds, t_envp_data **envp_struct)
 {
 	char	*path;
 
@@ -49,13 +49,15 @@ static void	pid_compose(t_data *data, char **envp, t_cmd *cmds)
 		close_all(data);
 		error_exit("Command not found\n", 127);
 	}
+	if(execute_builtin(cmds, envp_struct) == 1)
+		exit(g_status);
 	execve(path, cmds->cmd, envp);
 	close_all(data);
 	free(path);
 	error_exit("Command not found\n", 127);
 }
 
-void	exec_loop(t_data *data, char **envp, t_cmd *cmds)
+void	exec_loop(t_data *data, char **envp, t_cmd *cmds, t_envp_data **envp_struct)
 {
 	if (cmds->next)
 	{
@@ -66,7 +68,7 @@ void	exec_loop(t_data *data, char **envp, t_cmd *cmds)
 	if (data->pid == -1)
 		perror_exit("Fork failed", 1);
 	if (data->pid == 0)
-		pid_compose(data, envp, cmds);
+		pid_compose(data, envp, cmds, envp_struct);
 	else
 	{
 		if (data->previous_read != -1)
@@ -81,4 +83,46 @@ void	exec_loop(t_data *data, char **envp, t_cmd *cmds)
 			data->end[0] = -1;
 		}
 	}
+}
+
+int count_args(char **str)
+{
+	int i;
+	
+	i = 0;
+	if(str[i] == NULL)
+		return 0;
+	while (str[i])
+		i++;
+	return i;
+}
+
+char **struct_to_envp(t_envp_data *data)
+{
+	int count;
+	int i;
+	char **dest;
+	char *tmp;
+
+	if(!data)
+		return NULL;
+	count = ft_lstsize(data);
+	i = 0;
+	dest = malloc(sizeof(char *) * (count + 1));
+	while(i < count)
+	{
+		if(data->value)
+		{
+			tmp = ft_strjoin(data->keyword, "=");
+			dest[i] = ft_strjoin(tmp, data->value);
+			free(tmp);
+		}
+		else
+			dest[i] = ft_strjoin(data->keyword, "=");
+			
+		data = data->next;
+		i++;
+	}
+	dest[i] = NULL;
+	return dest;
 }
