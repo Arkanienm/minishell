@@ -66,7 +66,7 @@ void	print_cmd(t_cmd *cmd)
 	printf("-------------------------\n");
 }
 
-int    minishell_loop(t_envp_data *envp, int g_status)
+int    minishell_loop(t_envp_data *envp)
 {
     t_token    *token;
     t_cmd    *cmd;
@@ -89,11 +89,9 @@ int    minishell_loop(t_envp_data *envp, int g_status)
         {
             expander(token, envp);
             remove_quotes(token);
-            print_token(token);
             parser(token, &cmd);
-            print_cmd(cmd);
             if (cmd && cmd->cmd[0])
-				pipex(envp, cmd);
+				g_status = pipex(envp, cmd);
         }
         ft_free_struct(token);
         free_cmd_struct(cmd);
@@ -113,6 +111,6 @@ int	main(int argc, char **argv, char **envp)
 	setup_signals();
 	env = get_envp_path(envp);
 	g_status = 0;
-	minishell_loop(env, g_status);
+	minishell_loop(env);
 	return (0);
 }

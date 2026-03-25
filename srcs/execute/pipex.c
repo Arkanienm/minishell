@@ -15,6 +15,11 @@ int	pipex(t_envp_data *envp, t_cmd *cmds)
 		exec_loop(&data, envp_tab, current, &envp);
 		current = current->next;
 	}
+	if(data.previous_read != -1)
+	{
+		close(data.previous_read);
+		data.previous_read = -1;
+	}
 	if (data.outfile >= 0)
 		close(data.outfile);
 	data.outfile = -1;

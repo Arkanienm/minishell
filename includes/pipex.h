@@ -27,6 +27,7 @@ char **struct_to_envp(t_envp_data *envp);
 void apply_redir(t_data *data, t_redir *redir);
 void	handle_heredoc(t_data *data, t_redir *redir);
 int execute_builtin(t_cmd *cmd, t_envp_data **envp);
+int detect_builtin(t_cmd *cmd);
 
 
 

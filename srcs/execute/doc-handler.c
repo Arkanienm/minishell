@@ -19,11 +19,27 @@ void loop_redir(t_data *data, t_redir *redir)
 	}
 }
 
+void	error_file(char *file, int end[2], int infile)
+{
+	if (infile < 0)
+	{
+		perror(file);
+		if(end[0] != -1)
+			close(end[0]);
+		if(end[1] != -1)
+			close(end[1]);
+		exit(1);
+	}
+	return ;
+}
+
 void apply_redir(t_data *data, t_redir *redir)
 {
 	if(redir->type == REDIR_IN)
 	{
 		data->infile = open(redir->file, O_RDONLY);
+		if(data->infile < 0)
+			error_file(redir->file, data->end, data->infile);
 		dup2(data->infile, STDIN_FILENO);
 		close(data->infile);
 		data->infile = -1;
@@ -31,6 +47,8 @@ void apply_redir(t_data *data, t_redir *redir)
 	else if(redir->type == REDIR_OUT)
 	{
 		data->outfile = open(redir->file, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+		if(data->outfile < 0)
+			error_file(redir->file, data->end, data->outfile);
 		dup2(data->outfile, STDOUT_FILENO);
 		close(data->outfile);
 		data->outfile = -1;
@@ -45,6 +63,8 @@ void apply_redir(t_data *data, t_redir *redir)
 	else if (redir->type == APPEND)
 	{
 		data->outfile = open(redir->file, O_WRONLY | O_CREAT | O_APPEND, 0644);
+		if(data->outfile < 0)
+			error_file(redir->file, data->end, data->outfile);
 		dup2(data->outfile, STDOUT_FILENO);
 		close(data->outfile);
 		data->outfile = -1;
@@ -81,7 +101,11 @@ void	cmd_loop(t_data *data, t_cmd *current)
 	{
 		dup2(data->end[1], STDOUT_FILENO);
 		if (data->end[1] != -1)
+		{
+			dup2(data->end[1], STDOUT_FILENO);
 			close(data->end[1]);
+			data->end[1] = -1;
+		}
 		if (data->end[0] != -1)
 			close(data->end[0]);
 		if (data->outfile != -1)
