@@ -66,6 +66,53 @@ void	print_cmd(t_cmd *cmd)
 	printf("-------------------------\n");
 }
 
+void	write_redir_error(t_token *current)
+{
+	if (current->next->type == PIPE)
+		ft_putstr_fd("bash: syntax error near unexpected token `|'\n", 1);
+	else if (current->next->type == REDIR_IN)
+		ft_putstr_fd("bash: syntax error near unexpected token `<'\n", 1);
+	else if (current->next->type == REDIR_OUT)
+		ft_putstr_fd("bash: syntax error near unexpected token `>'\n", 1);
+	else if (current->next->type == APPEND)
+		ft_putstr_fd("bash: syntax error near unexpected token `>>'\n", 1);
+	else if (current->next->type == HEREDOC)
+		ft_putstr_fd("bash: syntax error near unexpected token `<<'\n", 1);
+}
+
+int	verif_redir(t_token *token)
+{
+	t_token	*current;
+
+	current = token;
+
+	if (current->type == PIPE)
+	{
+		ft_putstr_fd("bash: syntax error near unexpected token `|'\n", 1);
+		return (-1);
+	}
+	while (current->next)
+		current = current->next;
+	if (current->type == PIPE)
+	{
+		perror("bash: syntax error near unexpected token `|'\n");
+		return (-1);
+	}
+	current = token;
+	while (current->next)
+	{
+		if (current->type != WORD && current->next->type != WORD)
+		{
+			if (current->type == PIPE && current->next->type != PIPE && current->next->type != WORD)
+				return (1);
+			write_redir_error(current);
+			return (-1);
+		}
+		current = current->next;
+	}
+	return (1);
+}
+
 int	minishell_loop(t_envp_data *envp)
 {
 	t_token	*token;
@@ -90,8 +137,11 @@ int	minishell_loop(t_envp_data *envp)
 			expander(token, envp);
 			remove_quotes(token);
 			parser(token, &cmd);
-			if (cmd && cmd->cmd[0])
-				g_status = pipex(envp, cmd);
+			if (verif_redir(token) != -1)
+			{
+				if (cmd)
+					g_status = pipex(envp, cmd);
+			}	
 		}
 		ft_free_struct(token);
 		free_cmd_struct(cmd);
