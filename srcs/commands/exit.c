@@ -7,7 +7,7 @@ static int	ft_isspace(int c)
 	return (0);
 }
 
-static long long int	ft_atoll(const char *nptr)
+static long long int	ft_atoll(const char *nptr, int *error)
 {
 	int				i;
 	long long int	nb;
@@ -28,6 +28,11 @@ static long long int	ft_atoll(const char *nptr)
 		return (0);
 	while (nptr[i] >= '0' && nptr[i] <= '9')
 	{
+		if(nb > (9223372036854775807 - (nptr[i] - '0')) / 10)
+		{
+			*error = 1;
+			return 0;
+		}
 		nb = nb * 10 + nptr[i] - 48;
 		i++;
 	}
@@ -61,7 +66,9 @@ static int	is_numeric(char *str)
 void	ft_exit(t_cmd *cmd)
 {
 	long long	code;
+	int error;
 
+	error = 0;
 	write(1, "exit\n", 5);
 	if (!cmd->cmd[1])
 		exit(g_status);
@@ -76,6 +83,11 @@ void	ft_exit(t_cmd *cmd)
 		g_status = 1;
 		return ;
 	}
-	code = ft_atoll(cmd->cmd[1]);
+	code = ft_atoll(cmd->cmd[1], &error);
+	if(error)
+	{
+		ft_putstr_fd("exit: numeric argument required\n", 2);
+		exit(2);
+	}
 	exit(((code % 256) + 256) % 256);
 }

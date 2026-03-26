@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amurtas <amurtas@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mageneix <mageneix@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/05 11:44:58 by amurtas           #+#    #+#             */
-/*   Updated: 2026/03/24 12:01:58 by amurtas          ###   ########.fr       */
+/*   Updated: 2026/03/26 11:13:37 by mageneix         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ char	*get_next_line(int fd)
 	buf = malloc (BUFFER_SIZE + 1);
 	if (!buf)
 		return (NULL);
-	while (read_size > 0 && ft_strchr(stash, '\n') == NULL)
+	while (read_size > 0 && (stash == NULL || ft_strchr(stash, '\n') == NULL))
 		ft_test(&stash, &read_size, buf, fd);
 	free (buf);
 	buf = NULL;

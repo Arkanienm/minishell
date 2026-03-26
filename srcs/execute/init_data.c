@@ -8,6 +8,7 @@ void	init_data(t_data *data)
 	data->outfile = -1;
 	data->previous_read = -1;
 	data->pid = -1;
+	data->heredoc_fd = -1;
 	data->end[0] = -1;
 	data->end[1] = -1;
 }

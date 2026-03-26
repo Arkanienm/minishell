@@ -21,7 +21,21 @@ int	loop_redir(t_data *data, t_redir *redir)
 	return (0);
 }
 
-int	apply_redir(t_data *data, t_redir *redir)
+int pre_Handler_heredoc(t_data *data, t_cmd *cmds)
+{
+	t_redir *current;
+
+	current = cmds->redir;
+	while(current)
+	{
+		if(current->type == HEREDOC)
+			handle_heredoc(data, current);
+		current = current->next;
+	}
+	return 0;
+}
+
+int apply_redir(t_data *data, t_redir *redir)
 {
 	if (redir->type == REDIR_IN)
 	{
@@ -35,10 +49,9 @@ int	apply_redir(t_data *data, t_redir *redir)
 	}
 	else if (redir->type == HEREDOC)
 	{
-		handle_heredoc(data, redir);
-		dup2(data->previous_read, STDIN_FILENO);
-		close(data->previous_read);
-		data->previous_read = -1;
+		dup2(data->heredoc_fd, STDIN_FILENO);
+		close(data->heredoc_fd);
+		data->heredoc_fd = -1;
 	}
 	else if (redir->type == APPEND)
 	{
@@ -69,7 +82,7 @@ void	handle_heredoc(t_data *data, t_redir *redir)
 		free(line);
 	}
 	close(end[1]);
-	data->previous_read = end[0];
+	data->heredoc_fd = end[0];
 }
 
 void	cmd_loop(t_data *data, t_cmd *current)

@@ -39,7 +39,7 @@ int execute_builtin(t_cmd *cmd, t_envp_data **envp)
 		g_status = 0;
 		return 1;
 	}
-	else if (!ft_strcmp(cmd->cmd[0], "echo") && cmd->cmd[1] && !ft_strcmp(cmd->cmd[1], "-n"))
+	else if (!ft_strcmp(cmd->cmd[0], "echo") && cmd->cmd[1] && !ft_strncmp(cmd->cmd[1], "-n", 2))
 	{
 		i = 2;
 		while(cmd->cmd[i])

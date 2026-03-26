@@ -101,6 +101,11 @@ int	minishell_loop(t_envp_data *envp)
 		return (g_status);
 }
 
+void free_all(t_envp_data *envp)
+{
+	free_envp_data(envp);
+}
+
 int	main(int argc, char **argv, char **envp)
 {
 	t_envp_data	*env;
@@ -112,5 +117,6 @@ int	main(int argc, char **argv, char **envp)
 	env = get_envp_path(envp);
 	g_status = 0;
 	minishell_loop(env);
+	free_all(env);
 	return (0);
 }

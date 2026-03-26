@@ -96,11 +96,49 @@ void	exec_loop(t_data *data, char **envp, t_cmd *cmds,
 	int in;
 	int out;
 	int null_fd;
+	t_redir *current;
 
+	pre_Handler_heredoc(data, cmds);
 	if (cmds->next)
 	{
 		if (pipe(data->end) == -1)
 			perror_exit("Pipe failed", 1);
+	}
+	if(!cmds->cmd || !cmds->cmd[0])
+	{
+		if(cmds->redir)
+		{
+			current = cmds->redir;
+			while(current)
+			{
+				if(current->type == REDIR_OUT)
+				{
+					out = open(current->file, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+					if(out >= 0)
+						close(out);
+				}
+				else if (current->type == APPEND)
+				{
+					out = open(current->file, O_WRONLY | O_CREAT | O_APPEND, 0644);
+					if(out >= 0)
+						close(out);
+				}
+				else if (current->type == REDIR_IN)
+				{
+					in = open(current->file, O_RDONLY);
+					if(in < 0)
+					{
+						perror(current->file);
+						g_status = 1;
+						return ;
+					}
+					close(in);
+				}
+				current = current->next;
+			}
+		}
+		g_status = 0;
+		return;
 	}
 	if (detect_builtin(cmds) == 1)
 	{
@@ -144,7 +182,7 @@ void	exec_loop(t_data *data, char **envp, t_cmd *cmds,
 			{
 				dup2(data->previous_read, STDIN_FILENO);
 				close(data->previous_read);
-				data->previous_read = -1;
+				data->previous_reamettred = -1;
 			}
 			if (cmds->next)
 			{

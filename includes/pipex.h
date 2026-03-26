@@ -7,6 +7,7 @@ typedef struct s_data
 {
 	int		last_status;
 	int		last_was_builtin;
+	int		heredoc_fd;
 	int		end[2];
 	int		infile;
 	int		outfile;
@@ -23,13 +24,14 @@ void		exec_loop(t_data *data, char **envp, t_cmd *cmds,
 char		*ft_strjoin_pipex(char *s1, char *s2);
 void		error_exit(char *error, int exit_code);
 void		cmd_loop(t_data *data, t_cmd *current);
-int		loop_redir(t_data *data, t_redir *redir);
+int			loop_redir(t_data *data, t_redir *redir);
 void		redirect(t_data *data, t_cmd *cmds);
 int			pipex(t_envp_data *envp, t_cmd *cmds);
 char		**struct_to_envp(t_envp_data *envp);
-int		apply_redir(t_data *data, t_redir *redir);
+int			apply_redir(t_data *data, t_redir *redir);
 void		handle_heredoc(t_data *data, t_redir *redir);
 int			execute_builtin(t_cmd *cmd, t_envp_data **envp);
 int			detect_builtin(t_cmd *cmd);
+int pre_Handler_heredoc(t_data *data, t_cmd *cmds);
 
 #endif

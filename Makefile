@@ -9,7 +9,7 @@ LIBFT_DIR    = ./includes/Libft/
 COMMANDS_DIR = ./srcs/commands/
 EXC_DIR 	 = ./srcs/execute/
 
-SRCS        = $(SRCS_DIR)minishell.c $(SRCS_DIR)get_envp_path.c $(SRCS_DIR)expander.c \
+SRCS        = $(SRCS_DIR)minishell.c $(SRCS_DIR)free_all.c $(SRCS_DIR)get_envp_path.c $(SRCS_DIR)expander.c \
               $(SRCS_DIR)lexer.c $(SRCS_DIR)parsing.c $(SRCS_DIR)quotes_utils.c $(COMMANDS_DIR)cd.c \
 			  $(COMMANDS_DIR)commands_utils.c $(COMMANDS_DIR)echo.c $(COMMANDS_DIR)env.c $(COMMANDS_DIR)export.c \
 			  $(COMMANDS_DIR)pwd.c $(COMMANDS_DIR)unset.c $(SRCS_DIR)minishell_utils.c $(SRCS_DIR)signals.c \

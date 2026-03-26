@@ -101,6 +101,7 @@ void					printing_sorted_env(t_envp_data **data, int size);
 int						manage_redir_in(t_data **data, t_redir **redir);
 int						manage_redir_out(t_data **data, t_redir **redir);
 int						manage_redir_append(t_data **data, t_redir **redir);
+void free_envp_data(t_envp_data *envp);
 
 
 # include "pipex.h"
