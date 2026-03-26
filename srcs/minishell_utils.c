@@ -1,9 +1,22 @@
 #include "../includes/minishell.h"
 
-void	ft_error(char *str, t_token *head)
+int	verif_cmd_redir(t_token *current)
 {
-	printf("%s\n", str);
-	ft_free_struct(head);
+	if (!current->next)
+		return (1);
+	if (current->next->next)
+		return (1);
+	if (!current->next->next)
+	{
+		if (current->type == WORD && current->next->type != WORD)
+		{
+			ft_putstr_fd("bash: syntax error near unexpected token `newline'",
+				2);
+			ft_putstr_fd("\n", 2);
+			return (-1);
+		}
+	}
+	return (1);
 }
 
 void	ft_free_struct(t_token *lst)

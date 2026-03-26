@@ -59,7 +59,6 @@ typedef struct s_cmd
 }						t_cmd;
 
 t_envp_data				*get_envp_path(char **envp);
-void					ft_error(char *str, t_token *head);
 void					ft_free_struct(t_token *lst);
 int						update_quotes(int q_state, int len, char *str);
 int						check_meta_char(char c, int q_state);
@@ -103,6 +102,7 @@ int						minishell_loop(t_envp_data *envp);
 void					ft_free_data(t_envp_data *data);
 void					free_all(t_envp_data *envp);
 int						set_envp_path(t_envp_data **data, char **envp, t_envp_data **new);
+int						verif_cmd_redir(t_token *current);
 
 # include "pipex.h"
 #endif

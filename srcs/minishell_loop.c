@@ -17,23 +17,6 @@ int	check_double_redir(t_token	*current)
 	return (1);
 }
 
-int	verif_cmd_redir(t_token *current)
-{
-	if (!current->next)
-		return (1);
-	if (current->next->next)
-		return (1);
-	if (!current->next->next)
-	{	
-		if (current->type == WORD && current->next->type != WORD)
-		{
-			ft_putstr_fd("bash: syntax error near unexpected token `newline'\n", 2);
-			return (-1);
-		}
-	}
-	return (1);
-}
-
 int	verif_redir(t_token *token)
 {
 	t_token	*current;
@@ -71,7 +54,7 @@ void	check_line(char **line, t_envp_data **envp)
 
 int	parsing_execution(t_cmd **cmd, t_token **token, t_envp_data **envp)
 {
-	int ret;
+	int	ret;
 
 	expander((*token), (*envp));
 	remove_quotes((*token));
@@ -81,12 +64,12 @@ int	parsing_execution(t_cmd **cmd, t_token **token, t_envp_data **envp)
 		if (cmd)
 		{
 			ret = pipex((*envp), (*cmd));
-			if(ret == -42)
-				return 1;
+			if (ret == -42)
+				return (1);
 			g_status = ret;
 		}
 	}
-	return 0;
+	return (0);
 }
 
 int	minishell_loop(t_envp_data *envp)
@@ -94,7 +77,7 @@ int	minishell_loop(t_envp_data *envp)
 	t_token	*token;
 	t_cmd	*cmd;
 	char	*line;
-	int should_exit;
+	int		should_exit;
 
 	while (1)
 	{
@@ -109,7 +92,7 @@ int	minishell_loop(t_envp_data *envp)
 		ft_free_struct(token);
 		free_cmd_struct(cmd);
 		free(line);
-		if(should_exit)
+		if (should_exit)
 			break ;
 	}
 	return (g_status);

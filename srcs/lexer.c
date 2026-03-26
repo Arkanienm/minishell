@@ -1,5 +1,11 @@
 #include "../includes/minishell.h"
 
+void	ft_error(char *str, t_token *head)
+{
+	printf("%s\n", str);
+	ft_free_struct(head);
+}
+
 t_token	*lexer(char *str)
 {
 	t_token	*new_node;

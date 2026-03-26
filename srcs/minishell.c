@@ -26,7 +26,7 @@ void	free_all(t_envp_data *envp)
 int	main(int argc, char **argv, char **envp)
 {
 	t_envp_data	*env;
-	int status;
+	int			status;
 
 	if (argc != 1)
 		return (0);
