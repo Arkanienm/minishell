@@ -63,7 +63,7 @@ static int	is_numeric(char *str)
 	return (1);
 }
 
-void	ft_exit(t_cmd *cmd, t_envp_data *envp)
+long long int	ft_exit(t_cmd *cmd, t_envp_data *envp)
 {
 	long long	code;
 	int error;
@@ -71,24 +71,24 @@ void	ft_exit(t_cmd *cmd, t_envp_data *envp)
 	error = 0;
 	write(1, "exit\n", 5);
 	if (!cmd->cmd[1])
-		exit(g_status);
+		return (g_status);
 	if (!is_numeric(cmd->cmd[1]))
 	{
 		ft_putstr_fd("exit: numeric argument required\n", 2);
-		exit(2);
+		return(2);
 	}
 	if (count_tab_tab(cmd->cmd) > 2)
 	{
 		ft_putstr_fd("exit: too many arguments\n", 2);
 		g_status = 1;
-		return ;
+		return -1;
 	}
 	code = ft_atoll(cmd->cmd[1], &error);
 	if(error)
 	{
 		ft_putstr_fd("exit: numeric argument required\n", 2);
-		exit(2);
+		return (2);
 	}
 	free_envp_data(envp);
-	exit(((code % 256) + 256) % 256);
+	return (((code % 256) + 256) % 256);
 }

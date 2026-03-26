@@ -6,6 +6,7 @@
 typedef struct s_data
 {
 	int		last_status;
+	int should_exit;
 	int		last_was_builtin;
 	int		heredoc_fd;
 	int		end[2];

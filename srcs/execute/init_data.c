@@ -3,6 +3,7 @@
 void	init_data(t_data *data)
 {
 	data->last_status = 0;
+	data->should_exit = 0;
 	data->last_was_builtin = 0;
 	data->infile = -1;
 	data->outfile = -1;

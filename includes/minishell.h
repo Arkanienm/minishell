@@ -82,7 +82,7 @@ char					*get_keyword(char *str);
 int						unset(char *key, t_envp_data **envp);
 long long int			ft_atol_exit(const char *str, int *error);
 void					pwd(int fd);
-void	ft_exit(t_cmd *cmd, t_envp_data *envp);
+long long int	ft_exit(t_cmd *cmd, t_envp_data *envp);
 void					setup_signals(void);
 t_cmd					*ft_lstnew_cmd(void *content);
 void					ft_lstadd_back_cmd(t_cmd **lst, t_cmd *new);

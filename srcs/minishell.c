@@ -26,6 +26,7 @@ void	free_all(t_envp_data *envp)
 int	main(int argc, char **argv, char **envp)
 {
 	t_envp_data	*env;
+	int status;
 
 	if (argc != 1)
 		return (0);
@@ -33,7 +34,7 @@ int	main(int argc, char **argv, char **envp)
 	setup_signals();
 	env = get_envp_path(envp);
 	g_status = 0;
-	minishell_loop(env);
+	status = minishell_loop(env);
 	free_all(env);
-	return (0);
+	return (status);
 }

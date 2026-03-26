@@ -4,6 +4,7 @@
 int execute_builtin(t_cmd *cmd, t_envp_data **envp, int *in, int *out)
 {
 	int i;
+	int exit_code;
 
 	if (!ft_strcmp(cmd->cmd[0], "cd"))
 	{
@@ -76,9 +77,14 @@ int execute_builtin(t_cmd *cmd, t_envp_data **envp, int *in, int *out)
 	else if (!ft_strcmp(cmd->cmd[0], "exit"))
 	{
 		restore_fds(in, out);
-		ft_exit(cmd, *envp);
-		save_fds(in, out);
-		return 1;
+		exit_code = ft_exit(cmd, *envp);
+		if(exit_code == -1)
+		{
+			save_fds(in, out);
+			return 1;
+		}
+		g_status = exit_code;
+		return 2;
 	}
 	return 0;
 }

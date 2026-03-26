@@ -96,6 +96,7 @@ void	exec_loop(t_data *data, char **envp, t_cmd *cmds,
 	int in;
 	int out;
 	int null_fd;
+	int ret;
 	t_redir *current;
 	pre_Handler_heredoc(data, cmds);
 	if (cmds->next)
@@ -157,7 +158,11 @@ void	exec_loop(t_data *data, char **envp, t_cmd *cmds,
 			if (data->pid == 0)
 			{
 				redirect(data, cmds);
-				execute_builtin(cmds, envp_struct, &in, &out);
+				ret = execute_builtin(cmds, envp_struct, &in, &out);
+				if(ret == 2)
+					data->should_exit = 1;
+				data->last_was_builtin = 1;
+				data->last_status = g_status;
 				exit(g_status);
 			}
 			else
@@ -211,7 +216,9 @@ void	exec_loop(t_data *data, char **envp, t_cmd *cmds,
 				data->last_status = 1;
 				return ;
 			}
-			execute_builtin(cmds, envp_struct, &in, &out);
+			ret = execute_builtin(cmds, envp_struct, &in, &out);
+			if(ret == 2)
+				data->should_exit = 1;
 			data->last_was_builtin = 1;
 			data->last_status = g_status;
 			if (data->end[0] != -1)

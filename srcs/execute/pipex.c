@@ -17,6 +17,8 @@ int	pipex(t_envp_data *envp, t_cmd *cmds)
 		current = current->next;
 	}
 	free_tab_tab(envp_tab);
+	if(data.should_exit)
+		return -42;
 	if(data.previous_read != -1)
 	{
 		close(data.previous_read);
