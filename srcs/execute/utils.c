@@ -157,7 +157,7 @@ void	exec_loop(t_data *data, char **envp, t_cmd *cmds,
 			if (data->pid == 0)
 			{
 				redirect(data, cmds);
-				execute_builtin(cmds, envp_struct);
+				execute_builtin(cmds, envp_struct, &in, &out);
 				exit(g_status);
 			}
 			else
@@ -170,10 +170,13 @@ void	exec_loop(t_data *data, char **envp, t_cmd *cmds,
 					if (data->end[1] != -1)
 						close(data->end[1]);
 					data->previous_read = data->end[0];
-					close(data->heredoc_fd);
-					data->heredoc_fd = -1;
 					data->end[1] = -1;
 					data->end[0] = -1;
+				}
+				if(data->heredoc_fd != -1)
+				{
+					close(data->heredoc_fd);
+					data->heredoc_fd = -1;
 				}
 			}
 			return ;
@@ -208,15 +211,18 @@ void	exec_loop(t_data *data, char **envp, t_cmd *cmds,
 				data->last_status = 1;
 				return ;
 			}
-			execute_builtin(cmds, envp_struct);
+			execute_builtin(cmds, envp_struct, &in, &out);
 			data->last_was_builtin = 1;
 			data->last_status = g_status;
 			if (data->end[0] != -1)
 				close(data->end[0]);
 			if (data->end[1] != -1)
 				close(data->end[1]);
-			close(data->heredoc_fd);
-			data->heredoc_fd = -1;
+			if(data->heredoc_fd != -1)
+			{
+				close(data->heredoc_fd);
+				data->heredoc_fd = -1;
+			}
 			restore_fds(&in, &out);
 		}
 	}
@@ -237,11 +243,14 @@ void	exec_loop(t_data *data, char **envp, t_cmd *cmds,
 				if (data->end[1] != -1)
 					close(data->end[1]);
 				data->previous_read = data->end[0];
-				close(data->heredoc_fd);
-				data->heredoc_fd = -1;
 				data->end[1] = -1;
 				data->end[0] = -1;
 			}
+			if(data->heredoc_fd != -1)
+			{
+				close(data->heredoc_fd);
+				data->heredoc_fd = -1;
+			}	
 		}
 	}
 }

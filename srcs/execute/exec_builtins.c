@@ -1,6 +1,7 @@
 #include "../../includes/minishell.h"
+#include "../../includes/pipex.h"
 
-int execute_builtin(t_cmd *cmd, t_envp_data **envp)
+int execute_builtin(t_cmd *cmd, t_envp_data **envp, int *in, int *out)
 {
 	int i;
 
@@ -74,7 +75,9 @@ int execute_builtin(t_cmd *cmd, t_envp_data **envp)
 	}
 	else if (!ft_strcmp(cmd->cmd[0], "exit"))
 	{
-		ft_exit(cmd);
+		restore_fds(in, out);
+		ft_exit(cmd, *envp);
+		save_fds(in, out);
 		return 1;
 	}
 	return 0;

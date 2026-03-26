@@ -2,7 +2,12 @@
 
 int	is_good_size(char *limiter, char *line)
 {
-	if (ft_strlen(limiter) + 1 == ft_strlen(line))
+	int len_lim;
+	int len_line;
+
+	len_lim = ft_strlen(limiter);
+	len_line = ft_strlen(line);
+	if (len_lim == len_line || len_lim + 1 == len_line)
 		return (1);
 	return (0);
 }
@@ -61,6 +66,15 @@ int apply_redir(t_data *data, t_redir *redir)
 	return (0);
 }
 
+void gnl_clear()
+{
+	char *line;
+
+	line = get_next_line(-1);
+	if(line)
+		free(line);
+}
+
 void	handle_heredoc(t_data *data, t_redir *redir)
 {
 	int		end[2];
@@ -81,6 +95,7 @@ void	handle_heredoc(t_data *data, t_redir *redir)
 		write(end[1], line, ft_strlen(line));
 		free(line);
 	}
+	gnl_clear();
 	close(end[1]);
 	data->heredoc_fd = end[0];
 }

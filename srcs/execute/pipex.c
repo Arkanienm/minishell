@@ -9,6 +9,7 @@ int	pipex(t_envp_data *envp, t_cmd *cmds)
 
 	init_data(&data);
 	current = cmds;
+	status = 0;
 	envp_tab = struct_to_envp(envp);
 	while (current)
 	{

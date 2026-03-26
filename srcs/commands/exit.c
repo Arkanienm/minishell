@@ -63,7 +63,7 @@ static int	is_numeric(char *str)
 	return (1);
 }
 
-void	ft_exit(t_cmd *cmd)
+void	ft_exit(t_cmd *cmd, t_envp_data *envp)
 {
 	long long	code;
 	int error;
@@ -89,5 +89,6 @@ void	ft_exit(t_cmd *cmd)
 		ft_putstr_fd("exit: numeric argument required\n", 2);
 		exit(2);
 	}
+	free_envp_data(envp);
 	exit(((code % 256) + 256) % 256);
 }

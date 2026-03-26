@@ -6,7 +6,7 @@
 /*   By: mageneix <mageneix@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/05 11:44:58 by amurtas           #+#    #+#             */
-/*   Updated: 2026/03/26 11:13:37 by mageneix         ###   ########.fr       */
+/*   Updated: 2026/03/26 15:08:27 by mageneix         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,12 @@ char	*get_next_line(int fd)
 	char		*line;
 	int			read_size;
 
+	if (fd < 0)
+	{
+		free(stash);
+		stash = NULL;
+		return (NULL);
+	}
 	if (fd < 0 || fd > 1024 || BUFFER_SIZE <= 0)
 		return (NULL);
 	read_size = 1;
