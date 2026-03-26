@@ -17,6 +17,23 @@ int	check_double_redir(t_token	*current)
 	return (1);
 }
 
+int	verif_cmd_redir(t_token *current)
+{
+	if (!current->next)
+		return (1);
+	if (current->next->next)
+		return (1);
+	if (!current->next->next)
+	{	
+		if (current->type == WORD && current->next->type != WORD)
+		{
+			ft_putstr_fd("bash: syntax error near unexpected token `newline'\n", 2);
+			return (-1);
+		}
+	}
+	return (1);
+}
+
 int	verif_redir(t_token *token)
 {
 	t_token	*current;
@@ -24,17 +41,19 @@ int	verif_redir(t_token *token)
 	current = token;
 	if (current->type == PIPE)
 	{
-		ft_putstr_fd("bash: syntax error near unexpected token `|'\n", 1);
+		ft_putstr_fd("bash: syntax error near unexpected token `|'\n", 2);
 		return (-1);
 	}
 	while (current->next)
 		current = current->next;
 	if (current->type == PIPE)
 	{
-		perror("bash: syntax error near unexpected token `|'\n");
+		ft_putstr_fd("bash: syntax error near unexpected token `|'\n", 2);
 		return (-1);
 	}
 	current = token;
+	if (verif_cmd_redir(current) == -1)
+		return (-1);
 	if (check_double_redir(current) == -1)
 		return (-1);
 	return (1);
