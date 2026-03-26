@@ -69,7 +69,13 @@ int	parsing_execution(t_cmd **cmd, t_token **token, t_envp_data **envp)
 			g_status = ret;
 		}
 	}
+<<<<<<< Updated upstream
 	return (0);
+=======
+	else
+		g_status = 2;
+	return 0;
+>>>>>>> Stashed changes
 }
 
 int	minishell_loop(t_envp_data *envp)

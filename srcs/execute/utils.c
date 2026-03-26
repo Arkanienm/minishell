@@ -212,7 +212,6 @@ void	exec_loop(t_data *data, char **envp, t_cmd *cmds,
 			if (loop_redir(data, cmds->redir) == -1)
 			{
 				data->last_was_builtin = 1;
-				restore_fds(&in, &out);
 				data->last_status = 1;
 				return ;
 			}
