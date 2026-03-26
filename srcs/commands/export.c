@@ -1,5 +1,40 @@
 #include "../../includes/minishell.h"
 
+int	check_alnum(char *str)
+{
+	int	i;
+
+	i = 0;
+
+	while (str[i] && str[i] != '=')
+	{
+		if (!ft_isalnum(str[i]))
+			return (0);
+		i++;
+	}
+	return (1);
+}
+
+int	check_str_equal(char *str)
+{
+	int i;
+
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] == '=')
+		{
+
+			if (str[i + 1])
+				return (1);
+			else
+				return (0);
+		}
+		i++;
+	}
+	return (0);
+}
+
 void	print_sorted_env(t_envp_data *envp)
 {
 	t_envp_data	**data;
@@ -70,6 +105,14 @@ void	export(char *str, t_envp_data **envp)
 		print_sorted_env((*envp));
 		return ;
 	}
+	if (!check_alnum(str))
+	{
+		ft_putstr_fd("bash: export: `", 2);
+		ft_putstr_fd(str, 2);
+		ft_putstr_fd("': not a valid identifier\n", 2);
+	}
+	if (!check_str_equal(str))
+		return ;
 	keyword = get_keyword(str);
 	if (is_already_exist(keyword, (*envp)) == 1)
 		unset(keyword, envp);
