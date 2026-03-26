@@ -97,7 +97,6 @@ void	exec_loop(t_data *data, char **envp, t_cmd *cmds,
 	int out;
 	int null_fd;
 	t_redir *current;
-
 	pre_Handler_heredoc(data, cmds);
 	if (cmds->next)
 	{
@@ -134,6 +133,14 @@ void	exec_loop(t_data *data, char **envp, t_cmd *cmds,
 					}
 					close(in);
 				}
+				else if(current->type == HEREDOC)
+				{
+					if (data->heredoc_fd > 0)
+					{
+						close(data->heredoc_fd);
+						data->heredoc_fd = -1;
+					}
+				}
 				current = current->next;
 			}
 		}
@@ -163,6 +170,8 @@ void	exec_loop(t_data *data, char **envp, t_cmd *cmds,
 					if (data->end[1] != -1)
 						close(data->end[1]);
 					data->previous_read = data->end[0];
+					close(data->heredoc_fd);
+					data->heredoc_fd = -1;
 					data->end[1] = -1;
 					data->end[0] = -1;
 				}
@@ -206,6 +215,8 @@ void	exec_loop(t_data *data, char **envp, t_cmd *cmds,
 				close(data->end[0]);
 			if (data->end[1] != -1)
 				close(data->end[1]);
+			close(data->heredoc_fd);
+			data->heredoc_fd = -1;
 			restore_fds(&in, &out);
 		}
 	}
@@ -226,6 +237,8 @@ void	exec_loop(t_data *data, char **envp, t_cmd *cmds,
 				if (data->end[1] != -1)
 					close(data->end[1]);
 				data->previous_read = data->end[0];
+				close(data->heredoc_fd);
+				data->heredoc_fd = -1;
 				data->end[1] = -1;
 				data->end[0] = -1;
 			}
