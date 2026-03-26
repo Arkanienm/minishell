@@ -68,3 +68,17 @@ void	free_cmd_struct(t_cmd *lst)
 		lst = nnext;
 	}
 }
+
+void	write_redir_error(t_token *current)
+{
+	if (current->next->type == PIPE)
+		ft_putstr_fd("bash: syntax error near unexpected token `|'\n", 1);
+	else if (current->next->type == REDIR_IN)
+		ft_putstr_fd("bash: syntax error near unexpected token `<'\n", 1);
+	else if (current->next->type == REDIR_OUT)
+		ft_putstr_fd("bash: syntax error near unexpected token `>'\n", 1);
+	else if (current->next->type == APPEND)
+		ft_putstr_fd("bash: syntax error near unexpected token `>>'\n", 1);
+	else if (current->next->type == HEREDOC)
+		ft_putstr_fd("bash: syntax error near unexpected token `<<'\n", 1);
+}

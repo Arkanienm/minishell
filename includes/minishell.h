@@ -98,8 +98,12 @@ int						verif_pwd(t_envp_data **envp);
 char					*find_line_envp(char *to_find, t_envp_data *envp);
 void					exp_tmp(int *verif, int *size, t_envp_data **data, t_envp_data **tmp);
 void					printing_sorted_env(t_envp_data **data, int size);
-void free_envp_data(t_envp_data *envp);
-
+void					free_envp_data(t_envp_data *envp);
+void					write_redir_error(t_token *current);
+int						minishell_loop(t_envp_data *envp);
+void					ft_free_data(t_envp_data *data);
+void					free_all(t_envp_data *envp);
+int						set_envp_path(t_envp_data **data, char **envp, t_envp_data **new);
 
 # include "pipex.h"
 #endif
