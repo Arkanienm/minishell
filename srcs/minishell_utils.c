@@ -2,6 +2,11 @@
 
 int	verif_cmd_redir(t_token *current)
 {
+	if (current->type != WORD && !current->next)
+	{
+		ft_putstr_fd("bash: syntax error near unexpected token `newline'\n", 2);
+		return (-1);
+	}
 	if (!current->next)
 		return (1);
 	if (current->next->next)
