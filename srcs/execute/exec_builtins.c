@@ -1,11 +1,25 @@
 #include "../../includes/minishell.h"
 #include "../../includes/pipex.h"
 
+static int is_n_flag(char *str)
+{
+	int i;
+
+	i = 0;
+	if(!str || str[0] != '-' || str[1] != 'n')
+		return 0;
+	i = 1;
+	while(str[i] == 'n')
+		i++;
+	return (str[i] == '\0');
+}
+
 int execute_builtin(t_cmd *cmd, t_envp_data **envp, int *in, int *out)
 {
 	int i;
 	int exit_code;
 
+	i = 0;
 	if (!ft_strcmp(cmd->cmd[0], "cd"))
 	{
 		if(cmd->cmd[1] && cmd->cmd[2])
@@ -41,9 +55,11 @@ int execute_builtin(t_cmd *cmd, t_envp_data **envp, int *in, int *out)
 		g_status = 0;
 		return 1;
 	}
-	else if (!ft_strcmp(cmd->cmd[0], "echo") && cmd->cmd[1] && !ft_strncmp(cmd->cmd[1], "-n", 2))
+	else if (!ft_strcmp(cmd->cmd[0], "echo") && is_n_flag(cmd->cmd[1]))
 	{
-		i = 2;
+		i = 1;
+		while(cmd->cmd[i] && is_n_flag(cmd->cmd[i]))
+			i++;
 		while(cmd->cmd[i])
 		{
 			ft_echo(1, cmd->cmd[i]);

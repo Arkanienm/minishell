@@ -21,8 +21,6 @@ void	perror_exit(char *error_message, int code_exit)
 
 void	redirect(t_data *data, t_cmd *cmds)
 {
-	int	null_fd;
-
 	if(data->end[1] != -1)
 	{
 		dup2(data->end[1], STDOUT_FILENO);
@@ -34,13 +32,7 @@ void	redirect(t_data *data, t_cmd *cmds)
 		close(data->end[0]);
 		data->end[0] = -1;
 	}
-	if (data->previous_read == -1)
-	{
-		null_fd = open("/dev/null", O_RDONLY);
-		dup2(null_fd, STDIN_FILENO);
-		close(null_fd);
-	}
-	else
+	if (data->previous_read != -1)
 	{
 		dup2(data->previous_read, STDIN_FILENO);
 		close(data->previous_read);
@@ -108,6 +100,7 @@ void	exec_loop(t_data *data, char **envp, t_cmd *cmds,
 	{
 		if(cmds->redir)
 		{
+			g_status = 0;
 			current = cmds->redir;
 			while(current)
 			{
@@ -144,6 +137,22 @@ void	exec_loop(t_data *data, char **envp, t_cmd *cmds,
 				}
 				current = current->next;
 			}
+		}
+		if (data->previous_read != -1)
+            close(data->previous_read);
+        data->previous_read = -1;
+        if (cmds->next)
+        {
+            if (data->end[1] != -1)
+                close(data->end[1]);
+            data->previous_read = data->end[0];
+            data->end[1] = -1;
+            data->end[0] = -1;
+        }
+		if(data->heredoc_fd != -1)
+		{
+			close(data->heredoc_fd);
+			data->heredoc_fd = -1;
 		}
 		g_status = 0;
 		return;
@@ -189,7 +198,7 @@ void	exec_loop(t_data *data, char **envp, t_cmd *cmds,
 		else
 		{
 			save_fds(&in, &out);
-			if (data->previous_read == -1)
+			if (data->previous_read != -1)
 			{
 				null_fd = open("/dev/null", O_RDONLY);
 				dup2(null_fd, STDIN_FILENO);
@@ -213,6 +222,7 @@ void	exec_loop(t_data *data, char **envp, t_cmd *cmds,
 			{
 				data->last_was_builtin = 1;
 				data->last_status = 1;
+				restore_fds(&in, &out);
 				return ;
 			}
 			ret = execute_builtin(cmds, envp_struct, &in, &out);
