@@ -32,6 +32,9 @@ int			apply_redir(t_data *data, t_redir *redir);
 void		handle_heredoc(t_data *data, t_redir *redir);
 int			execute_builtin(t_cmd *cmd, t_envp_data **envp);
 int			detect_builtin(t_cmd *cmd);
-int pre_Handler_heredoc(t_data *data, t_cmd *cmds);
+int			pre_Handler_heredoc(t_data *data, t_cmd *cmds);
+int			manage_redir_in(t_data **data, t_redir **redir);
+int			manage_redir_out(t_data **data, t_redir **redir);
+int			manage_redir_append(t_data **data, t_redir **redir);
 
 #endif

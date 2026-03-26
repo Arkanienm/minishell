@@ -182,7 +182,7 @@ void	exec_loop(t_data *data, char **envp, t_cmd *cmds,
 			{
 				dup2(data->previous_read, STDIN_FILENO);
 				close(data->previous_read);
-				data->previous_reamettred = -1;
+				data->previous_read = -1;
 			}
 			if (cmds->next)
 			{
