@@ -39,6 +39,18 @@ char	*final_string(int len, char *s2, t_token *current, char *key)
 	return (s3);
 }
 
+int	env_loop(t_envp_data **env, char *key, t_token **current)
+{
+	while ((*env) && ft_strcmp((*env)->keyword, key) != 0)
+		(*env) = (*env)->next;
+	if (!ft_strcmp((*current)->content, "\"$\""))
+	{
+		(*current)->content = ft_strdup("$");
+		return (0);
+	}
+	return (1);
+}
+
 void	replace_word(t_token *current, int *i, t_envp_data *env)
 {
 	int		len;
@@ -50,8 +62,8 @@ void	replace_word(t_token *current, int *i, t_envp_data *env)
 	while (ft_isalnum(current->content[len]) || current->content[len] == '_')
 		len++;
 	key = ft_substr(current->content, (*i) + 1, (len - ((*i) + 1)));
-	while (env && ft_strcmp(env->keyword, key) != 0)
-		env = env->next;
+	if (!env_loop(&env, key, &current))
+		return ;
 	s1 = ft_substr(current->content, 0, (*i));
 	if (env)
 	{
@@ -65,19 +77,6 @@ void	replace_word(t_token *current, int *i, t_envp_data *env)
 	}
 	free(s1);
 	current->content = final_string(len, s2, current, key);
-}
-
-int	q_state_set(int i, t_token *current, int q_state)
-{
-	if (current->content[i] == 39 && q_state == 0)
-		q_state = 1;
-	else if (current->content[i] == 39 && q_state == 1)
-		q_state = 0;
-	else if (current->content[i] == 34 && q_state == 0)
-		q_state = 2;
-	else if (current->content[i] == 34 && q_state == 2)
-		q_state = 0;
-	return (q_state);
 }
 
 void	expander(t_token *head, t_envp_data *env)

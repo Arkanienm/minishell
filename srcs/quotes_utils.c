@@ -20,6 +20,19 @@ int	check_meta_char(char c, int q_state)
 	return (0);
 }
 
+int	q_state_set(int i, t_token *current, int q_state)
+{
+	if (current->content[i] == 39 && q_state == 0)
+		q_state = 1;
+	else if (current->content[i] == 39 && q_state == 1)
+		q_state = 0;
+	else if (current->content[i] == 34 && q_state == 0)
+		q_state = 2;
+	else if (current->content[i] == 34 && q_state == 2)
+		q_state = 0;
+	return (q_state);
+}
+
 int	update_quotes(int q_state, int len, char *str)
 {
 	if (str[len] == 34 && q_state == 0)
