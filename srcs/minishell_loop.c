@@ -62,7 +62,7 @@ int	parsing_execution(t_cmd **cmd, t_token **token, t_envp_data **envp)
 	if (verif_redir((*token)) == -1)
 	{
 		g_status = 2;
-		return 0;
+		return (0);
 	}
 	parser((*token), cmd);
 	if (cmd)
@@ -87,11 +87,8 @@ int	minishell_loop(t_envp_data *envp)
 	{
 		cmd = NULL;
 		line = readline("minishell> ");
-		if(!line)
-		{
-			(printf("exit\n"));
-			break;
-		}
+		if (!verif_line(line))
+			break ;
 		if (*line)
 			add_history(line);
 		check_line(&line, &envp);

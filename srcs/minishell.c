@@ -18,6 +18,16 @@ void	ft_free_data(t_envp_data *data)
 	}
 }
 
+int	verif_line(char *line)
+{
+	if (!line)
+	{
+		(printf("exit\n"));
+		return (0);
+	}
+	return (1);
+}
+
 void	free_all(t_envp_data *envp)
 {
 	free_envp_data(envp);

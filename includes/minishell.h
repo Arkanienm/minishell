@@ -104,6 +104,9 @@ void					free_all(t_envp_data *envp);
 int						set_envp_path(t_envp_data **data, char **envp, t_envp_data **new);
 int						verif_cmd_redir(t_token *current);
 int						q_state_set(int i, t_token *current, int q_state);
+int						verif_line(char *line);
+int						check_alnum(char *str);
+int						atoll_loop(int **error, int sign, int nb, int digit);
 
 # include "pipex.h"
 #endif

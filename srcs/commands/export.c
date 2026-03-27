@@ -1,31 +1,14 @@
 #include "../../includes/minishell.h"
 
-int	check_alnum(char *str)
-{
-	int	i;
-
-	i = 0;
-	if(ft_isdigit(str[0]) == 1)
-		return 0;
-	while (str[i] && str[i] != '=')
-	{
-		if (!ft_isalnum(str[i]) && str[i] != '_')
-			return (0);
-		i++;
-	}
-	return (1);
-}
-
 int	check_str_equal(char *str)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (str[i])
 	{
 		if (str[i] == '=')
 		{
-
 			if (str[i + 1])
 				return (1);
 			else

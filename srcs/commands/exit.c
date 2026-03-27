@@ -12,7 +12,7 @@ static long long int	ft_atoll(const char *nptr, int *error)
 	int					i;
 	long long int		nb;
 	int					sign;
-	long long	max_div;
+	long long			max_div;
 	int					digit;
 
 	i = 0;
@@ -39,22 +39,14 @@ static long long int	ft_atoll(const char *nptr, int *error)
 		}
 		if (nb == max_div)
 		{
-			if (sign == 0 && digit > 7)
-			{
-				*error = 1;
+			if (atoll_loop(&error, sign, nb, digit) == 0)
 				return (0);
-			}
-			if (sign == 1 && digit > 8)
-			{
-				*error = 1;
-				return (0);
-			}
 		}
 		nb = nb * 10 + nptr[i] - 48;
 		i++;
 	}
 	if (sign == 1)
-		return(-(long long)nb);
+		return (-(long long)nb);
 	return ((long long)nb);
 }
 
@@ -79,8 +71,8 @@ static int	is_numeric(char *str)
 	}
 	while (ft_isspace(str[i]))
 		i++;
-	if(str[i] != '\0')
-		return 0;
+	if (str[i] != '\0')
+		return (0);
 	return (1);
 }
 
