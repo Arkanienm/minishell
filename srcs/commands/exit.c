@@ -39,7 +39,7 @@ static long long int	ft_atoll(const char *nptr, int *error)
 		}
 		if (nb == max_div)
 		{
-			if (atoll_loop(&error, sign, nb, digit) == 0)
+			if (atoll_loop(&error, sign, digit) == 0)
 				return (0);
 		}
 		nb = nb * 10 + nptr[i] - 48;
@@ -90,7 +90,7 @@ long long int	ft_exit(t_cmd *cmd, t_envp_data *envp)
 	if (!is_numeric(cmd->cmd[1]))
 	{
 		ft_putstr_fd("exit: numeric argument required\n", 2);
-		return (2);
+		return (-2);
 	}
 	if (count_tab_tab(cmd->cmd) > 2)
 	{
@@ -102,7 +102,7 @@ long long int	ft_exit(t_cmd *cmd, t_envp_data *envp)
 	if (error)
 	{
 		ft_putstr_fd("exit: numeric argument required\n", 2);
-		return (2);
+		return (-2);
 	}
 	return (((code % 256) + 256) % 256);
 }

@@ -48,6 +48,6 @@ void	setup_signals(void)
 void handle_sigint_heredoc(int sig)
 {
 	(void)sig;
-	g_status = SIGINT;
+	g_status = 130;
 	write(1, "\n", 1);
 }

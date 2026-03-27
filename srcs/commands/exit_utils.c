@@ -1,5 +1,5 @@
 #include "../../includes/minishell.h"
-int	atoll_loop(int **error, int sign, int nb, int digit)
+int	atoll_loop(int **error, int sign, int digit)
 {	
 	if (sign == 0 && digit > 7)
 	{

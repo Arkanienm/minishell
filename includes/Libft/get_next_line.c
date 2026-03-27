@@ -6,7 +6,7 @@
 /*   By: mageneix <mageneix@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/05 11:44:58 by amurtas           #+#    #+#             */
-/*   Updated: 2026/03/27 16:05:24 by mageneix         ###   ########.fr       */
+/*   Updated: 2026/03/27 21:00:55 by mageneix         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,9 @@ char	*ft_cleanstash(char *stash)
 {
 	char	*new_stash;
 	char	*ptr_n;
-
+	
+	if(!stash)
+		return NULL;
 	ptr_n = ft_strchr(stash, '\n');
 	if (ptr_n == NULL)
 	{
@@ -75,6 +77,7 @@ void	ft_test(char **stash, int *read_size, char *buf, int fd)
 		if (*stash != NULL)
 		{
 			free(*stash);
+			*
 			stash = NULL;
 		}
 		return ;
