@@ -43,6 +43,11 @@ void	redirect(t_data *data, t_cmd *cmds)
 		exit(1);
 }
 
+void command_error(char *command, int error_code)
+{
+	
+}
+
 static void	pid_compose(t_data *data, char **envp, t_cmd *cmds)
 {
 	char	*path;
