@@ -42,21 +42,7 @@ void	redirect(t_data *data, t_cmd *cmds)
 	if(loop_redir(data, cmds->redir) == -1)
 		exit(1);
 }
-<<<<<<< Updated upstream
-/*
-void command_error(char *command, int error_code)
-{
-	
-}
-*/
-=======
 
-//void command_error(char *command, int error_code)
-//{
-	
-//}
-
->>>>>>> Stashed changes
 static void	pid_compose(t_data *data, char **envp, t_cmd *cmds)
 {
 	char	*path;
@@ -74,11 +60,15 @@ static void	pid_compose(t_data *data, char **envp, t_cmd *cmds)
 				error_exit("Permission denied\n", 126);
 		}
 		close_all(data);
+		ft_putstr_fd(cmds->cmd[0], 2);
+		write(2, ": ", 2);
 		error_exit("Command not found\n", 127);
 	}
 	execve(path, cmds->cmd, envp);
 	close_all(data);
 	free(path);
+	ft_putstr_fd(cmds->cmd[0], 2);
+	write(2, ": ", 2);
 	error_exit("Command not found\n", 127);
 }
 

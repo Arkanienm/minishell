@@ -59,7 +59,6 @@ int	parsing_execution(t_cmd **cmd, t_token **token, t_envp_data **envp)
 
 	expander((*token), (*envp));
 	remove_quotes((*token));
-	parser((*token), cmd);
 	if (verif_redir((*token)) == -1)
 	{
 		g_status = 2;
@@ -88,9 +87,14 @@ int	minishell_loop(t_envp_data *envp)
 	{
 		cmd = NULL;
 		line = readline("minishell> ");
-		check_line(&line, &envp);
-		if (line)
+		if(!line)
+		{
+			(printf("exit\n"));
+			break;
+		}
+		if (*line)
 			add_history(line);
+		check_line(&line, &envp);
 		token = tokenizer(line);
 		if (token)
 			should_exit = parsing_execution(&cmd, &token, &envp);

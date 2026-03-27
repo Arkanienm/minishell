@@ -40,7 +40,7 @@ int	pipex(t_envp_data *envp, t_cmd *cmds)
 	if (WIFEXITED(status))
 		return (WEXITSTATUS(status));
 	if (WIFSIGNALED(status) && WTERMSIG(status) == SIGPIPE)
-		exit(130);
+		exit(2);
 	if (WIFSIGNALED(status) && WTERMSIG(status) == SIGPIPE)
 		return (0);
 	return (1);

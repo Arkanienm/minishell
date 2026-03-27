@@ -24,7 +24,7 @@ int execute_builtin(t_cmd *cmd, t_envp_data **envp, int *in, int *out)
 	{
 		if(cmd->cmd[1] && cmd->cmd[2])
 		{
-			ft_putstr_fd("too many arguments", 2);
+			ft_putstr_fd("cd : too many arguments\n", 2);
 			g_status = 1;
 			return 1;
 		}

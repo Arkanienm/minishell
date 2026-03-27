@@ -54,11 +54,8 @@ static long long int	ft_atoll(const char *nptr, int *error)
 		i++;
 	}
 	if (sign == 1)
-	{
-		nb--;
-		nb *= -1;
-	}
-	return (nb);
+		return(-(long long)nb);
+	return ((long long)nb);
 }
 
 static int	is_numeric(char *str)
