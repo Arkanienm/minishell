@@ -25,6 +25,7 @@ int	verif_redir(t_token *token)
 	if (current->type == PIPE)
 	{
 		ft_putstr_fd("bash: syntax error near unexpected token `|'\n", 2);
+		g_status = 2;
 		return (-1);
 	}
 	while (current->next)
@@ -32,6 +33,7 @@ int	verif_redir(t_token *token)
 	if (current->type == PIPE)
 	{
 		ft_putstr_fd("bash: syntax error near unexpected token `|'\n", 2);
+		g_status = 2;
 		return (-1);
 	}
 	current = token;
@@ -46,9 +48,8 @@ void	check_line(char **line, t_envp_data **envp)
 {
 	if ((*line) == NULL)
 	{
-		free((*line));
 		ft_free_data((*envp));
-		exit(0);
+		exit(g_status);
 	}
 }
 

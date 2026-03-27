@@ -24,7 +24,7 @@ int	pipex(t_envp_data *envp, t_cmd *cmds)
 		close(data.previous_read);
 		data.previous_read = -1;
 	}
-	if (data.outfile >= 0)
+	if (data.outfile != -1)
 		close(data.outfile);
 	data.outfile = -1;
 	if(data.last_was_builtin)

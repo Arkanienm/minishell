@@ -14,6 +14,9 @@ typedef struct s_data
 	int		outfile;
 	int		previous_read;
 	pid_t	pid;
+	t_token *token;
+	t_cmd *cmd;
+	char *line;
 }			t_data;
 
 void		init_data(t_data *data);

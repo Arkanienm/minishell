@@ -78,8 +78,12 @@ void restore_fds(int *in, int *out)
 {
 	dup2(*in, STDIN_FILENO);
 	dup2(*out, STDOUT_FILENO);
-	close(*in);
-	close(*out);
+	if(*in != -1)
+		close(*in);
+	if(*out != -1)
+		close(*out);
+	*in = -1;
+	*out = -1;
 }
 
 void	exec_loop(t_data *data, char **envp, t_cmd *cmds,
@@ -94,7 +98,11 @@ void	exec_loop(t_data *data, char **envp, t_cmd *cmds,
 	if (cmds->next)
 	{
 		if (pipe(data->end) == -1)
+		{
+			free_tab_tab(envp);
+			free_envp_data(*envp_struct);
 			perror_exit("Pipe failed", 1);
+		}
 	}
 	if(!cmds->cmd || !cmds->cmd[0])
 	{
@@ -107,13 +115,13 @@ void	exec_loop(t_data *data, char **envp, t_cmd *cmds,
 				if(current->type == REDIR_OUT)
 				{
 					out = open(current->file, O_WRONLY | O_CREAT | O_TRUNC, 0644);
-					if(out >= 0)
+					if(out != -1)
 						close(out);
 				}
 				else if (current->type == APPEND)
 				{
 					out = open(current->file, O_WRONLY | O_CREAT | O_APPEND, 0644);
-					if(out >= 0)
+					if(out != -1)
 						close(out);
 				}
 				else if (current->type == REDIR_IN)
@@ -129,7 +137,7 @@ void	exec_loop(t_data *data, char **envp, t_cmd *cmds,
 				}
 				else if(current->type == HEREDOC)
 				{
-					if (data->heredoc_fd > 0)
+					if (data->heredoc_fd != -1)
 					{
 						close(data->heredoc_fd);
 						data->heredoc_fd = -1;
@@ -163,7 +171,10 @@ void	exec_loop(t_data *data, char **envp, t_cmd *cmds,
 		{
 			data->pid = fork();
 			if (data->pid == -1)
+			{
+				free_tab_tab(envp);
 				perror_exit("Fork failed", 1);
+			}
 			if (data->pid == 0)
 			{
 				redirect(data, cmds);
@@ -172,6 +183,8 @@ void	exec_loop(t_data *data, char **envp, t_cmd *cmds,
 					data->should_exit = 1;
 				data->last_was_builtin = 1;
 				data->last_status = g_status;
+				free_tab_tab(envp);
+				free_envp_data(*envp_struct);
 				exit(g_status);
 			}
 			else
@@ -198,7 +211,7 @@ void	exec_loop(t_data *data, char **envp, t_cmd *cmds,
 		else
 		{
 			save_fds(&in, &out);
-			if (data->previous_read != -1)
+			if (data->previous_read == -1)
 			{
 				null_fd = open("/dev/null", O_RDONLY);
 				dup2(null_fd, STDIN_FILENO);
@@ -213,7 +226,8 @@ void	exec_loop(t_data *data, char **envp, t_cmd *cmds,
 			if (cmds->next)
 			{
 				dup2(data->end[1], STDOUT_FILENO);
-				close(data->end[1]);
+				if(data->end[1] != -1)
+					close(data->end[1]);
 				data->end[1] = -1;
 				data->previous_read = data->end[0];
 				data->end[0] = -1;

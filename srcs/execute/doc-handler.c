@@ -55,8 +55,11 @@ int apply_redir(t_data *data, t_redir *redir)
 	else if (redir->type == HEREDOC)
 	{
 		dup2(data->heredoc_fd, STDIN_FILENO);
-		close(data->heredoc_fd);
-		data->heredoc_fd = -1;
+		if(data->heredoc_fd != -1)
+		{
+			close(data->heredoc_fd);
+			data->heredoc_fd = -1;
+		}
 	}
 	else if (redir->type == APPEND)
 	{
@@ -96,7 +99,11 @@ void	handle_heredoc(t_data *data, t_redir *redir)
 		free(line);
 	}
 	gnl_clear();
-	close(end[1]);
+	if(end[1] != -1)
+	{
+		close(end[1]);
+		end[1] = -1;
+	}
 	data->heredoc_fd = end[0];
 }
 

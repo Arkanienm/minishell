@@ -46,7 +46,6 @@ int execute_builtin(t_cmd *cmd, t_envp_data **envp, int *in, int *out)
 	else if (!ft_strcmp(cmd->cmd[0], "export"))
 	{
 		export(cmd->cmd[1], envp);
-		g_status = 0;
 		return 1;
 	}
 	else if (!ft_strcmp(cmd->cmd[0], "pwd"))

@@ -5,10 +5,11 @@ int	check_alnum(char *str)
 	int	i;
 
 	i = 0;
-
+	if(ft_isdigit(str[0]) == 1)
+		return 0;
 	while (str[i] && str[i] != '=')
 	{
-		if (!ft_isalnum(str[i]))
+		if (!ft_isalnum(str[i]) && str[i] != '_')
 			return (0);
 		i++;
 	}
@@ -110,6 +111,8 @@ void	export(char *str, t_envp_data **envp)
 		ft_putstr_fd("bash: export: `", 2);
 		ft_putstr_fd(str, 2);
 		ft_putstr_fd("': not a valid identifier\n", 2);
+		g_status = 1;
+		return ;
 	}
 	if (!check_str_equal(str))
 		return ;

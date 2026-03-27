@@ -9,7 +9,11 @@ int	manage_redir_in(t_data **data, t_redir **redir)
 		return (-1);
 	}
 	dup2((*data)->infile, STDIN_FILENO);
-	close((*data)->infile);
+	if((*data)->infile != -1)
+	{
+		close((*data)->infile);
+		(*data)->infile = -1;
+	}
 	(*data)->infile = -1;
 	return (1);
 }
@@ -23,8 +27,11 @@ int	manage_redir_out(t_data **data, t_redir **redir)
 		return (-1);
 	}
 	dup2((*data)->outfile, STDOUT_FILENO);
-	close((*data)->outfile);
-	(*data)->outfile = -1;
+	if((*data)->outfile != -1)
+	{
+		close((*data)->outfile);
+		(*data)->outfile = -1;
+	}
 	return (1);
 }
 
@@ -38,7 +45,11 @@ int	manage_redir_append(t_data **data, t_redir **redir)
 		return (-1);
 	}
 	dup2((*data)->outfile, STDOUT_FILENO);
-	close((*data)->outfile);
+	if((*data)->outfile != -1)
+	{
+		close((*data)->outfile);
+		(*data)->outfile = -1;
+	}
 	(*data)->outfile = -1;
 	return (1);
 }
