@@ -6,7 +6,7 @@
 /*   By: mageneix <mageneix@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/05 11:44:58 by amurtas           #+#    #+#             */
-/*   Updated: 2026/03/26 15:08:27 by mageneix         ###   ########.fr       */
+/*   Updated: 2026/03/27 16:05:24 by mageneix         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,8 @@ char	*ft_cleanstash(char *stash)
 		return (NULL);
 	}
 	new_stash = ft_strdup (ptr_n + 1);
-	free (stash);
+	if(stash)
+		free (stash);
 	return (new_stash);
 }
 

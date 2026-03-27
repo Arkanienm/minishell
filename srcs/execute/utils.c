@@ -42,12 +42,21 @@ void	redirect(t_data *data, t_cmd *cmds)
 	if(loop_redir(data, cmds->redir) == -1)
 		exit(1);
 }
+<<<<<<< Updated upstream
 /*
 void command_error(char *command, int error_code)
 {
 	
 }
 */
+=======
+
+//void command_error(char *command, int error_code)
+//{
+	
+//}
+
+>>>>>>> Stashed changes
 static void	pid_compose(t_data *data, char **envp, t_cmd *cmds)
 {
 	char	*path;
@@ -182,6 +191,7 @@ void	exec_loop(t_data *data, char **envp, t_cmd *cmds,
 			}
 			if (data->pid == 0)
 			{
+				set_sign_def();
 				redirect(data, cmds);
 				ret = execute_builtin(cmds, envp_struct, &in, &out);
 				if(ret == 2)
@@ -267,7 +277,10 @@ void	exec_loop(t_data *data, char **envp, t_cmd *cmds,
 		if (data->pid == -1)
 			perror_exit("Fork failed", 1);
 		if (data->pid == 0)
+		{
+			set_sign_def();
 			pid_compose(data, envp, cmds);
+		}
 		else
 		{
 			if (data->previous_read != -1)

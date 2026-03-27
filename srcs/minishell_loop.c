@@ -60,18 +60,19 @@ int	parsing_execution(t_cmd **cmd, t_token **token, t_envp_data **envp)
 	expander((*token), (*envp));
 	remove_quotes((*token));
 	parser((*token), cmd);
-	if (verif_redir((*token)) != -1)
+	if (verif_redir((*token)) == -1)
 	{
-		if (cmd)
-		{
-			ret = pipex((*envp), (*cmd));
-			if (ret == -42)
-				return (1);
-			g_status = ret;
-		}
-	}
-	else
 		g_status = 2;
+		return 0;
+	}
+	parser((*token), cmd);
+	if (cmd)
+	{
+		ret = pipex((*envp), (*cmd));
+		if (ret == -42)
+			return (1);
+		g_status = ret;
+	}
 	return (0);
 }
 
@@ -82,6 +83,7 @@ int	minishell_loop(t_envp_data *envp)
 	char	*line;
 	int		should_exit;
 
+	should_exit = 0;
 	while (1)
 	{
 		cmd = NULL;
