@@ -45,5 +45,7 @@ void		save_fds(int *in, int *out);
 void		set_sign_ignore(void);
 void		set_sign_def(void);
 void		setup_signals(void);
+void handle_sigint_heredoc(int sig);
+
 
 #endif

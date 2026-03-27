@@ -43,3 +43,11 @@ void	setup_signals(void)
 	sa_int.sa_handler = SIG_IGN;
 	sigaction(SIGQUIT, &sa_int, NULL);
 }
+
+
+void handle_sigint_heredoc(int sig)
+{
+	(void)sig;
+	g_status = SIGINT;
+	write(1, "\n", 1);
+}

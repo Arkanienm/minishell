@@ -83,12 +83,23 @@ void	handle_heredoc(t_data *data, t_redir *redir)
 	int		end[2];
 	char	*line;
 
+	signal(SIGINT, handle_sigint_heredoc);
 	pipe(end);
 	while (1)
 	{
 		line = get_next_line(0);
-		if (!line)
+		if (!line || g_status == SIGINT)
+		{
+			if(g_status == SIGINT)
+			{
+				free(line);
+				close(end[1]);
+				data->heredoc_fd = -1;
+				g_status = 130;
+				return ;
+			}
 			break ;
+		}
 		if (is_good_size(redir->file, line)
 			&& ft_strncmp(redir->file, line, ft_strlen(redir->file)) == 0)
 		{
@@ -98,6 +109,7 @@ void	handle_heredoc(t_data *data, t_redir *redir)
 		write(end[1], line, ft_strlen(line));
 		free(line);
 	}
+	setup_signals();
 	gnl_clear();
 	if(end[1] != -1)
 	{

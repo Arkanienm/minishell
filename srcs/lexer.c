@@ -84,6 +84,7 @@ t_token	*tokenizer(char *str)
 		word = extract_word(i, str);
 		if (word == NULL)
 		{
+			g_status = 2;
 			ft_error("syntax error : quote is not closed", head);
 			return (NULL);
 		}
