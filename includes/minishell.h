@@ -122,5 +122,7 @@ int						check_sign(const char *nptr, int *i, int *sign);
 int						check_nb(int **error, long long int nb, long long int max_div);
 int						check_space(const char *nptr, t_atol **st_atol);
 int						ft_isspace(int c);
+int	cd_dash(t_envp_data **envp);
+
 # include "pipex.h"
 #endif
