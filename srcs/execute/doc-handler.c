@@ -181,6 +181,19 @@ char*	expander_heredoc(char *line, t_envp_data *env)
 	return line;
 }
 
+int	check_quotes(char *file)
+{
+	int len;
+	len = ft_strlen(file);
+
+	printf("%s", file);
+	if (file[0] == '\'' && file[len] == '\"')
+		return (0);
+	else if (file[0] == '\"' && file[len] == '\"')
+		return (0);
+	return (1);
+}
+
 void heredoc_child(int write_fd, t_redir *redir, t_data *data)
 {
 	struct sigaction sa;
@@ -208,9 +221,17 @@ void heredoc_child(int write_fd, t_redir *redir, t_data *data)
 			free(line);
 			break ;
 		}
-		expanded = expander_heredoc(line, data->env);
-		write(write_fd, expanded, ft_strlen(expanded));
-		free(expanded);
+		if (check_quotes(redir->file))
+		{
+			expanded = expander_heredoc(line, data->env);
+			write(write_fd, expanded, ft_strlen(expanded));
+			free(expanded);
+		}
+		else
+		{
+			write(write_fd, line, ft_strlen(line));
+			free(line);
+		}
 	}
 	gnl_clear();
 	close(write_fd);

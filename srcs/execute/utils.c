@@ -69,7 +69,7 @@ static void	pid_compose(t_data *data, char **envp, t_cmd *cmds)
 	free(path);
 	ft_putstr_fd(cmds->cmd[0], 2);
 	write(2, ": ", 2);
-	error_exit("Command not found\n", 127);
+	error_exit("Command not found\n", 126);
 }
 
 void save_fds(int *in, int *out)

@@ -12,7 +12,11 @@ int	check_str_equal(char *str)
 			if (str[i + 1])
 				return (1);
 			else
+			{
+				ft_putstr_fd("not a valid identifier", 2);
+				g_status = 1;
 				return (0);
+			}
 		}
 		i++;
 	}
