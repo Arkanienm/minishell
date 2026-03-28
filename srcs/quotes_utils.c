@@ -73,15 +73,25 @@ void	remove_quotes(t_token *head)
 	t_token	*current;
 	char	*s1;
 	int		q_state;
-
+	int		verif;
+	
+	verif = 1;
 	current = head;
 	while (current)
 	{
 		q_state = 0;
-		s1 = malloc (sizeof(char) * ft_strlen(current->content) + 1);
-		replace(q_state, current, s1);
-		free(current->content);
-		current->content = s1;
+		if (current->next)
+		{
+			if (current->type == HEREDOC && current->next->type == WORD)
+				verif = 0;
+		}
+		if (verif == 1)
+		{
+			s1 = malloc (sizeof(char) * ft_strlen(current->content) + 1);
+			replace(q_state, current, s1);
+			free(current->content);
+			current->content = s1;
+		}
 		current = current->next;
 	}
 }

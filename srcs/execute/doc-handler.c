@@ -186,12 +186,23 @@ int	check_quotes(char *file)
 	int len;
 	len = ft_strlen(file);
 
-	printf("%s", file);
-	if (file[0] == '\'' && file[len] == '\"')
-		return (0);
-	else if (file[0] == '\"' && file[len] == '\"')
-		return (0);
-	return (1);
+	if (file[0] == '\'' && file[len - 1] == '\'')
+		return (1);
+	else if (file[0] == '\"' && file[len - 1] == '\"')
+		return (1);
+	return (0);
+}
+
+static void	removing_quotes(char **redir_file)
+{
+	char	*s1;
+	int		i;
+
+	i = 0;
+	s1 = malloc (sizeof(char) * ft_strlen((*redir_file)) + 1);
+	ft_strlcpy(s1, ((*redir_file) + 1), ft_strlen((*redir_file)) - 1);
+	free((*redir_file));
+	(*redir_file) = s1;
 }
 
 void heredoc_child(int write_fd, t_redir *redir, t_data *data)
@@ -199,7 +210,11 @@ void heredoc_child(int write_fd, t_redir *redir, t_data *data)
 	struct sigaction sa;
 	char *line;
 	char *expanded;
+	int	quote;
 
+	quote = check_quotes(redir->file);
+	if (quote == 1)
+		removing_quotes(&redir->file);
 	sa.sa_handler = handle_sigint_heredoc;
 	sigemptyset(&sa.sa_mask);
 	sa.sa_flags = 0;
@@ -221,7 +236,7 @@ void heredoc_child(int write_fd, t_redir *redir, t_data *data)
 			free(line);
 			break ;
 		}
-		if (check_quotes(redir->file))
+		if (quote == 0)
 		{
 			expanded = expander_heredoc(line, data->env);
 			write(write_fd, expanded, ft_strlen(expanded));
