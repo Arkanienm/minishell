@@ -70,6 +70,8 @@ int	parsing_execution(t_cmd **cmd, t_token **token, t_envp_data **envp)
 		ret = pipex((*envp), (*cmd));
 		if (ret == -42)
 			return (1);
+		if(g_status == 130)
+			return 0;
 		g_status = ret;
 	}
 	return (0);

@@ -90,7 +90,9 @@ void restore_fds(int *in, int *out)
 	*out = -1;
 }
 
-void	exec_loop(t_data *data, char **envp, t_cmd *cmds,
+
+
+int	exec_loop(t_data *data, char **envp, t_cmd *cmds,
 		t_envp_data **envp_struct)
 {
 	int in;
@@ -98,7 +100,9 @@ void	exec_loop(t_data *data, char **envp, t_cmd *cmds,
 	int null_fd;
 	int ret;
 	t_redir *current;
-	pre_Handler_heredoc(data, cmds);
+
+	if(pre_Handler_heredoc(data, cmds) == 130)
+		return 130;
 	if (cmds->next)
 	{
 		if (pipe(data->end) == -1)
@@ -135,7 +139,7 @@ void	exec_loop(t_data *data, char **envp, t_cmd *cmds,
 					{
 						perror(current->file);
 						g_status = 1;
-						return ;
+						return 0;
 					}
 					close(in);
 				}
@@ -167,7 +171,7 @@ void	exec_loop(t_data *data, char **envp, t_cmd *cmds,
 			data->heredoc_fd = -1;
 		}
 		g_status = 0;
-		return;
+		return 0;
 	}
 	if (detect_builtin(cmds) == 1)
 	{
@@ -211,7 +215,7 @@ void	exec_loop(t_data *data, char **envp, t_cmd *cmds,
 					data->heredoc_fd = -1;
 				}
 			}
-			return ;
+			return 0;
 		}
 		else
 		{
@@ -242,7 +246,7 @@ void	exec_loop(t_data *data, char **envp, t_cmd *cmds,
 				data->last_was_builtin = 1;
 				data->last_status = 1;
 				restore_fds(&in, &out);
-				return ;
+				return 0;
 			}
 			ret = execute_builtin(cmds, envp_struct, &in, &out);
 			if(ret == 2)
@@ -291,4 +295,5 @@ void	exec_loop(t_data *data, char **envp, t_cmd *cmds,
 			}	
 		}
 	}
+	return 0;
 }
