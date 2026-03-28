@@ -58,6 +58,17 @@ typedef struct s_cmd
 	t_redir				*redir;
 }						t_cmd;
 
+typedef struct s_atol
+{
+	int					i;
+	long long int		nb;
+	int					sign;
+	long long			max_div;
+	int					digit;
+}						t_atol;
+
+
+
 t_envp_data				*get_envp_path(char **envp);
 void					ft_free_struct(t_token *lst);
 int						update_quotes(int q_state, int len, char *str);
@@ -106,7 +117,10 @@ int						verif_cmd_redir(t_token *current);
 int						q_state_set(int i, t_token *current, int q_state);
 int						verif_line(char *line);
 int						check_alnum(char *str);
-int						atoll_loop(int **error, int sign, int nb, int digit);
-
+int						atoll_loop(int **error, int sign, int digit);
+int						check_sign(const char *nptr, int *i, int *sign);
+int						check_nb(int **error, long long int nb, long long int max_div);
+int						check_space(const char *nptr, t_atol **st_atol);
+int						ft_isspace(int c);
 # include "pipex.h"
 #endif

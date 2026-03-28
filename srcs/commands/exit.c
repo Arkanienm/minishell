@@ -1,53 +1,31 @@
 #include "../../includes/minishell.h"
 
-static int	ft_isspace(int c)
-{
-	if ((c >= 9 && c <= 13) || (c == 32 && c != '\0'))
-		return (1);
-	return (0);
-}
-
 static long long int	ft_atoll(const char *nptr, int *error)
 {
-	int					i;
-	long long int		nb;
-	int					sign;
-	long long			max_div;
-	int					digit;
+	t_atol	*st_atol;
 
-	i = 0;
-	sign = 0;
-	nb = 0;
-	max_div = 922337203685477580ULL;
-	while (ft_isspace(nptr[i]))
-		i++;
-	if (nptr[i] == '-' || nptr[i] == '+')
-	{
-		if (nptr[i] == '-')
-			sign = 1;
-		i++;
-	}
-	if (!(nptr[i] >= '0' && nptr[i] <= '9'))
+	st_atol = malloc(sizeof(*st_atol));
+	st_atol->i = 0;
+	st_atol->sign = 0;
+	st_atol->nb = 0;
+	st_atol->max_div = 922337203685477580ULL;
+	if (!check_space(nptr, &st_atol))
 		return (0);
-	while (nptr[i] >= '0' && nptr[i] <= '9')
+	while (nptr[st_atol->i] >= '0' && nptr[st_atol->i] <= '9')
 	{
-		digit = nptr[i] - 48;
-		if (nb > max_div)
-		{
-			*error = 1;
+		st_atol->digit = nptr[st_atol->i] - 48;
+		if (!check_nb(&error, st_atol->nb, st_atol->max_div))
 			return (0);
-		}
-		if (nb == max_div)
+		if (st_atol->nb == st_atol->max_div)
 		{
-			if (atoll_loop(&error, sign, nb, digit) == 0)
+			if (atoll_loop(&error, st_atol->sign, st_atol->digit) == 0)
 				return (0);
 		}
-		nb = nb * 10 + nptr[i] - 48;
-		i++;
+		st_atol->nb = st_atol->nb * 10 + nptr[st_atol->i++] - 48;
 	}
-	if (sign == 1)
-		return (-(long long)nb);
-	return ((long long)nb);
+	if (st_atol->sign == 1)
+		return (-(long long)st_atol->nb);
+	return ((long long)st_atol->nb);
 }
 
 static int	is_numeric(char *str)
@@ -76,6 +54,15 @@ static int	is_numeric(char *str)
 	return (1);
 }
 
+int	check_cmd_signal(t_cmd *cmd)
+{
+	if (isatty(STDIN_FILENO) && isatty(STDOUT_FILENO))
+		ft_putstr_fd("exit\n", 2);
+	if (!cmd->cmd[1])
+		return (0);
+	return (1);
+}
+
 long long int	ft_exit(t_cmd *cmd, t_envp_data *envp)
 {
 	long long	code;
@@ -83,14 +70,12 @@ long long int	ft_exit(t_cmd *cmd, t_envp_data *envp)
 
 	error = 0;
 	(void)envp;
-	if (isatty(STDIN_FILENO) && isatty(STDOUT_FILENO))
-		ft_putstr_fd("exit\n", 2);
-	if (!cmd->cmd[1])
+	if (!check_cmd_signal(cmd))
 		return (g_status);
 	if (!is_numeric(cmd->cmd[1]))
 	{
 		ft_putstr_fd("exit: numeric argument required\n", 2);
-		return (2);
+		return (-2);
 	}
 	if (count_tab_tab(cmd->cmd) > 2)
 	{
@@ -102,7 +87,7 @@ long long int	ft_exit(t_cmd *cmd, t_envp_data *envp)
 	if (error)
 	{
 		ft_putstr_fd("exit: numeric argument required\n", 2);
-		return (2);
+		return (-2);
 	}
 	return (((code % 256) + 256) % 256);
 }

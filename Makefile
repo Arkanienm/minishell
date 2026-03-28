@@ -18,7 +18,7 @@ SRCS        = $(SRCS_DIR)minishell.c $(SRCS_DIR)free_all.c $(SRCS_DIR)get_envp_p
 			  $(EXC_DIR)init_data.c $(EXC_DIR)ft_strjoin_pipex.c $(EXC_DIR)doc-handler.c \
 			  $(EXC_DIR)utils.c $(EXC_DIR)exec_builtins.c $(COMMANDS_DIR)exit.c $(COMMANDS_DIR)cd_utils.c \
 			  $(COMMANDS_DIR)export_utils.c $(EXC_DIR)doc-handler_utils.c $(SRCS_DIR)minishell_loop.c \
-			  $(SRCS_DIR)get_envp_path_utils.c $(COMMANDS_DIR)exit_utils.c
+			  $(SRCS_DIR)get_envp_path_utils.c $(COMMANDS_DIR)atoll_utils.c
 OBJS        = $(SRCS:$(SRCS_DIR)%.c=$(OBJ_DIR)%.o)
 LIBFT       = $(LIBFT_DIR)/libft.a
 
