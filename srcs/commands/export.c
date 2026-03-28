@@ -8,16 +8,7 @@ int	check_str_equal(char *str)
 	while (str[i])
 	{
 		if (str[i] == '=')
-		{
-			if (str[i + 1])
-				return (1);
-			else
-			{
-				ft_putstr_fd("not a valid identifier", 2);
-				g_status = 1;
-				return (0);
-			}
-		}
+			return 1;
 		i++;
 	}
 	return (0);
@@ -58,6 +49,9 @@ static int	add_struct(char *str, t_envp_data **envp)
 	nnode = malloc(sizeof(t_envp_data));
 	if (!nnode)
 		return (-1);
+	nnode->equal = 0;
+	if(check_str_equal(str) == 1)
+		nnode->equal = 1;
 	nnode->keyword = get_keyword(str);
 	nnode->value = ft_substr(str, len_before_equal(str) + 1, len_value(str));
 	nnode->next = NULL;
@@ -101,8 +95,6 @@ void	export(char *str, t_envp_data **envp)
 		g_status = 1;
 		return ;
 	}
-	if (!check_str_equal(str))
-		return ;
 	keyword = get_keyword(str);
 	if (is_already_exist(keyword, (*envp)) == 1)
 		unset(keyword, envp);

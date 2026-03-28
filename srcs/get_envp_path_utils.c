@@ -63,6 +63,7 @@ int	set_envp_path(t_envp_data **data, char **envp, t_envp_data **new)
 		(*data)->keyword = get_keyword(envp[i]);
 		(*data)->value = ft_substr(envp[i], len_before_equal(envp[i]) + 1,
 				len_value(envp[i]));
+		(*data)->equal = 1;
 		if (envp[i + 1] == NULL)
 			(*data)->next = NULL;
 		else
