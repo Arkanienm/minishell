@@ -31,9 +31,14 @@ void	printing_sorted_env(t_envp_data **data, int size)
 	{
 		write(1, "declare -x ", 11);
 		ft_putstr_fd(data[i]->keyword, 1);
-		if (data[i]->value)
+		if(data[i]->equal == 1)
 		{
 			write(1, "=", 1);
+			if(!data[i]->value)
+				ft_putstr_fd("\"\"", 1);
+		}
+		if (data[i]->value)
+		{
 			write(1, "\"", 1);
 			ft_putstr_fd(data[i]->value, 1);
 			write(1, "\"", 1);

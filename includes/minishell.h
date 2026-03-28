@@ -124,6 +124,8 @@ int						check_nb(int **error, long long int nb, long long int max_div);
 int						check_space(const char *nptr, t_atol **st_atol);
 int						ft_isspace(int c);
 int	cd_dash(t_envp_data **envp);
+int	check_str_equal(char *str);
+
 
 # include "pipex.h"
 #endif
