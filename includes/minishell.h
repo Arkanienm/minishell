@@ -24,6 +24,7 @@ typedef struct s_envp_data
 {
 	char				*keyword;
 	char				*value;
+	int	equal;
 	struct s_envp_data	*next;
 }						t_envp_data;
 

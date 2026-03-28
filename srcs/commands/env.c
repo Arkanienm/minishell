@@ -2,7 +2,7 @@
 
 void	print_env(t_envp_data *envp)
 {
-	while (envp && envp->value != NULL)
+	while (envp && envp->equal == 1)
 	{
 		ft_putstr_fd(envp->keyword, 1);
 		write(1, "=", 1);
