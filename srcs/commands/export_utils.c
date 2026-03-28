@@ -31,10 +31,10 @@ void	printing_sorted_env(t_envp_data **data, int size)
 	{
 		write(1, "declare -x ", 11);
 		ft_putstr_fd(data[i]->keyword, 1);
-		if(data[i]->equal == 1)
+		if (data[i]->equal == 1)
 		{
 			write(1, "=", 1);
-			if(!data[i]->value)
+			if (!data[i]->value)
 				ft_putstr_fd("\"\"", 1);
 		}
 		if (data[i]->value)
@@ -62,4 +62,18 @@ int	check_alnum(char *str)
 		i++;
 	}
 	return (1);
+}
+
+int	check_str_equal(char *str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] == '=')
+			return (1);
+		i++;
+	}
+	return (0);
 }

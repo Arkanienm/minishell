@@ -74,7 +74,7 @@ void	remove_quotes(t_token *head)
 	char	*s1;
 	int		q_state;
 	int		verif;
-	
+
 	verif = 1;
 	current = head;
 	while (current)

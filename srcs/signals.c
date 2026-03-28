@@ -44,8 +44,7 @@ void	setup_signals(void)
 	sigaction(SIGQUIT, &sa_int, NULL);
 }
 
-
-void handle_sigint_heredoc(int sig)
+void	handle_sigint_heredoc(int sig)
 {
 	(void)sig;
 	g_status = 130;

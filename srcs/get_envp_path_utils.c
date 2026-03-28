@@ -25,7 +25,7 @@ char	*get_keyword(char *str)
 	return (dest);
 }
 
-int	len_before_equal(char *str)
+int	len_bef_equal(char *str)
 {
 	int	i;
 
@@ -61,7 +61,7 @@ int	set_envp_path(t_envp_data **data, char **envp, t_envp_data **new)
 	while (envp[i])
 	{
 		(*data)->keyword = get_keyword(envp[i]);
-		(*data)->value = ft_substr(envp[i], len_before_equal(envp[i]) + 1,
+		(*data)->value = ft_substr(envp[i], len_bef_equal(envp[i]) + 1,
 				len_value(envp[i]));
 		(*data)->equal = 1;
 		if (envp[i + 1] == NULL)

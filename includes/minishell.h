@@ -88,7 +88,7 @@ int						count_tab_tab(char **envp);
 void					free_tab_tab(char **envp);
 void					copy_tab_tab(char **src, char **dest);
 int						len_value(char *str);
-int						len_before_equal(char *str);
+int						len_bef_equal(char *str);
 char					*get_keyword(char *str);
 int						unset(char *key, t_envp_data **envp);
 long long int			ft_atol_exit(const char *str, int *error);
@@ -123,6 +123,7 @@ int						check_sign(const char *nptr, int *i, int *sign);
 int						check_nb(int **error, long long int nb, long long int max_div);
 int						check_space(const char *nptr, t_atol **st_atol);
 int						ft_isspace(int c);
+int	check_str_equal(char *str);
 int	cd_dash(t_envp_data **envp);
 int	check_str_equal(char *str);
 

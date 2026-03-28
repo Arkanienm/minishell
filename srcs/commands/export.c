@@ -1,19 +1,5 @@
 #include "../../includes/minishell.h"
 
-int	check_str_equal(char *str)
-{
-	int	i;
-
-	i = 0;
-	while (str[i])
-	{
-		if (str[i] == '=')
-			return 1;
-		i++;
-	}
-	return (0);
-}
-
 void	print_sorted_env(t_envp_data *envp)
 {
 	t_envp_data	**data;
@@ -40,16 +26,16 @@ void	print_sorted_env(t_envp_data *envp)
 	return ;
 }
 
-int is_value(char *str)
+int	is_value(char *str)
 {
-	int i;
+	int	i;
 
 	i = 0;
-	while(str[i] && str[i] != '=')
+	while (str[i] && str[i] != '=')
 		i++;
-	if(str[i] == '\0' || (str[i] == '=' && str[i + 1] == '\0'))
-		return 0;
-	return 1;
+	if (str[i] == '\0' || (str[i] == '=' && str[i + 1] == '\0'))
+		return (0);
+	return (1);
 }
 
 static int	add_struct(char *str, t_envp_data **envp)
@@ -62,12 +48,12 @@ static int	add_struct(char *str, t_envp_data **envp)
 	if (!nnode)
 		return (-1);
 	nnode->equal = 0;
-	if(check_str_equal(str) == 1)
+	if (check_str_equal(str) == 1)
 		nnode->equal = 1;
 	nnode->keyword = get_keyword(str);
 	nnode->value = NULL;
-	if(is_value(str) == 1)
-		nnode->value = ft_substr(str, len_before_equal(str) + 1, len_value(str));
+	if (is_value(str) == 1)
+		nnode->value = ft_substr(str, len_bef_equal(str) + 1, len_value(str));
 	nnode->next = NULL;
 	if (!*envp)
 	{

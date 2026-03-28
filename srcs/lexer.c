@@ -2,6 +2,7 @@
 
 void	ft_error(char *str, t_token *head)
 {
+	g_status = 2;
 	printf("%s\n", str);
 	ft_free_struct(head);
 }
@@ -84,7 +85,6 @@ t_token	*tokenizer(char *str)
 		word = extract_word(i, str);
 		if (word == NULL)
 		{
-			g_status = 2;
 			ft_error("syntax error : quote is not closed", head);
 			return (NULL);
 		}
