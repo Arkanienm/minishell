@@ -20,23 +20,7 @@ int execute_builtin(t_cmd *cmd, t_envp_data **envp, int *in, int *out)
 	int exit_code;
 
 	i = 0;
-	if (!ft_strcmp(cmd->cmd[0], "cd") && ft_strcmp(cmd->cmd[1], "-") != 0)
-	{
-		if(cmd->cmd[1] && cmd->cmd[2])
-		{
-			ft_putstr_fd("cd : too many arguments\n", 2);
-			g_status = 1;
-			return 1;
-		}
-		else
-		{
-			if(cd(cmd->cmd[1], *envp) == -1)
-				g_status = 1;
-			else
-				g_status = 0;
-		}
-	}
-	if (!ft_strcmp(cmd->cmd[0], "cd") && ft_strcmp(cmd->cmd[1], "-") == 0)
+	if (!ft_strcmp(cmd->cmd[0], "cd") && cmd->cmd[1] && ft_strcmp(cmd->cmd[1], "-") == 0)
 	{
 		if(cmd->cmd[1] && cmd->cmd[2])
 		{
@@ -47,6 +31,22 @@ int execute_builtin(t_cmd *cmd, t_envp_data **envp, int *in, int *out)
 		else
 		{
 			if(cd_dash(envp) == -1)
+				g_status = 1;
+			else
+				g_status = 0;
+		}
+	}
+	else if (!ft_strcmp(cmd->cmd[0], "cd"))
+	{
+		if(cmd->cmd[1] && cmd->cmd[2])
+		{
+			ft_putstr_fd("cd : too many arguments\n", 2);
+			g_status = 1;
+			return 1;
+		}
+		else
+		{
+			if(cd(cmd->cmd[1], *envp) == -1)
 				g_status = 1;
 			else
 				g_status = 0;
@@ -130,9 +130,7 @@ int execute_builtin(t_cmd *cmd, t_envp_data **envp, int *in, int *out)
 
 int detect_builtin(t_cmd *cmd)
 {
-	if (!ft_strcmp(cmd->cmd[0], "cd") && cmd->cmd[1] && !ft_strcmp(cmd->cmd[1], "-"))
-		return 1;
-	else if (!ft_strcmp(cmd->cmd[0], "cd"))
+	if (!ft_strcmp(cmd->cmd[0], "cd"))
 		return 1;
 	else if (!ft_strcmp(cmd->cmd[0], "unset"))
 		return 1;
