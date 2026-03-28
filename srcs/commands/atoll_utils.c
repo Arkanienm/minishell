@@ -45,11 +45,11 @@ int	check_nb(int **error, long long int nb, long long int max_div)
 	return (1);
 }
 
-int	check_space(const char *nptr, t_atol **st_atol)
+int	check_space(const char *nptr, t_atol *st_atol)
 {
-	while (ft_isspace(nptr[(*st_atol)->i]))
-		(*st_atol)->i++;
-	if (!check_sign(nptr, &(*st_atol)->i, &(*st_atol)->sign))
+	while (ft_isspace(nptr[st_atol->i]))
+		st_atol->i++;
+	if (!check_sign(nptr, &st_atol->i, &st_atol->sign))
 		return (0);
 	return (1);
 }

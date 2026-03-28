@@ -121,7 +121,7 @@ int						check_alnum(char *str);
 int						atoll_loop(int **error, int sign, int digit);
 int						check_sign(const char *nptr, int *i, int *sign);
 int						check_nb(int **error, long long int nb, long long int max_div);
-int						check_space(const char *nptr, t_atol **st_atol);
+int	check_space(const char *nptr, t_atol *st_atol);
 int						ft_isspace(int c);
 int	check_str_equal(char *str);
 int	cd_dash(t_envp_data **envp);
