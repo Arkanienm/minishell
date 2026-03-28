@@ -2,30 +2,29 @@
 
 static long long int	ft_atoll(const char *nptr, int *error)
 {
-	t_atol	*st_atol;
+	t_atol	st_atol;
 
-	st_atol = malloc(sizeof(*st_atol));
-	st_atol->i = 0;
-	st_atol->sign = 0;
-	st_atol->nb = 0;
-	st_atol->max_div = 922337203685477580ULL;
+	st_atol.i = 0;
+	st_atol.sign = 0;
+	st_atol.nb = 0;
+	st_atol.max_div = 922337203685477580ULL;
 	if (!check_space(nptr, &st_atol))
 		return (0);
-	while (nptr[st_atol->i] >= '0' && nptr[st_atol->i] <= '9')
+	while (nptr[st_atol.i] >= '0' && nptr[st_atol.i] <= '9')
 	{
-		st_atol->digit = nptr[st_atol->i] - 48;
-		if (!check_nb(&error, st_atol->nb, st_atol->max_div))
+		st_atol.digit = nptr[st_atol.i] - 48;
+		if (!check_nb(&error, st_atol.nb, st_atol.max_div))
 			return (0);
-		if (st_atol->nb == st_atol->max_div)
+		if (st_atol.nb == st_atol.max_div)
 		{
-			if (atoll_loop(&error, st_atol->sign, st_atol->digit) == 0)
+			if (atoll_loop(&error, st_atol.sign, st_atol.digit) == 0)
 				return (0);
 		}
-		st_atol->nb = st_atol->nb * 10 + nptr[st_atol->i++] - 48;
+		st_atol.nb = st_atol.nb * 10 + nptr[st_atol.i++] - 48;
 	}
-	if (st_atol->sign == 1)
-		return (-(long long)st_atol->nb);
-	return ((long long)st_atol->nb);
+	if (st_atol.sign == 1)
+		return (-(long long)st_atol.nb);
+	return ((long long)st_atol.nb);
 }
 
 static int	is_numeric(char *str)

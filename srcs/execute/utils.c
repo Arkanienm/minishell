@@ -99,6 +99,7 @@ int	exec_loop(t_data *data, char **envp, t_cmd *cmds,
 	int out;
 	int null_fd;
 	int ret;
+	char buf[4096];
 	t_redir *current;
 
 	if(pre_Handler_heredoc(data, cmds) == 130)
@@ -154,9 +155,13 @@ int	exec_loop(t_data *data, char **envp, t_cmd *cmds,
 				current = current->next;
 			}
 		}
-		if (data->previous_read != -1)
-            close(data->previous_read);
-        data->previous_read = -1;
+		if (!cmds->next && data->previous_read != -1)
+		{
+			while(read(data->previous_read, buf, sizeof(buf)) > 0)
+				;
+			close(data->previous_read);
+			data->previous_read = -1;
+		}
         if (cmds->next)
         {
             if (data->end[1] != -1)

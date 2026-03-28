@@ -118,7 +118,7 @@ int execute_builtin(t_cmd *cmd, t_envp_data **envp, int *in, int *out)
 		{
 			g_status = 2;
 			save_fds(in, out);
-			return 1;
+			return 2;
 		}
 		g_status = exit_code;
 		return 2;

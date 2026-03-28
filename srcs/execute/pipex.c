@@ -57,6 +57,6 @@ int	pipex(t_envp_data *envp, t_cmd *cmds)
 	if (WIFEXITED(status))
 		return (WEXITSTATUS(status));
 	if (WIFSIGNALED(status) && WTERMSIG(status) == SIGPIPE)
-		exit(2);
+		return (128 + WTERMSIG(status));
 	return (1);
 }
