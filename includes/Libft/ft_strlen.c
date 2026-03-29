@@ -6,7 +6,7 @@
 /*   By: mageneix <mageneix@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/13 14:53:06 by amurtas           #+#    #+#             */
-/*   Updated: 2026/03/28 12:38:22 by mageneix         ###   ########.fr       */
+/*   Updated: 2026/03/29 14:28:19 by mageneix         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,8 @@ size_t	ft_strlen(const char *s)
 	size_t	i;
 
 	i = 0;
-	if(!s)
-		return 0;
+	if (!s)
+		return (0);
 	if (s[i] == '\0')
 		return (0);
 	while (s[i] != '\0')

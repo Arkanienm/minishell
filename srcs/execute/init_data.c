@@ -1,4 +1,5 @@
 #include "includes/minishell.h"
+#include "../../includes/pipex.h"
 
 void	init_data(t_data *data, t_envp_data *envp)
 {

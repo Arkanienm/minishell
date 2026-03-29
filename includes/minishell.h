@@ -139,6 +139,4 @@ int						exec_unset(t_cmd *cmd, t_envp_data **envp);
 int						exec_cd(t_cmd *cmd, t_envp_data **envp);
 int						exec_cd_dash(t_cmd *cmd, t_envp_data **envp);
 int						is_n_flag(char *str);
-
-# include "pipex.h"
 #endif

@@ -1,4 +1,5 @@
 #include "includes/minishell.h"
+#include "../../includes/pipex.h"
 
 static int	ft_envpsize(t_envp_data *envp)
 {

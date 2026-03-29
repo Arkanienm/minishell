@@ -1,4 +1,5 @@
 #include "includes/minishell.h"
+#include "../../includes/pipex.h"
 
 int	check_quotes(char *file)
 {
@@ -27,8 +28,6 @@ static void	removing_quotes(char **redir_file)
 void	heredoc_child(int write_fd, t_redir *redir, t_data *data)
 {
 	struct sigaction	sa;
-	char				*line;
-	char				*expanded;
 	int					quote;
 
 	quote = check_quotes(redir->file);
@@ -38,36 +37,8 @@ void	heredoc_child(int write_fd, t_redir *redir, t_data *data)
 	sigemptyset(&sa.sa_mask);
 	sa.sa_flags = 0;
 	sigaction(SIGINT, &sa, NULL);
-	while (1)
-	{
-		line = get_next_line(0);
-		if (g_status == SIGINT)
-		{
-			free(line);
-			gnl_clear();
-			g_status = 130;
-			break ;
-		}
-		if (!line)
-			break ;
-		if (is_good_size(redir->file, line) && ft_strncmp(redir->file, line,
-				ft_strlen(redir->file)) == 0)
-		{
-			free(line);
-			break ;
-		}
-		if (quote == 0)
-		{
-			expanded = expander_heredoc(line, data->env);
-			write(write_fd, expanded, ft_strlen(expanded));
-			free(expanded);
-		}
-		else
-		{
-			write(write_fd, line, ft_strlen(line));
-			free(line);
-		}
-	}
+	while (heredoc_child_loop(quote, data, redir, write_fd) == 0)
+		;
 	gnl_clear();
 	close(write_fd);
 	if (data->env)

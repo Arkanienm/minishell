@@ -1,4 +1,5 @@
 #include "../includes/minishell.h"
+#include "../includes/pipex.h"
 
 int	check_double_redir(t_token	*current)
 {

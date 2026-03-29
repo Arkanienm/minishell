@@ -28,7 +28,7 @@ int	execute_builtin(t_cmd *cmd, t_envp_data **envp, int *in, int *out)
 	else if (!ft_strcmp(cmd->cmd[0], "unset"))
 		return (exec_unset(cmd, envp));
 	else if (!ft_strcmp(cmd->cmd[0], "export"))
-		exec_export(cmd, envp);
+		return(exec_export(cmd, envp));
 	else if (!ft_strcmp(cmd->cmd[0], "pwd"))
 		return (exec_pwd(envp));
 	else if (!ft_strcmp(cmd->cmd[0], "echo") && is_n_flag(cmd->cmd[1]))

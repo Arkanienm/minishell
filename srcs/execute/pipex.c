@@ -1,4 +1,5 @@
 #include "includes/minishell.h"
+#include "../../includes/pipex.h"
 
 int	pipex_loop(t_cmd **current, t_data *data, int *status, t_envp_data **envp)
 {

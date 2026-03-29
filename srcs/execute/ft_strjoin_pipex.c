@@ -1,4 +1,5 @@
 #include "includes/minishell.h"
+#include "../../includes/pipex.h"
 
 char	*ft_strjoin_pipex(char *s1, char *s2)
 {

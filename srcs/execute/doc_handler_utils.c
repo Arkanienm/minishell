@@ -1,4 +1,5 @@
 #include "includes/minishell.h"
+#include "../../includes/pipex.h"
 
 int	manage_redir_in(t_data **data, t_redir **redir)
 {
@@ -52,4 +53,33 @@ int	manage_redir_append(t_data **data, t_redir **redir)
 	}
 	(*data)->outfile = -1;
 	return (1);
+}
+void	perror_exit(char *error_message, int code_exit)
+{
+	perror(error_message);
+	exit(code_exit);
+}
+
+void	redirect(t_data *data, t_cmd *cmds)
+{
+	if (data->end[1] != -1)
+	{
+		dup2(data->end[1], STDOUT_FILENO);
+		close(data->end[1]);
+		data->end[1] = -1;
+	}
+	if (data->end[0] != -1)
+	{
+		close(data->end[0]);
+		data->end[0] = -1;
+	}
+	if (data->previous_read != -1)
+	{
+		dup2(data->previous_read, STDIN_FILENO);
+		close(data->previous_read);
+		data->previous_read = -1;
+	}
+	cmd_loop(data, cmds);
+	if (loop_redir(data, cmds->redir) == -1)
+		exit(1);
 }

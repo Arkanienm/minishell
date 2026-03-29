@@ -6,7 +6,7 @@
 /*   By: mageneix <mageneix@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/05 11:44:58 by amurtas           #+#    #+#             */
-/*   Updated: 2026/03/27 21:00:55 by mageneix         ###   ########.fr       */
+/*   Updated: 2026/03/29 14:27:58 by mageneix         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,10 +43,10 @@ char	*ft_update_stash(char *stash, char *buf)
 		new_stash = ft_strjoin(stash, buf);
 	if (!new_stash)
 	{
-		free (stash);
+		free(stash);
 		return (NULL);
 	}
-	free (stash);
+	free(stash);
 	return (new_stash);
 }
 
@@ -54,18 +54,18 @@ char	*ft_cleanstash(char *stash)
 {
 	char	*new_stash;
 	char	*ptr_n;
-	
-	if(!stash)
-		return NULL;
+
+	if (!stash)
+		return (NULL);
 	ptr_n = ft_strchr(stash, '\n');
 	if (ptr_n == NULL)
 	{
 		free(stash);
 		return (NULL);
 	}
-	new_stash = ft_strdup (ptr_n + 1);
-	if(stash)
-		free (stash);
+	new_stash = ft_strdup(ptr_n + 1);
+	if (stash)
+		free(stash);
 	return (new_stash);
 }
 
@@ -77,8 +77,7 @@ void	ft_test(char **stash, int *read_size, char *buf, int fd)
 		if (*stash != NULL)
 		{
 			free(*stash);
-			*
-			stash = NULL;
+			*stash = NULL;
 		}
 		return ;
 	}
@@ -103,12 +102,12 @@ char	*get_next_line(int fd)
 	if (fd < 0 || fd > 1024 || BUFFER_SIZE <= 0)
 		return (NULL);
 	read_size = 1;
-	buf = malloc (BUFFER_SIZE + 1);
+	buf = malloc(BUFFER_SIZE + 1);
 	if (!buf)
 		return (NULL);
 	while (read_size > 0 && (stash == NULL || ft_strchr(stash, '\n') == NULL))
 		ft_test(&stash, &read_size, buf, fd);
-	free (buf);
+	free(buf);
 	buf = NULL;
 	line = ft_extract_line(stash);
 	stash = ft_cleanstash(stash);
