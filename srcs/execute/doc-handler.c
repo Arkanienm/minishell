@@ -66,14 +66,7 @@ int	handle_heredoc(t_data *data, t_redir *redir)
 	close(end[1]);
 	waitpid(pid, &status, 0);
 	if (WIFSIGNALED(status) && WTERMSIG(status) == SIGINT)
-	{
-		close(end[0]);
-		data->heredoc_fd = -1;
-		g_status = 130;
-		write(1, "\n", 1);
-		setup_signals();
-		return (130);
-	}
+		return(free_signal_interrupt(end, data));
 	if (WIFEXITED(status) && WEXITSTATUS(status) == 130)
 	{
 		close(end[0]);

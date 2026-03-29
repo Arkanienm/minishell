@@ -69,7 +69,6 @@ int	exec_loop(t_data *data, char **envp, t_cmd *cmds, t_envp_data **envp_struct)
 	int		null_fd;
 	int		ret;
 	char	buf[4096];
-	t_redir	*current;
 
 	in = -1;
 	out = -1;
@@ -86,48 +85,8 @@ int	exec_loop(t_data *data, char **envp, t_cmd *cmds, t_envp_data **envp_struct)
 	}
 	if (!cmds->cmd || !cmds->cmd[0])
 	{
-		if (cmds->redir)
-		{
-			g_status = 0;
-			current = cmds->redir;
-			while (current)
-			{
-				if (current->type == REDIR_OUT)
-				{
-					out = open(current->file, O_WRONLY | O_CREAT | O_TRUNC,
-							0644);
-					if (out != -1)
-						close(out);
-				}
-				else if (current->type == APPEND)
-				{
-					out = open(current->file, O_WRONLY | O_CREAT | O_APPEND,
-							0644);
-					if (out != -1)
-						close(out);
-				}
-				else if (current->type == REDIR_IN)
-				{
-					in = open(current->file, O_RDONLY);
-					if (in < 0)
-					{
-						perror(current->file);
-						g_status = 1;
-						return (0);
-					}
-					close(in);
-				}
-				else if (current->type == HEREDOC)
-				{
-					if (data->heredoc_fd != -1)
-					{
-						close(data->heredoc_fd);
-						data->heredoc_fd = -1;
-					}
-				}
-				current = current->next;
-			}
-		}
+		if (redir_loop(data, &in, &out, cmds) == 0)
+			return 0;
 		if (!cmds->next && data->previous_read != -1)
 		{
 			while (read(data->previous_read, buf, sizeof(buf)) > 0)

@@ -18,6 +18,7 @@
 # include <termios.h>
 # include <unistd.h>
 
+
 extern int				g_status;
 
 typedef struct s_envp_data
@@ -139,4 +140,6 @@ int						exec_unset(t_cmd *cmd, t_envp_data **envp);
 int						exec_cd(t_cmd *cmd, t_envp_data **envp);
 int						exec_cd_dash(t_cmd *cmd, t_envp_data **envp);
 int						is_n_flag(char *str);
+
+
 #endif

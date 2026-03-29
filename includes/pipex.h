@@ -54,7 +54,9 @@ int				pre_handler_heredoc(t_data *data, t_cmd *cmds);
 void			gnl_clear(void);
 int				loop_redir(t_data *data, t_redir *redir);
 char			*expander_heredoc(char *line, t_envp_data *env);
-int heredoc_child_loop(int quote, t_data *data, t_redir *redir, int write_fd);
-
+int				heredoc_child_loop(int quote, t_data *data, t_redir *redir,
+					int write_fd);
+int				free_signal_interrupt(int end[2], t_data *data);
+int				redir_loop(t_data *data, int *in, int *out, t_cmd *cmds);
 
 #endif
