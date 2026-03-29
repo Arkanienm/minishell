@@ -52,14 +52,9 @@ int	exec_unset(t_cmd *cmd, t_envp_data **envp)
 	return (1);
 }
 
-int	exec_export(t_cmd *cmd, t_envp_data **envp, t_data **data)
+int	exec_export(t_cmd *cmd, t_envp_data **envp)
 {
-	int	index;
-
-	index = 0;
-
-	while (cmd->cmd[index])
-		export(cmd->cmd[index++], envp);
+	export(cmd->cmd[1], envp);
 	return (1);
 }
 
