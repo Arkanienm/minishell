@@ -90,8 +90,6 @@ void restore_fds(int *in, int *out)
 	*out = -1;
 }
 
-
-
 int	exec_loop(t_data *data, char **envp, t_cmd *cmds,
 		t_envp_data **envp_struct)
 {
@@ -102,7 +100,9 @@ int	exec_loop(t_data *data, char **envp, t_cmd *cmds,
 	char buf[4096];
 	t_redir *current;
 
-	if(pre_Handler_heredoc(data, cmds) == 130)
+	in = -1;
+	out = -1;
+	if(pre_handler_heredoc(data, cmds) == 130)
 		return 130;
 	if (cmds->next)
 	{

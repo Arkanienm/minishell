@@ -1,6 +1,6 @@
 #include "includes/minishell.h"
 
-void	init_data(t_data *data)
+void	init_data(t_data *data, t_envp_data *envp)
 {
 	data->last_status = 0;
 	data->should_exit = 0;
@@ -12,4 +12,7 @@ void	init_data(t_data *data)
 	data->heredoc_fd = -1;
 	data->end[0] = -1;
 	data->end[1] = -1;
+	data->envp_tab = NULL;
+	if (envp)
+		data->envp_tab = struct_to_envp(envp);
 }

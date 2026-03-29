@@ -24,7 +24,7 @@ typedef struct s_envp_data
 {
 	char				*keyword;
 	char				*value;
-	int	equal;
+	int					equal;
 	struct s_envp_data	*next;
 }						t_envp_data;
 
@@ -68,8 +68,6 @@ typedef struct s_atol
 	int					digit;
 }						t_atol;
 
-
-
 t_envp_data				*get_envp_path(char **envp);
 void					ft_free_struct(t_token *lst);
 int						update_quotes(int q_state, int len, char *str);
@@ -92,8 +90,8 @@ int						len_bef_equal(char *str);
 char					*get_keyword(char *str);
 int						unset(char *key, t_envp_data **envp);
 long long int			ft_atol_exit(const char *str, int *error);
-void					pwd(int fd);
-long long int	ft_exit(t_cmd *cmd, t_envp_data *envp);
+void					print_pwd(int fd, t_envp_data *envp);
+long long int			ft_exit(t_cmd *cmd, t_envp_data *envp);
 void					setup_signals(void);
 t_cmd					*ft_lstnew_cmd(void *content);
 void					ft_lstadd_back_cmd(t_cmd **lst, t_cmd *new);
@@ -101,32 +99,46 @@ void					ft_lstadd_back_redir(t_redir **lst, t_redir *new);
 void					ft_lstadd_back(t_token **lst, t_token *new);
 t_token					*ft_lstnew(void *content);
 int						ft_lstsize_data(t_envp_data *data);
-int						path_home(char **path, char **old_p, char **tmp_p, t_envp_data **envp);
-int						path_not_found(char **home_p, char **old_p, t_envp_data **envp, char *path);
+int						path_home(char **path, char **old_p, char **tmp_p,
+							t_envp_data **envp);
+int						path_not_found(char **home_p, char **old_p,
+							t_envp_data **envp, char *path);
 int						path_error(char **path, char **old_path);
 int						verif_pwd(t_envp_data **envp);
 char					*find_line_envp(char *to_find, t_envp_data *envp);
-void					exp_tmp(int *verif, int *size, t_envp_data **data, t_envp_data **tmp);
+void					exp_tmp(int *verif, int *size, t_envp_data **data,
+							t_envp_data **tmp);
 void					printing_sorted_env(t_envp_data **data, int size);
 void					free_envp_data(t_envp_data *envp);
 void					write_redir_error(t_token *current);
 int						minishell_loop(t_envp_data *envp);
 void					ft_free_data(t_envp_data *data);
 void					free_all(t_envp_data *envp);
-int						set_envp_path(t_envp_data **data, char **envp, t_envp_data **new);
+int						set_envp_path(t_envp_data **data, char **envp,
+							t_envp_data **new);
 int						verif_cmd_redir(t_token *current);
 int						q_state_set(int i, t_token *current, int q_state);
 int						verif_line(char *line);
 int						check_alnum(char *str);
 int						atoll_loop(int **error, int sign, int digit);
 int						check_sign(const char *nptr, int *i, int *sign);
-int						check_nb(int **error, long long int nb, long long int max_div);
-int	check_space(const char *nptr, t_atol *st_atol);
+int						check_nb(int **error, long long int nb,
+							long long int max_div);
+int						check_space(const char *nptr, t_atol *st_atol);
 int						ft_isspace(int c);
-int	check_str_equal(char *str);
-int	cd_dash(t_envp_data **envp);
-int	check_str_equal(char *str);
-
+int						check_str_equal(char *str);
+int						cd_dash(t_envp_data **envp);
+int						check_str_equal(char *str);
+int						exec_exit(int fd[2], t_cmd *cmd, t_envp_data *envp);
+int						exec_env(t_envp_data **envp);
+int						exec_echo(t_cmd *cmd);
+int						exec_echo_with_n(t_cmd *cmd);
+int						exec_pwd(t_envp_data **envp);
+int						exec_export(t_cmd *cmd, t_envp_data **envp);
+int						exec_unset(t_cmd *cmd, t_envp_data **envp);
+int						exec_cd(t_cmd *cmd, t_envp_data **envp);
+int						exec_cd_dash(t_cmd *cmd, t_envp_data **envp);
+int						is_n_flag(char *str);
 
 # include "pipex.h"
 #endif

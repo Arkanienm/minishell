@@ -21,7 +21,7 @@ typedef struct s_data
 	char	*line;
 }			t_data;
 
-void		init_data(t_data *data);
+void	init_data(t_data *data, t_envp_data *envp);
 void		perror_exit(char *error_message, int code_exit);
 char		*return_path(char *cmd, char **env);
 void		free_tab(char **tab_to_free);
@@ -38,7 +38,7 @@ int	handle_heredoc(t_data *data, t_redir *redir);
 int			apply_redir(t_data *data, t_redir *redir);
 int			execute_builtin(t_cmd *cmd, t_envp_data **envp, int *in, int *out);
 int			detect_builtin(t_cmd *cmd);
-int pre_Handler_heredoc(t_data *data, t_cmd *cmds);
+int pre_handler_heredoc(t_data *data, t_cmd *cmds);
 int			manage_redir_in(t_data **data, t_redir **redir);
 int			manage_redir_out(t_data **data, t_redir **redir);
 int			manage_redir_append(t_data **data, t_redir **redir);
@@ -48,6 +48,12 @@ void		set_sign_ignore(void);
 void		set_sign_def(void);
 void		setup_signals(void);
 void handle_sigint_heredoc(int sig);
+int	is_good_size(char *limiter, char *line);
+int	pre_handler_heredoc(t_data *data, t_cmd *cmds);
+void	gnl_clear(void);
+int	loop_redir(t_data *data, t_redir *redir);
+char	*expander_heredoc(char *line, t_envp_data *env);
+
 
 
 #endif

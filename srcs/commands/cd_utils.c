@@ -8,7 +8,7 @@ int	path_not_found(char **home_p, char **old_p, t_envp_data **envp, char *path)
 		if (!(*home_p))
 		{
 			free((*old_p));
-			perror("minishell : cd");
+			ft_putstr_fd("minishell : cd: HOME not set\n", 2);
 			return (-1);
 		}
 		if (chdir((*home_p)))
@@ -30,6 +30,7 @@ int	path_home(char **path, char **old_p, char **tmp_p, t_envp_data **envp)
 	{
 		free((*old_p));
 		perror("minishell : cd");
+		g_status = 1;
 		return (-1);
 	}
 	(*tmp_p) = ft_strjoin(home_for_tilde, (*path) + 1);
@@ -38,6 +39,7 @@ int	path_home(char **path, char **old_p, char **tmp_p, t_envp_data **envp)
 		free((*old_p));
 		free((*tmp_p));
 		perror("minishell : cd");
+		g_status = 1;
 		return (-1);
 	}
 	return (1);

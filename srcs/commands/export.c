@@ -87,7 +87,7 @@ void	export(char *str, t_envp_data **envp)
 		print_sorted_env((*envp));
 		return ;
 	}
-	if (!check_alnum(str))
+	if (!check_alnum(str) || str[0] == '=')
 	{
 		ft_putstr_fd("bash: export: `", 2);
 		ft_putstr_fd(str, 2);

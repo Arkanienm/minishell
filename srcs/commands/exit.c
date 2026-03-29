@@ -32,6 +32,8 @@ static int	is_numeric(char *str)
 	int	i;
 
 	i = 0;
+	if (str[0] == '\0')
+		return (0);
 	while (ft_isspace(str[i]))
 		i++;
 	if (str[i] == '-' || str[i] == '+')
@@ -40,12 +42,8 @@ static int	is_numeric(char *str)
 			return (0);
 		i++;
 	}
-	while (str[i])
-	{
-		if (str[i] < '0' || str[i] > '9')
-			return (0);
+	while (str[i] && str[i] >= '0' && str[i] <= '9')
 		i++;
-	}
 	while (ft_isspace(str[i]))
 		i++;
 	if (str[i] != '\0')
