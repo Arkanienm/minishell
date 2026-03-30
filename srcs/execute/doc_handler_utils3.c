@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   doc_handler_utils3.c                               :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mageneix <mageneix@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/03/30 10:46:43 by mageneix          #+#    #+#             */
+/*   Updated: 2026/03/30 10:46:43 by mageneix         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../includes/minishell.h"
 #include "../../includes/pipex.h"
 
@@ -15,7 +27,7 @@ static int	free_and_return(char *line)
 	return (1);
 }
 
-int free_signal_interrupt(int end[2], t_data *data)
+int	free_signal_interrupt(int end[2], t_data *data)
 {
 	close(end[0]);
 	data->heredoc_fd = -1;
@@ -52,9 +64,9 @@ int	heredoc_child_loop(int quote, t_data *data, t_redir *redir, int write_fd)
 	return (0);
 }
 
-int redir_loop(t_data *data, int *in, int *out, t_cmd *cmds)
+int	redir_loop(t_data *data, int *in, int *out, t_cmd *cmds)
 {
-	t_redir *current;
+	t_redir	*current;
 
 	if (cmds->redir)
 	{
@@ -64,15 +76,13 @@ int redir_loop(t_data *data, int *in, int *out, t_cmd *cmds)
 		{
 			if (current->type == REDIR_OUT)
 			{
-				*out = open(current->file, O_WRONLY | O_CREAT | O_TRUNC,
-						0644);
+				*out = open(current->file, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 				if (*out != -1)
 					close(*out);
 			}
 			else if (current->type == APPEND)
 			{
-				*out = open(current->file, O_WRONLY | O_CREAT | O_APPEND,
-						0644);
+				*out = open(current->file, O_WRONLY | O_CREAT | O_APPEND, 0644);
 				if (*out != -1)
 					close(*out);
 			}
@@ -98,5 +108,5 @@ int redir_loop(t_data *data, int *in, int *out, t_cmd *cmds)
 			current = current->next;
 		}
 	}
-	return 1;
+	return (1);
 }

@@ -1,5 +1,17 @@
-#include "includes/minishell.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   doc-handler.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mageneix <mageneix@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/03/30 10:46:45 by mageneix          #+#    #+#             */
+/*   Updated: 2026/03/30 10:46:45 by mageneix         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../includes/pipex.h"
+#include "includes/minishell.h"
 
 int	check_quotes(char *file)
 {
@@ -66,7 +78,7 @@ int	handle_heredoc(t_data *data, t_redir *redir)
 	close(end[1]);
 	waitpid(pid, &status, 0);
 	if (WIFSIGNALED(status) && WTERMSIG(status) == SIGINT)
-		return(free_signal_interrupt(end, data));
+		return (free_signal_interrupt(end, data));
 	if (WIFEXITED(status) && WEXITSTATUS(status) == 130)
 	{
 		close(end[0]);

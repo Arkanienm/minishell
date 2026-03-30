@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   utils.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mageneix <mageneix@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/03/30 10:47:12 by mageneix          #+#    #+#             */
+/*   Updated: 2026/03/30 10:47:12 by mageneix         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../includes/minishell.h"
 #include "../../includes/pipex.h"
 
@@ -86,7 +98,7 @@ int	exec_loop(t_data *data, char **envp, t_cmd *cmds, t_envp_data **envp_struct)
 	if (!cmds->cmd || !cmds->cmd[0])
 	{
 		if (redir_loop(data, &in, &out, cmds) == 0)
-			return 0;
+			return (0);
 		if (!cmds->next && data->previous_read != -1)
 		{
 			while (read(data->previous_read, buf, sizeof(buf)) > 0)

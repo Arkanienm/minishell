@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   minishell.h                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mageneix <mageneix@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/03/30 10:45:53 by mageneix          #+#    #+#             */
+/*   Updated: 2026/03/30 10:45:53 by mageneix         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
@@ -17,7 +29,6 @@
 # include <term.h>
 # include <termios.h>
 # include <unistd.h>
-
 
 extern int				g_status;
 
@@ -140,6 +151,5 @@ int						exec_unset(t_cmd *cmd, t_envp_data **envp);
 int						exec_cd(t_cmd *cmd, t_envp_data **envp);
 int						exec_cd_dash(t_cmd *cmd, t_envp_data **envp);
 int						is_n_flag(char *str);
-
 
 #endif

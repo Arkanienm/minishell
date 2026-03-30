@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   exec_builtins.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mageneix <mageneix@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/03/30 10:46:48 by mageneix          #+#    #+#             */
+/*   Updated: 2026/03/30 10:46:48 by mageneix         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../includes/minishell.h"
 #include "../../includes/pipex.h"
 
@@ -28,7 +40,7 @@ int	execute_builtin(t_cmd *cmd, t_envp_data **envp, int *in, int *out)
 	else if (!ft_strcmp(cmd->cmd[0], "unset"))
 		return (exec_unset(cmd, envp));
 	else if (!ft_strcmp(cmd->cmd[0], "export"))
-		return(exec_export(cmd, envp));
+		return (exec_export(cmd, envp));
 	else if (!ft_strcmp(cmd->cmd[0], "pwd"))
 		return (exec_pwd(envp));
 	else if (!ft_strcmp(cmd->cmd[0], "echo") && is_n_flag(cmd->cmd[1]))

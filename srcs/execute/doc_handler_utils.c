@@ -1,5 +1,17 @@
-#include "includes/minishell.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   doc_handler_utils.c                                :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mageneix <mageneix@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/03/30 10:46:39 by mageneix          #+#    #+#             */
+/*   Updated: 2026/03/30 10:46:39 by mageneix         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../includes/pipex.h"
+#include "includes/minishell.h"
 
 int	manage_redir_in(t_data **data, t_redir **redir)
 {
@@ -54,6 +66,7 @@ int	manage_redir_append(t_data **data, t_redir **redir)
 	(*data)->outfile = -1;
 	return (1);
 }
+
 void	perror_exit(char *error_message, int code_exit)
 {
 	perror(error_message);
