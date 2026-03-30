@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   path.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mageneix <mageneix@student.42.fr>          +#+  +:+       +#+        */
+/*   By: amurtas <amurtas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/30 10:47:00 by mageneix          #+#    #+#             */
-/*   Updated: 2026/03/30 15:55:26 by mageneix         ###   ########.fr       */
+/*   Updated: 2026/03/30 16:46:41 by amurtas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,10 +107,4 @@ char	*return_path(char *cmd, char **env)
 	final_path = get_path(cmd, path);
 	free_tab(path);
 	return (final_path);
-}
-
-void	error_exit(char *error, int exit_code)
-{
-	ft_putstr_fd(error, 2);
-	exit(exit_code);
 }

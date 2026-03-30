@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   doc_handler_utils3.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mageneix <mageneix@student.42.fr>          +#+  +:+       +#+        */
+/*   By: amurtas <amurtas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/30 10:46:43 by mageneix          #+#    #+#             */
-/*   Updated: 2026/03/30 10:46:43 by mageneix         ###   ########.fr       */
+/*   Updated: 2026/03/30 17:32:12 by amurtas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,36 +75,16 @@ int	redir_loop(t_data *data, int *in, int *out, t_cmd *cmds)
 		while (current)
 		{
 			if (current->type == REDIR_OUT)
-			{
-				*out = open(current->file, O_WRONLY | O_CREAT | O_TRUNC, 0644);
-				if (*out != -1)
-					close(*out);
-			}
+				open_redir_out(&current, out);
 			else if (current->type == APPEND)
-			{
-				*out = open(current->file, O_WRONLY | O_CREAT | O_APPEND, 0644);
-				if (*out != -1)
-					close(*out);
-			}
+				opening_out(&current, out);
 			else if (current->type == REDIR_IN)
 			{
-				*in = open(current->file, O_RDONLY);
-				if (*in < 0)
-				{
-					perror(current->file);
-					g_status = 1;
+				if (!opening_in(&current, in))
 					return (0);
-				}
-				close(*in);
 			}
 			else if (current->type == HEREDOC)
-			{
-				if (data->heredoc_fd != -1)
-				{
-					close(data->heredoc_fd);
-					data->heredoc_fd = -1;
-				}
-			}
+				verif_heredoc(&data);
 			current = current->next;
 		}
 	}

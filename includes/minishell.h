@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mageneix <mageneix@student.42.fr>          +#+  +:+       +#+        */
+/*   By: amurtas <amurtas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/30 10:45:53 by mageneix          #+#    #+#             */
-/*   Updated: 2026/03/30 10:45:53 by mageneix         ###   ########.fr       */
+/*   Updated: 2026/03/30 17:14:40 by amurtas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,16 @@ typedef struct s_atol
 	int					digit;
 }						t_atol;
 
+typedef	struct s_exec
+{
+	int	null_fd;
+	int	ret;
+	int	fd[2];
+	char	buf[4096];
+	t_cmd	**cmds;
+}						t_exec;
+
+
 t_envp_data				*get_envp_path(char **envp);
 void					ft_free_struct(t_token *lst);
 int						update_quotes(int q_state, int len, char *str);
@@ -151,5 +161,6 @@ int						exec_unset(t_cmd *cmd, t_envp_data **envp);
 int						exec_cd(t_cmd *cmd, t_envp_data **envp);
 int						exec_cd_dash(t_cmd *cmd, t_envp_data **envp);
 int						is_n_flag(char *str);
+
 
 #endif

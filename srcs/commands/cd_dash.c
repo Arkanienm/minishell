@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd_dash.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mageneix <mageneix@student.42.fr>          +#+  +:+       +#+        */
+/*   By: amurtas <amurtas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/30 10:46:02 by mageneix          #+#    #+#             */
-/*   Updated: 2026/03/30 17:21:34 by mageneix         ###   ########.fr       */
+/*   Updated: 2026/03/30 17:56:43 by amurtas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,12 @@ void	cd_loop(t_envp_data **current,
 	}
 }
 
+static int	exit_dash(void)
+{
+	ft_putstr_fd("minishell: cd: OLDPWD not set\n", 2);
+	return (-1);
+}
+
 int	cd_dash(t_envp_data **envp)
 {
 	t_envp_data	*oldpwd;
@@ -53,10 +59,7 @@ int	cd_dash(t_envp_data **envp)
 	current = *envp;
 	cd_loop(&current, envp, &oldpwd, &newpwd);
 	if (!oldpwd)
-	{
-		ft_putstr_fd("minishell: cd: OLDPWD not set\n", 2);
-		return (-1);
-	}
+		return (exit_dash());
 	if (!newpwd)
 		lst_addback_envpdata(envp);
 	str_old = ft_strjoin("OLDPWD=", newpwd->value);

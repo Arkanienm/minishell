@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   struct_to_envp.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mageneix <mageneix@student.42.fr>          +#+  +:+       +#+        */
+/*   By: amurtas <amurtas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/30 10:47:08 by mageneix          #+#    #+#             */
-/*   Updated: 2026/03/30 10:47:08 by mageneix         ###   ########.fr       */
+/*   Updated: 2026/03/30 16:47:00 by amurtas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,4 +63,10 @@ char	**struct_to_envp(t_envp_data *envp)
 	}
 	envp_tab[i] = NULL;
 	return (envp_tab);
+}
+
+void	error_exit(char *error, int exit_code)
+{
+	ft_putstr_fd(error, 2);
+	exit(exit_code);
 }

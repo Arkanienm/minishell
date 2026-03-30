@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mageneix <mageneix@student.42.fr>          +#+  +:+       +#+        */
+/*   By: amurtas <amurtas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/30 10:45:56 by mageneix          #+#    #+#             */
-/*   Updated: 2026/03/30 10:45:56 by mageneix         ###   ########.fr       */
+/*   Updated: 2026/03/30 17:49:38 by amurtas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,5 +70,28 @@ int				heredoc_child_loop(int quote, t_data *data, t_redir *redir,
 					int write_fd);
 int				free_signal_interrupt(int end[2], t_data *data);
 int				redir_loop(t_data *data, int *in, int *out, t_cmd *cmds);
+void				pid_compose(t_data *data, char **envp, t_cmd *cmds);
+void					print_arg(t_cmd *cmds);
+void				close_all(t_data *data);
+void					restore_fds(int *in, int *out);
+void					save_fds(int *in, int *out);
+void					exit_pid(t_data **data, t_envp_data **envp_struct, char **envp, int ret);
+void					close_previous_read(t_data **data, t_cmd **cmds);
+void					close_heredoc(t_data **data, int *in, int *out, int *ret);
+void	close_read(t_data **data, t_cmd **cmds, char *buf);
+void					check_pid(t_data **data, char **envp);
+int	loop_restore(t_data **data, t_cmd **cmds, t_exec *exec);
+int	check_cmds(t_data **data, t_cmd **cmds, t_exec *exec);
+int						validate_pid(t_cmd **cmds, t_data **data, t_envp_data **envp_struct, t_exec *exec);
+void					executing_builtin(t_data **data, t_cmd **cmds, t_envp_data **env_str,t_exec *exec);
+void					exe_built_pid(t_data **data, t_exec *exec, t_envp_data **envp_struct, char **envp);
+int					opening_in(t_redir **current, int *in);
+void					verif_heredoc(t_data **data);
+void					opening_out(t_redir **current, int *out);
+int	cmd_verif(t_cmd **cmds, t_data **data, char **envp, t_envp_data **envp_struct);
+void	verif_pid(t_data **data, t_cmd **cmds, char **envp);
+void	closing_data(t_data **data, t_cmd **cmds);
+void	verif_read(t_data **data, t_cmd **cmds, int *null_fd);
+void	open_redir_out(t_redir **current, int *out);
 
 #endif

@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mageneix <mageneix@student.42.fr>          +#+  +:+       +#+        */
+/*   By: amurtas <amurtas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/30 10:47:12 by mageneix          #+#    #+#             */
-/*   Updated: 2026/03/30 10:47:12 by mageneix         ###   ########.fr       */
+/*   Updated: 2026/03/30 17:57:15 by amurtas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 #include "../../includes/pipex.h"
 
-static void	close_all(t_data *data)
+void	close_all(t_data *data)
 {
 	if (data->outfile != -1)
 		close(data->outfile);
@@ -26,7 +26,13 @@ static void	close_all(t_data *data)
 	data->end[0] = -1;
 }
 
-static void	pid_compose(t_data *data, char **envp, t_cmd *cmds)
+void	print_arg(t_cmd *cmds)
+{
+	ft_putstr_fd(cmds->cmd[0], 2);
+	write(2, ": ", 2);
+}
+
+void	pid_compose(t_data *data, char **envp, t_cmd *cmds)
 {
 	char		*path;
 	struct stat	st;
@@ -51,8 +57,7 @@ static void	pid_compose(t_data *data, char **envp, t_cmd *cmds)
 	execve(path, cmds->cmd, envp);
 	close_all(data);
 	free(path);
-	ft_putstr_fd(cmds->cmd[0], 2);
-	write(2, ": ", 2);
+	print_arg(cmds);
 	error_exit("Command not found\n", 126);
 }
 
@@ -72,177 +77,4 @@ void	restore_fds(int *in, int *out)
 		close(*out);
 	*in = -1;
 	*out = -1;
-}
-
-int	exec_loop(t_data *data, char **envp, t_cmd *cmds, t_envp_data **envp_struct)
-{
-	int		in;
-	int		out;
-	int		null_fd;
-	int		ret;
-	char	buf[4096];
-
-	in = -1;
-	out = -1;
-	if (pre_handler_heredoc(data, cmds) == 130)
-		return (130);
-	if (cmds->next)
-	{
-		if (pipe(data->end) == -1)
-		{
-			free_tab_tab(envp);
-			free_envp_data(*envp_struct);
-			perror_exit("Pipe failed", 1);
-		}
-	}
-	if (!cmds->cmd || !cmds->cmd[0])
-	{
-		if (redir_loop(data, &in, &out, cmds) == 0)
-			return (0);
-		if (!cmds->next && data->previous_read != -1)
-		{
-			while (read(data->previous_read, buf, sizeof(buf)) > 0)
-				;
-			close(data->previous_read);
-			data->previous_read = -1;
-		}
-		if (cmds->next)
-		{
-			if (data->end[1] != -1)
-				close(data->end[1]);
-			data->previous_read = data->end[0];
-			data->end[1] = -1;
-			data->end[0] = -1;
-		}
-		if (data->heredoc_fd != -1)
-		{
-			close(data->heredoc_fd);
-			data->heredoc_fd = -1;
-		}
-		g_status = 0;
-		return (0);
-	}
-	if (detect_builtin(cmds) == 1)
-	{
-		if (cmds->next != NULL || data->previous_read != -1)
-		{
-			data->pid = fork();
-			if (data->pid == -1)
-			{
-				free_tab_tab(envp);
-				perror_exit("Fork failed", 1);
-			}
-			if (data->pid == 0)
-			{
-				set_sign_def();
-				redirect(data, cmds);
-				ret = execute_builtin(cmds, envp_struct, &in, &out);
-				if (ret == 2)
-					data->should_exit = 1;
-				data->last_was_builtin = 1;
-				data->last_status = g_status;
-				free_tab_tab(envp);
-				free_envp_data(*envp_struct);
-				exit(g_status);
-			}
-			else
-			{
-				if (data->previous_read != -1)
-					close(data->previous_read);
-				data->previous_read = -1;
-				if (cmds->next)
-				{
-					if (data->end[1] != -1)
-						close(data->end[1]);
-					data->previous_read = data->end[0];
-					data->end[1] = -1;
-					data->end[0] = -1;
-				}
-				if (data->heredoc_fd != -1)
-				{
-					close(data->heredoc_fd);
-					data->heredoc_fd = -1;
-				}
-			}
-			return (0);
-		}
-		else
-		{
-			save_fds(&in, &out);
-			if (data->previous_read == -1)
-			{
-				null_fd = open("/dev/null", O_RDONLY);
-				dup2(null_fd, STDIN_FILENO);
-				close(null_fd);
-			}
-			else
-			{
-				dup2(data->previous_read, STDIN_FILENO);
-				close(data->previous_read);
-				data->previous_read = -1;
-			}
-			if (cmds->next)
-			{
-				dup2(data->end[1], STDOUT_FILENO);
-				if (data->end[1] != -1)
-					close(data->end[1]);
-				data->end[1] = -1;
-				data->previous_read = data->end[0];
-				data->end[0] = -1;
-			}
-			if (loop_redir(data, cmds->redir) == -1)
-			{
-				data->last_was_builtin = 1;
-				data->last_status = 1;
-				restore_fds(&in, &out);
-				return (0);
-			}
-			ret = execute_builtin(cmds, envp_struct, &in, &out);
-			if (ret == 2)
-				data->should_exit = 1;
-			data->last_was_builtin = 1;
-			data->last_status = g_status;
-			if (data->end[0] != -1)
-				close(data->end[0]);
-			if (data->end[1] != -1)
-				close(data->end[1]);
-			if (data->heredoc_fd != -1)
-			{
-				close(data->heredoc_fd);
-				data->heredoc_fd = -1;
-			}
-			restore_fds(&in, &out);
-		}
-	}
-	else
-	{
-		data->pid = fork();
-		if (data->pid == -1)
-			perror_exit("Fork failed", 1);
-		if (data->pid == 0)
-		{
-			set_sign_def();
-			pid_compose(data, envp, cmds);
-		}
-		else
-		{
-			if (data->previous_read != -1)
-				close(data->previous_read);
-			data->previous_read = -1;
-			if (cmds->next)
-			{
-				if (data->end[1] != -1)
-					close(data->end[1]);
-				data->previous_read = data->end[0];
-				data->end[1] = -1;
-				data->end[0] = -1;
-			}
-			if (data->heredoc_fd != -1)
-			{
-				close(data->heredoc_fd);
-				data->heredoc_fd = -1;
-			}
-		}
-	}
-	return (0);
 }
