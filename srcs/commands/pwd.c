@@ -6,7 +6,7 @@
 /*   By: mageneix <mageneix@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/30 10:46:34 by mageneix          #+#    #+#             */
-/*   Updated: 2026/03/30 10:46:34 by mageneix         ###   ########.fr       */
+/*   Updated: 2026/03/30 15:37:31 by mageneix         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	print_pwd(int fd, t_envp_data *data)
 		}
 		data = data->next;
 	}
-	if (data == NULL)
-		perror("PWD");
+	if (data == NULL || data->value == NULL)
+		ft_putstr_fd("minishell: PWD not set\n", 2);
 	return ;
 }
