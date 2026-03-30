@@ -6,7 +6,7 @@
 /*   By: mageneix <mageneix@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/30 10:46:02 by mageneix          #+#    #+#             */
-/*   Updated: 2026/03/30 10:46:02 by mageneix         ###   ########.fr       */
+/*   Updated: 2026/03/30 17:21:34 by mageneix         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,5 +66,6 @@ int	cd_dash(t_envp_data **envp)
 	export(str_new, envp);
 	free(str_old);
 	free(str_new);
+	print_pwd(1, *envp);
 	return (1);
 }
