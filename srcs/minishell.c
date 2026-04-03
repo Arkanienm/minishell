@@ -6,7 +6,7 @@
 /*   By: mageneix <mageneix@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/30 10:47:43 by mageneix          #+#    #+#             */
-/*   Updated: 2026/03/30 10:47:43 by mageneix         ###   ########.fr       */
+/*   Updated: 2026/03/31 18:00:14 by mageneix         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,13 @@ void	ft_free_data(t_envp_data *data)
 		free(data);
 		data = nnext;
 	}
+}
+
+int	print_and_return(void)
+{
+	ft_putstr_fd("bash: syntax error near unexpected token `|'\n", 2);
+	g_status = 2;
+	return (-1);
 }
 
 int	verif_line(char *line)

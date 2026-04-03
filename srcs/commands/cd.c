@@ -6,7 +6,7 @@
 /*   By: mageneix <mageneix@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/30 10:46:07 by mageneix          #+#    #+#             */
-/*   Updated: 2026/03/30 10:46:07 by mageneix         ###   ########.fr       */
+/*   Updated: 2026/04/02 10:58:01 by mageneix         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,48 +38,46 @@ char	*find_line_envp(char *to_find, t_envp_data *envp)
 	return (NULL);
 }
 
-int	find_index_in_array(char **env_array, char *keyword)
+void	update_value(int *num_envp, t_envp_data *current, char *cwd,
+		t_envp_data *envp)
 {
-	int	i;
-	int	len;
+	char	buffer[4096];
 
-	i = 0;
-	len = ft_strlen(keyword);
-	while (env_array && env_array[i])
-	{
-		if (strncmp(env_array[i], keyword, len) == 0
-			&& env_array[i][len] == '=')
-			return (i);
-		i++;
-	}
-	return (-1);
+	*num_envp = find_num_envp("PWD", envp);
+	free(current->value);
+	if (cwd)
+		current->value = ft_strdup(getcwd(buffer, 4096));
+	else
+		current->value = ft_strdup("");
 }
 
 void	update_var(t_envp_data *envp, char buffer[4096], char *old_path)
 {
 	t_envp_data	*current;
 	int			num_envp;
+	char		*cwd;
 
 	current = envp;
+	cwd = getcwd(buffer, 4096);
 	while (current)
 	{
 		if (strncmp("PWD", current->keyword, ft_strlen("PWD")) == 0
 			&& ft_strlen("PWD") == ft_strlen(current->keyword))
-		{
-			num_envp = find_num_envp("PWD", envp);
-			free(current->value);
-			current->value = ft_strdup(getcwd(buffer, 4096));
-		}
+			update_value(&num_envp, current, cwd, envp);
 		if (strncmp("OLDPWD", current->keyword, ft_strlen("OLDPWD")) == 0
 			&& ft_strlen("OLDPWD") == ft_strlen(current->keyword))
 		{
 			num_envp = find_num_envp("OLDPWD", envp);
 			free(current->value);
-			current->value = ft_strdup(old_path);
+			if (old_path)
+				current->value = ft_strdup(old_path);
+			else
+				current->value = ft_strdup("");
 		}
 		current = current->next;
 	}
-	free(old_path);
+	if (old_path)
+		free(old_path);
 }
 
 int	cd(char *path, t_envp_data *envp)
@@ -88,21 +86,22 @@ int	cd(char *path, t_envp_data *envp)
 	char	buffer[4096];
 	char	*tmp_path;
 	char	*home_path;
+	char	*cwd;
 
+	cwd = getcwd(buffer, 4096);
 	tmp_path = NULL;
-	if (verif_pwd(&envp) == -1)
+	if (verif_pwd(&envp) == 1)
+		old_path = ft_strdup(find_line_envp("PWD", envp));
+	else if (cwd)
+		old_path = ft_strdup(cwd);
+	else
+		old_path = NULL;
+	if ((!path || path[0] == '\0' || path[0] == ' ')
+		&& path_not_found(&home_path, &old_path, &envp, path) == -1)
 		return (-1);
-	old_path = ft_strdup(find_line_envp("PWD", envp));
-	if (!path || path[0] == '\0' || path[0] == ' ')
-	{
-		if (path_not_found(&home_path, &old_path, &envp, path) == -1)
-			return (-1);
-	}
-	else if (path[0] == '~')
-	{
-		if (path_home(&path, &old_path, &tmp_path, &envp) == -1)
-			return (-1);
-	}
+	else if (path[0] == '~' && path_home(&path, &old_path, &tmp_path, &envp)
+		== -1)
+		return (-1);
 	else if (path_error(&path, &old_path) == -1)
 		return (-1);
 	free(tmp_path);

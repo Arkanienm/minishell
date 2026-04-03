@@ -3,17 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amurtas <amurtas@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mageneix <mageneix@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/30 10:47:12 by mageneix          #+#    #+#             */
-/*   Updated: 2026/03/30 17:57:15 by amurtas          ###   ########.fr       */
+/*   Updated: 2026/04/03 10:35:20 by mageneix         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 #include "../../includes/pipex.h"
 
-void	close_all(t_data *data)
+void	close_all(t_data *data, t_cmd *cmds, t_envp_data **envp_struct,
+		char **envp)
 {
 	if (data->outfile != -1)
 		close(data->outfile);
@@ -21,9 +22,16 @@ void	close_all(t_data *data)
 		close(data->end[1]);
 	if (data->end[0] != -1)
 		close(data->end[0]);
-	data->outfile = -1;
-	data->end[1] = -1;
-	data->end[0] = -1;
+	if (data->outfile)
+		data->outfile = -1;
+	if (data->end[1])
+		data->end[1] = -1;
+	if (data->end[0])
+		data->end[0] = -1;
+	free_cmd_struct(cmds);
+	free_envp_data(*envp_struct);
+	free_token_struct(data->token);
+	free_tab_tab(envp);
 }
 
 void	print_arg(t_cmd *cmds)
@@ -32,7 +40,8 @@ void	print_arg(t_cmd *cmds)
 	write(2, ": ", 2);
 }
 
-void	pid_compose(t_data *data, char **envp, t_cmd *cmds)
+void	pid_compose(t_data *data, char **envp, t_cmd *cmds,
+		t_envp_data **envp_struct)
 {
 	char		*path;
 	struct stat	st;
@@ -49,13 +58,13 @@ void	pid_compose(t_data *data, char **envp, t_cmd *cmds)
 			if (access(cmds->cmd[0], F_OK) == 0)
 				error_exit("Permission denied\n", 126);
 		}
-		close_all(data);
 		ft_putstr_fd(cmds->cmd[0], 2);
-		write(2, ": ", 2);
-		error_exit("Command not found\n", 127);
+		close_all(data, cmds, envp_struct, envp);
+		error_exit(": Command not found\n", 127);
 	}
+	free_token_struct(data->token);
 	execve(path, cmds->cmd, envp);
-	close_all(data);
+	close_all(data, cmds, envp_struct, envp);
 	free(path);
 	print_arg(cmds);
 	error_exit("Command not found\n", 126);

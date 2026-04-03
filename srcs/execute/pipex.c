@@ -6,12 +6,12 @@
 /*   By: mageneix <mageneix@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/30 10:47:05 by mageneix          #+#    #+#             */
-/*   Updated: 2026/03/30 10:47:05 by mageneix         ###   ########.fr       */
+/*   Updated: 2026/04/02 09:14:33 by mageneix         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "includes/minishell.h"
 #include "../../includes/pipex.h"
+#include "includes/minishell.h"
 
 int	pipex_loop(t_cmd **current, t_data *data, int *status, t_envp_data **envp)
 {
@@ -76,22 +76,25 @@ static int	return_code_function(int *status)
 		return (130);
 	if (WIFSIGNALED(*status) && WTERMSIG(*status) == SIGPIPE)
 		return (128 + WTERMSIG(*status));
+	if (WIFSIGNALED(*status) && WTERMSIG(*status) == SIGQUIT)
+		return (131);
 	return (1);
 }
 
-int	pipex(t_envp_data *envp, t_cmd *cmds)
+int	pipex(t_envp_data **envp, t_cmd *cmds, t_token *token)
 {
 	t_data	data;
 	int		status;
 	t_cmd	*current;
 
-	init_data(&data, envp);
+	init_data(&data, *envp);
 	current = cmds;
 	status = 0;
 	data.cmd = cmds;
-	data.env = envp;
+	data.token = token;
+	data.env = *envp;
 	set_sign_ignore();
-	if (pipex_loop(&current, &data, &status, &envp) == 0)
+	if (pipex_loop(&current, &data, &status, envp) == 0)
 		return (130);
 	if (pipex_verif(&data) == -42)
 		return (-42);

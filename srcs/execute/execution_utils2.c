@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution_utils2.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amurtas <amurtas@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mageneix <mageneix@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/30 10:47:12 by mageneix          #+#    #+#             */
-/*   Updated: 2026/03/30 17:22:19 by amurtas          ###   ########.fr       */
+/*   Updated: 2026/04/02 10:30:58 by mageneix         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ void	exit_pid(t_data **data, t_envp_data **envp_struct, char **envp, int ret)
 	(*data)->last_was_builtin = 1;
 	(*data)->last_status = g_status;
 	free_tab_tab(envp);
+	free_token_struct((*data)->token);
 	free_envp_data(*envp_struct);
 	exit(g_status);
 }

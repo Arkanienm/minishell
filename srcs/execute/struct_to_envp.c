@@ -3,15 +3,32 @@
 /*                                                        :::      ::::::::   */
 /*   struct_to_envp.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amurtas <amurtas@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mageneix <mageneix@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/30 10:47:08 by mageneix          #+#    #+#             */
-/*   Updated: 2026/03/30 16:47:00 by amurtas          ###   ########.fr       */
+/*   Updated: 2026/04/02 10:33:37 by mageneix         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "includes/minishell.h"
 #include "../../includes/pipex.h"
+#include "includes/minishell.h"
+
+void	free_token_struct(t_token *token)
+{
+	t_token	*tmp;
+
+	if (!token)
+		return ;
+	while (token)
+	{
+		tmp = token->next;
+		if (token->content)
+			free(token->content);
+		free(token);
+		token = tmp;
+	}
+	return ;
+}
 
 static int	ft_envpsize(t_envp_data *envp)
 {

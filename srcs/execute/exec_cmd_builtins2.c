@@ -6,7 +6,7 @@
 /*   By: mageneix <mageneix@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/30 10:46:53 by mageneix          #+#    #+#             */
-/*   Updated: 2026/03/30 10:46:53 by mageneix         ###   ########.fr       */
+/*   Updated: 2026/03/31 17:09:13 by mageneix         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ int	exec_unset(t_cmd *cmd, t_envp_data **envp)
 {
 	int	index;
 
-	index = 0;
+	index = 1;
 	if (cmd->cmd[1])
 	{
 		while (cmd->cmd[index])
@@ -66,7 +66,16 @@ int	exec_unset(t_cmd *cmd, t_envp_data **envp)
 
 int	exec_export(t_cmd *cmd, t_envp_data **envp)
 {
-	export(cmd->cmd[1], envp);
+	int	i;
+
+	i = 1;
+	if (cmd->cmd[1] == NULL || cmd->cmd[1][0] == '\0')
+		export(cmd->cmd[1], envp);
+	else
+	{
+		while (cmd->cmd[i])
+			export(cmd->cmd[i++], envp);
+	}
 	return (1);
 }
 

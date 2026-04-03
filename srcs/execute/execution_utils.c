@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amurtas <amurtas@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mageneix <mageneix@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/30 10:47:12 by mageneix          #+#    #+#             */
-/*   Updated: 2026/03/30 17:14:45 by amurtas          ###   ########.fr       */
+/*   Updated: 2026/04/02 09:14:41 by mageneix         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "../../includes/pipex.h"
 
 int	cmd_verif(t_cmd **cmds, t_data **data, char **envp,
-			t_envp_data **envp_struct)
+		t_envp_data **envp_struct)
 {
 	if (pre_handler_heredoc((*data), (*cmds)) == 130)
 		return (0);
@@ -93,7 +93,8 @@ void	verif_previous_read(t_data **data, t_cmd **cmds)
 	}
 }
 
-void	verif_pid(t_data **data, t_cmd **cmds, char **envp)
+void	verif_pid(t_data **data, t_cmd **cmds, char **envp,
+		t_envp_data **envp_struct)
 {
 	(*data)->pid = fork();
 	if ((*data)->pid == -1)
@@ -101,7 +102,7 @@ void	verif_pid(t_data **data, t_cmd **cmds, char **envp)
 	if ((*data)->pid == 0)
 	{
 		set_sign_def();
-		pid_compose((*data), envp, (*cmds));
+		pid_compose((*data), envp, (*cmds), envp_struct);
 	}
 	else
 		verif_previous_read(&(*data), cmds);

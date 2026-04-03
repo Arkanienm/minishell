@@ -6,14 +6,14 @@
 /*   By: mageneix <mageneix@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/30 10:47:38 by mageneix          #+#    #+#             */
-/*   Updated: 2026/03/30 10:47:38 by mageneix         ###   ########.fr       */
+/*   Updated: 2026/04/02 09:12:05 by mageneix         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 #include "../includes/pipex.h"
 
-int	check_double_redir(t_token	*current)
+int	check_double_redir(t_token *current)
 {
 	while (current->next)
 	{
@@ -36,16 +36,14 @@ int	verif_redir(t_token *token)
 
 	current = token;
 	if (current->type == PIPE)
-	{
-		ft_putstr_fd("bash: syntax error near unexpected token `|'\n", 2);
-		g_status = 2;
-		return (-1);
-	}
+		return (print_and_return());
 	while (current->next)
 		current = current->next;
 	if (current->type == PIPE)
+		return (print_and_return());
+	else if (current->type != WORD)
 	{
-		ft_putstr_fd("bash: syntax error near unexpected token `|'\n", 2);
+		ft_putstr_fd("bash: syntax error near unexpected token `newline'\n", 2);
 		g_status = 2;
 		return (-1);
 	}
@@ -80,7 +78,7 @@ int	parsing_execution(t_cmd **cmd, t_token **token, t_envp_data **envp)
 	parser((*token), cmd);
 	if (cmd)
 	{
-		ret = pipex((*envp), (*cmd));
+		ret = pipex(envp, (*cmd), *token);
 		if (ret == -42)
 			return (1);
 		if (g_status == 130)

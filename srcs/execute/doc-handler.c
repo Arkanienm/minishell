@@ -6,7 +6,7 @@
 /*   By: mageneix <mageneix@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/30 10:46:45 by mageneix          #+#    #+#             */
-/*   Updated: 2026/03/30 10:46:45 by mageneix         ###   ########.fr       */
+/*   Updated: 2026/04/03 10:43:57 by mageneix         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,8 @@ void	heredoc_child(int write_fd, t_redir *redir, t_data *data)
 		free_cmd_struct(data->cmd);
 	if (data->envp_tab)
 		free_tab_tab(data->envp_tab);
+	if(data->token)
+		ft_free_struct(data->token);
 	exit(g_status);
 }
 

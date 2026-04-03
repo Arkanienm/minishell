@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution_utils3.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amurtas <amurtas@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mageneix <mageneix@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/30 10:47:12 by mageneix          #+#    #+#             */
-/*   Updated: 2026/03/30 17:51:24 by amurtas          ###   ########.fr       */
+/*   Updated: 2026/04/02 10:27:28 by mageneix         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,7 @@ void	exe_built_pid(t_data **data, t_exec *exec,
 	if ((*data)->pid == 0)
 	{
 		executing_builtin(&(*data), (*exec).cmds, envp_struct, &(*exec));
+		free_cmd_struct((*data)->cmd);
 		exit_pid(&(*data), envp_struct, envp, (*exec).ret);
 	}
 	else

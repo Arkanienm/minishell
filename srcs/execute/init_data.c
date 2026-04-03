@@ -6,12 +6,12 @@
 /*   By: mageneix <mageneix@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/30 10:46:58 by mageneix          #+#    #+#             */
-/*   Updated: 2026/03/30 10:46:58 by mageneix         ###   ########.fr       */
+/*   Updated: 2026/04/02 09:14:35 by mageneix         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "includes/minishell.h"
 #include "../../includes/pipex.h"
+#include "includes/minishell.h"
 
 void	init_data(t_data *data, t_envp_data *envp)
 {
