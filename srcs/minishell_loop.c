@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_loop.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mageneix <mageneix@student.42.fr>          +#+  +:+       +#+        */
+/*   By: amurtas <amurtas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/30 10:47:38 by mageneix          #+#    #+#             */
-/*   Updated: 2026/04/02 09:12:05 by mageneix         ###   ########.fr       */
+/*   Updated: 2026/04/03 15:22:22 by amurtas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ int	minishell_loop(t_envp_data *envp)
 	while (1)
 	{
 		cmd = NULL;
-		line = readline("minishell> ");
+		line = readline(P_GREEN "minishell> " P_RESET);
 		if (!verif_line(line))
 			break ;
 		if (*line)

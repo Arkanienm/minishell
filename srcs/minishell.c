@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mageneix <mageneix@student.42.fr>          +#+  +:+       +#+        */
+/*   By: amurtas <amurtas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/30 10:47:43 by mageneix          #+#    #+#             */
-/*   Updated: 2026/03/31 18:00:14 by mageneix         ###   ########.fr       */
+/*   Updated: 2026/04/03 15:31:42 by amurtas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int	verif_line(char *line)
 {
 	if (!line)
 	{
-		(printf("exit\n"));
+		(printf(P_RED "exit\n" P_RESET));
 		return (0);
 	}
 	return (1);
@@ -57,7 +57,7 @@ int	main(int argc, char **argv, char **envp)
 	t_envp_data	*env;
 	int			status;
 
-	if (argc != 1)
+	if (argc != 1)	
 		return (0);
 	(void)argv;
 	setup_signals();
