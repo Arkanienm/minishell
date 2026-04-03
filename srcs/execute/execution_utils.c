@@ -22,8 +22,12 @@ int	cmd_verif(t_cmd **cmds, t_data **data, char **envp,
 	{
 		if (pipe((*data)->end) == -1)
 		{
-			free_tab_tab(envp);
-			free_envp_data(*envp_struct);
+			if(envp)
+				free_tab_tab(envp);
+			envp = NULL;
+			if(*envp_struct)
+				free_envp_data(*envp_struct);
+			*envp_struct = NULL;
 			perror_exit("Pipe failed", 1);
 		}
 	}

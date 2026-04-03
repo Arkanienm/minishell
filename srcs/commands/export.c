@@ -21,15 +21,27 @@ void	print_sorted_env(t_envp_data *envp)
 	int			verif;
 
 	verif = 1;
-	size = ft_lstsize_data(envp);
+	size = 0;
 	i = 0;
+	tmp = envp;
+	while (tmp)
+    {
+        if (tmp->keyword != NULL)
+            size++;
+        tmp = tmp->next;
+    }
 	if (size == 0)
-		return ;
+        return ;
 	data = malloc(sizeof(t_envp_data *) * size);
+	if(!data)
+		return ;
 	while (envp)
 	{
-		data[i] = envp;
-		i++;
+		if(envp->keyword != NULL)
+		{
+			data[i] = envp;
+			i++;
+		}
 		envp = envp->next;
 	}
 	exp_tmp(&verif, &size, data, &tmp);
@@ -83,7 +95,7 @@ static int	is_already_exist(char *keyword, t_envp_data *envp)
 {
 	while (envp)
 	{
-		if (ft_strcmp(keyword, envp->keyword) == 0)
+		if (envp->keyword != NULL && ft_strcmp(keyword, envp->keyword) == 0)
 			return (1);
 		envp = envp->next;
 	}

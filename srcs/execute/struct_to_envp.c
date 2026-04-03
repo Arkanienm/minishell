@@ -24,7 +24,9 @@ void	free_token_struct(t_token *token)
 		tmp = token->next;
 		if (token->content)
 			free(token->content);
+		token->content = NULL;
 		free(token);
+		token = NULL;
 		token = tmp;
 	}
 	return ;
@@ -70,6 +72,11 @@ char	**struct_to_envp(t_envp_data *envp)
 		return (NULL);
 	while (envp)
 	{
+		if(!envp->keyword)
+		{
+			envp = envp->next;
+			continue ;
+		}
 		tmp = ft_strdup(envp->keyword);
 		envp_tab[i] = ft_strjoin(tmp, "=");
 		free(tmp);

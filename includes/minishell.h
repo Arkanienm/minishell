@@ -136,7 +136,7 @@ void					exp_tmp(int *verif, int *size, t_envp_data **data,
 void					printing_sorted_env(t_envp_data **data, int size);
 void					free_envp_data(t_envp_data *envp);
 void					write_redir_error(t_token *current);
-int						minishell_loop(t_envp_data *envp);
+int						minishell_loop(t_envp_data **envp);
 void					ft_free_data(t_envp_data *data);
 void					free_all(t_envp_data *envp);
 int						set_envp_path(t_envp_data **data, char **envp,

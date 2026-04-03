@@ -15,7 +15,7 @@
 
 int	env_loop_heredoc(t_envp_data **env, char *key, char *line)
 {
-	while ((*env) && ft_strcmp((*env)->keyword, key) != 0)
+	while ((*env) && (!(*env)->keyword || ft_strcmp((*env)->keyword, key) != 0))
 		(*env) = (*env)->next;
 	if (!ft_strcmp(line, "\"$\""))
 	{

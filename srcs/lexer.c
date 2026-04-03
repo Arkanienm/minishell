@@ -16,7 +16,9 @@ void	ft_error(char *str, t_token *head)
 {
 	g_status = 2;
 	printf("%s\n", str);
-	ft_free_struct(head);
+	if(head)
+		ft_free_struct(head);
+	head = NULL;
 }
 
 t_token	*lexer(char *str)
@@ -90,7 +92,7 @@ t_token	*tokenizer(char *str)
 	i = 0;
 	while (str[i])
 	{
-		while (str[i] == ' ')
+		while (str[i] == ' ' || str[i] == '\t')
 			i++;
 		if (!str[i])
 			break ;

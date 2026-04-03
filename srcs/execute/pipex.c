@@ -32,6 +32,7 @@ int	pipex_loop(t_cmd **current, t_data *data, int *status, t_envp_data **envp)
 			}
 			if (data->envp_tab)
 				free_tab_tab(data->envp_tab);
+			envp = NULL;
 			setup_signals();
 			return (0);
 		}
@@ -42,7 +43,9 @@ int	pipex_loop(t_cmd **current, t_data *data, int *status, t_envp_data **envp)
 
 int	pipex_verif(t_data *data)
 {
-	free_tab_tab(data->envp_tab);
+	if(data->envp_tab)
+		free_tab_tab(data->envp_tab);
+	data->envp_tab = NULL;
 	if (data->should_exit)
 		return (-42);
 	if (data->previous_read != -1)

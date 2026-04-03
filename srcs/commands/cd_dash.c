@@ -33,9 +33,9 @@ void	cd_loop(t_envp_data **current, t_envp_data **envp, t_envp_data **oldpwd,
 	(void)envp;
 	while ((*current) && (!(*oldpwd) || !(*newpwd)))
 	{
-		if (strcmp((*current)->keyword, "OLDPWD") == 0)
+		if (ft_strcmp((*current)->keyword, "OLDPWD") == 0)
 			(*oldpwd) = (*current);
-		else if (strcmp((*current)->keyword, "PWD") == 0)
+		else if (ft_strcmp((*current)->keyword, "PWD") == 0)
 			(*newpwd) = (*current);
 		(*current) = (*current)->next;
 	}

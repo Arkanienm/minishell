@@ -28,9 +28,7 @@ int	check_quotes(char *file)
 static void	removing_quotes(char **redir_file)
 {
 	char	*s1;
-	int		i;
 
-	i = 0;
 	s1 = malloc(sizeof(char) * ft_strlen((*redir_file)) + 1);
 	ft_strlcpy(s1, ((*redir_file) + 1), ft_strlen((*redir_file)) - 1);
 	free((*redir_file));
@@ -55,12 +53,16 @@ void	heredoc_child(int write_fd, t_redir *redir, t_data *data)
 	close(write_fd);
 	if (data->env)
 		free_envp_data(data->env);
+	data->env = NULL;
 	if (data->cmd)
 		free_cmd_struct(data->cmd);
+	data->cmd = NULL;
 	if (data->envp_tab)
 		free_tab_tab(data->envp_tab);
+	data->envp_tab = NULL;
 	if (data->token)
 		ft_free_struct(data->token);
+	data->token = NULL;
 	exit(g_status);
 }
 

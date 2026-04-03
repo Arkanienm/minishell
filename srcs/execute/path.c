@@ -89,12 +89,14 @@ char	*return_path(char *cmd, char **env)
 
 	if (!cmd || !cmd[0])
 		return (NULL);
-	if (cmd[0] == '/' || (cmd[0] == '.' && cmd[1] == '/'))
+	if (ft_strchr(cmd, '/'))
 	{
 		if (access(cmd, F_OK | X_OK) == 0)
 			return (ft_strdup(cmd));
 		return (NULL);
 	}
+	if(!env)
+		return(get_path_local(cmd));
 	path = find_line_path(env);
 	if (!path)
 	{

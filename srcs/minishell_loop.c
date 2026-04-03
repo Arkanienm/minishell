@@ -88,7 +88,7 @@ int	parsing_execution(t_cmd **cmd, t_token **token, t_envp_data **envp)
 	return (0);
 }
 
-int	minishell_loop(t_envp_data *envp)
+int	minishell_loop(t_envp_data **envp)
 {
 	t_token	*token;
 	t_cmd	*cmd;
@@ -104,13 +104,19 @@ int	minishell_loop(t_envp_data *envp)
 			break ;
 		if (*line)
 			add_history(line);
-		check_line(&line, &envp);
+		check_line(&line, envp);
 		token = tokenizer(line);
 		if (token)
-			should_exit = parsing_execution(&cmd, &token, &envp);
-		ft_free_struct(token);
-		free_cmd_struct(cmd);
-		free(line);
+			should_exit = parsing_execution(&cmd, &token, envp);
+		if(token)
+			ft_free_struct(token);
+		token = NULL;
+		if(cmd)
+			free_cmd_struct(cmd);
+		cmd = NULL;
+		if(line)
+			free(line);
+		line = NULL;
 		if (should_exit)
 			break ;
 	}

@@ -19,10 +19,18 @@ void	exit_pid(t_data **data, t_envp_data **envp_struct, char **envp, int ret)
 		(*data)->should_exit = 1;
 	(*data)->last_was_builtin = 1;
 	(*data)->last_status = g_status;
-	free_tab_tab(envp);
-	free_cmd_struct((*data)->cmd);
-	free_token_struct((*data)->token);
-	free_envp_data(*envp_struct);
+	if(envp)
+		free_tab_tab(envp);
+	envp = NULL;
+	if((*data)->cmd != NULL)
+		free_cmd_struct((*data)->cmd);
+	(*data)->cmd = NULL;
+	if((*data)->token)
+		free_token_struct((*data)->token);
+	(*data)->token = NULL;
+	if(*envp_struct)
+		free_envp_data(*envp_struct);
+	*envp_struct = NULL;
 	exit(g_status);
 }
 
@@ -81,7 +89,9 @@ void	check_pid(t_data **data, char **envp)
 	(*data)->pid = fork();
 	if ((*data)->pid == -1)
 	{
-		free_tab_tab(envp);
+		if(envp)
+			free_tab_tab(envp);
+		envp = NULL;
 		perror_exit("Fork failed", 1);
 	}
 }

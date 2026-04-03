@@ -30,12 +30,16 @@ void	close_all(t_data *data, t_cmd *cmds, t_envp_data **envp_struct,
 		data->end[0] = -1;
 	if (cmds)
 		free_cmd_struct(cmds);
+	cmds = NULL;
 	if (envp_struct)
 		free_envp_data(*envp_struct);
+	envp_struct = NULL;
 	if (data->token)
 		free_token_struct(data->token);
+	data->token = NULL;
 	if (envp)
 		free_tab_tab(envp);
+	envp = NULL;
 }
 
 void	print_arg(t_cmd *cmds)
@@ -45,7 +49,7 @@ void	print_arg(t_cmd *cmds)
 	error = ft_strjoin(cmds->cmd[0], ": ");
 	ft_putstr_fd(error, 2);
 	free(error);
-	error_exit("Command not found\n", 126);
+	ft_putstr_fd("Command not found\n", 2);
 }
 
 void	pid_compose(t_data *data, char **envp, t_cmd *cmds,
@@ -70,11 +74,17 @@ void	pid_compose(t_data *data, char **envp, t_cmd *cmds,
 		close_all(data, data->cmd, envp_struct, envp);
 		error_exit(": Command not found\n", 127);
 	}
-	free_token_struct(data->token);
+	if(data->token)
+	{
+		if(data->token)
+			free_token_struct(data->token);
+		data->token = NULL;
+	}
 	execve(path, cmds->cmd, envp);
-	close_all(data, data->cmd, envp_struct, envp);
-	free(path);
 	print_arg(cmds);
+	free(path);
+	close_all(data, data->cmd, envp_struct, envp);
+	exit(126);
 }
 
 void	save_fds(int *in, int *out)

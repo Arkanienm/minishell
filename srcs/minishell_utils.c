@@ -48,7 +48,9 @@ void	ft_free_struct(t_token *lst)
 		nnext = lst->next;
 		if (lst->content)
 			free(lst->content);
+		lst->content = NULL;
 		free(lst);
+		lst = NULL;
 		lst = nnext;
 	}
 }
@@ -87,14 +89,16 @@ void	free_cmd_struct(t_cmd *lst)
 			i = 0;
 			while (lst->cmd[i])
 			{
-				free(lst->cmd[i]);
+				if(lst->cmd)
+					free(lst->cmd[i]);
 				i++;
 			}
 			free(lst->cmd);
 		}
 		if (lst->redir)
 			ft_free_redir(lst->redir);
-		free(lst);
+		if(lst)
+			free(lst);
 		lst = nnext;
 	}
 }

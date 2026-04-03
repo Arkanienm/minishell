@@ -67,7 +67,6 @@ void	exe_built_pid(t_data **data, t_exec *exec,
 	if ((*data)->pid == 0)
 	{
 		executing_builtin(&(*data), (*exec).cmds, envp_struct, &(*exec));
-		free_cmd_struct((*data)->cmd);
 		exit_pid(&(*data), envp_struct, envp, (*exec).ret);
 	}
 	else

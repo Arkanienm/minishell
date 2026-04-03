@@ -16,6 +16,11 @@ void	print_env(t_envp_data *envp)
 {
 	while (envp)
 	{
+		if (envp->keyword == NULL)
+        {
+            envp = envp->next;
+            continue;
+        }
 		if (envp->value != NULL)
 		{
 			ft_putstr_fd(envp->keyword, 1);

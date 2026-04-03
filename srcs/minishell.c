@@ -49,7 +49,9 @@ int	verif_line(char *line)
 
 void	free_all(t_envp_data *envp)
 {
-	free_envp_data(envp);
+	if(envp)
+		free_envp_data(envp);
+	envp = NULL;
 }
 
 int	main(int argc, char **argv, char **envp)
@@ -63,7 +65,7 @@ int	main(int argc, char **argv, char **envp)
 	setup_signals();
 	env = get_envp_path(envp);
 	g_status = 0;
-	status = minishell_loop(env);
+	status = minishell_loop(&env);
 	free_all(env);
 	return (status);
 }
