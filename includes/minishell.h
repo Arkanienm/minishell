@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amurtas <amurtas@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mageneix <mageneix@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/30 10:45:53 by mageneix          #+#    #+#             */
-/*   Updated: 2026/04/03 15:19:48 by amurtas          ###   ########.fr       */
+/*   Updated: 2026/04/03 15:39:02 by mageneix         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,10 +29,10 @@
 # include <term.h>
 # include <termios.h>
 # include <unistd.h>
-#define P_RESET   "\001\033[0m\002"
-#define P_RED     "\001\033[31m\002"
-#define P_GREEN   "\001\033[32m\002"
-#define P_CYAN    "\001\033[36m\002"
+# define P_RESET "\001\033[0m\002"
+# define P_RED "\001\033[31m\002"
+# define P_GREEN "\001\033[32m\002"
+# define P_CYAN "\001\033[36m\002"
 
 extern int				g_status;
 

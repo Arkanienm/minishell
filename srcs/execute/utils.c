@@ -6,7 +6,7 @@
 /*   By: mageneix <mageneix@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/30 10:47:12 by mageneix          #+#    #+#             */
-/*   Updated: 2026/04/03 10:35:20 by mageneix         ###   ########.fr       */
+/*   Updated: 2026/04/03 15:38:36 by mageneix         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,16 +28,24 @@ void	close_all(t_data *data, t_cmd *cmds, t_envp_data **envp_struct,
 		data->end[1] = -1;
 	if (data->end[0])
 		data->end[0] = -1;
-	free_cmd_struct(cmds);
-	free_envp_data(*envp_struct);
-	free_token_struct(data->token);
-	free_tab_tab(envp);
+	if (cmds)
+		free_cmd_struct(cmds);
+	if (envp_struct)
+		free_envp_data(*envp_struct);
+	if (data->token)
+		free_token_struct(data->token);
+	if (envp)
+		free_tab_tab(envp);
 }
 
 void	print_arg(t_cmd *cmds)
 {
-	ft_putstr_fd(cmds->cmd[0], 2);
-	write(2, ": ", 2);
+	char	*error;
+
+	error = ft_strjoin(cmds->cmd[0], ": ");
+	ft_putstr_fd(error, 2);
+	free(error);
+	error_exit("Command not found\n", 126);
 }
 
 void	pid_compose(t_data *data, char **envp, t_cmd *cmds,
@@ -59,15 +67,14 @@ void	pid_compose(t_data *data, char **envp, t_cmd *cmds,
 				error_exit("Permission denied\n", 126);
 		}
 		ft_putstr_fd(cmds->cmd[0], 2);
-		close_all(data, cmds, envp_struct, envp);
+		close_all(data, data->cmd, envp_struct, envp);
 		error_exit(": Command not found\n", 127);
 	}
 	free_token_struct(data->token);
 	execve(path, cmds->cmd, envp);
-	close_all(data, cmds, envp_struct, envp);
+	close_all(data, data->cmd, envp_struct, envp);
 	free(path);
 	print_arg(cmds);
-	error_exit("Command not found\n", 126);
 }
 
 void	save_fds(int *in, int *out)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd_dash.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amurtas <amurtas@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mageneix <mageneix@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/30 10:46:02 by mageneix          #+#    #+#             */
-/*   Updated: 2026/03/30 17:56:43 by amurtas          ###   ########.fr       */
+/*   Updated: 2026/04/03 15:54:26 by mageneix         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,10 +27,11 @@ void	lst_addback_envpdata(t_envp_data **envp)
 	nnode->next = NULL;
 }
 
-void	cd_loop(t_envp_data **current,
-		t_envp_data **envp, t_envp_data **oldpwd, t_envp_data **newpwd)
+void	cd_loop(t_envp_data **current, t_envp_data **envp, t_envp_data **oldpwd,
+		t_envp_data **newpwd)
 {
-	while (envp && (!(*oldpwd) || !(*newpwd)))
+	(void)envp;
+	while ((*current) && (!(*oldpwd) || !(*newpwd)))
 	{
 		if (strcmp((*current)->keyword, "OLDPWD") == 0)
 			(*oldpwd) = (*current);
@@ -44,6 +45,14 @@ static int	exit_dash(void)
 {
 	ft_putstr_fd("minishell: cd: OLDPWD not set\n", 2);
 	return (-1);
+}
+
+void	export_function(char *str_old, char *str_new, t_envp_data **envp)
+{
+	export(str_old, envp);
+	export(str_new, envp);
+	free(str_old);
+	free(str_new);
 }
 
 int	cd_dash(t_envp_data **envp)
@@ -65,10 +74,7 @@ int	cd_dash(t_envp_data **envp)
 	str_old = ft_strjoin("OLDPWD=", newpwd->value);
 	str_new = ft_strjoin("PWD=", oldpwd->value);
 	cd(oldpwd->value, *envp);
-	export(str_old, envp);
-	export(str_new, envp);
-	free(str_old);
-	free(str_new);
+	export_function(str_old, str_new, envp);
 	print_pwd(1, *envp);
 	return (1);
 }
