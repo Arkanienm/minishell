@@ -102,12 +102,16 @@ int	cd(char *path, t_envp_data **envp)
 		old_path = ft_strdup(cwd);
 	else
 		old_path = NULL;
-	if ((!path || path[0] == '\0' || path[0] == ' ')
-		&& path_not_found(&home_path, &old_path, envp, path) == -1)
-		return (-1);
-	else if (path[0] == '~' && path_home(&path, &old_path, &tmp_path, envp)
-		== -1)
-		return (-1);
+	if (!path || path[0] == '\0' || path[0] == ' ')
+	{
+		if(path_not_found(&home_path, &old_path, envp, path) == -1)
+			return (-1);
+	}
+	else if (path[0] == '~')
+	{
+		if(path_home(&path, &old_path, &tmp_path, envp) == -1)
+			return (-1);
+	}
 	else if (path_error(&path, &old_path) == -1)
 		return (-1);
 	free(tmp_path);

@@ -33,6 +33,14 @@ int	exec_cd_dash(t_cmd *cmd, t_envp_data **envp)
 
 int	exec_cd(t_cmd *cmd, t_envp_data **envp)
 {
+	if(cmd->cmd[1] == NULL)
+	{
+		if (cd(NULL, envp) == -1)
+			g_status = 1;
+		else
+			g_status = 0;
+		return 0;
+	}
 	if (cmd->cmd[1] && cmd->cmd[2])
 	{
 		ft_putstr_fd("cd : too many arguments\n", 2);
