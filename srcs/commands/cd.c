@@ -39,11 +39,10 @@ char	*find_line_envp(char *to_find, t_envp_data *envp)
 }
 
 void	update_value(int *num_envp, t_envp_data *current, char *cwd,
-		t_envp_data *envp)
+		t_envp_data **envp)
 {
 	char	buffer[4096];
-
-	*num_envp = find_num_envp("PWD", envp);
+	*num_envp = find_num_envp("PWD", *envp);
 	free(current->value);
 	if (cwd)
 		current->value = ft_strdup(getcwd(buffer, 4096));
@@ -51,13 +50,14 @@ void	update_value(int *num_envp, t_envp_data *current, char *cwd,
 		current->value = ft_strdup("");
 }
 
-void	update_var(t_envp_data *envp, char buffer[4096], char *old_path)
+void	update_var(t_envp_data **envp, char buffer[4096], char *old_path)
 {
 	t_envp_data	*current;
 	int			num_envp;
 	char		*cwd;
+	char *tmp;
 
-	current = envp;
+	current = *envp;
 	cwd = getcwd(buffer, 4096);
 	while (current)
 	{
@@ -67,7 +67,7 @@ void	update_var(t_envp_data *envp, char buffer[4096], char *old_path)
 		if (strncmp("OLDPWD", current->keyword, ft_strlen("OLDPWD")) == 0
 			&& ft_strlen("OLDPWD") == ft_strlen(current->keyword))
 		{
-			num_envp = find_num_envp("OLDPWD", envp);
+			num_envp = find_num_envp("OLDPWD", *envp);
 			free(current->value);
 			if (old_path)
 				current->value = ft_strdup(old_path);
@@ -76,11 +76,17 @@ void	update_var(t_envp_data *envp, char buffer[4096], char *old_path)
 		}
 		current = current->next;
 	}
+	if(current == NULL && cwd)
+	{
+		tmp = ft_strjoin("PWD=", cwd);
+		export(tmp, envp);
+		free(tmp);
+	}
 	if (old_path)
 		free(old_path);
 }
 
-int	cd(char *path, t_envp_data *envp)
+int	cd(char *path, t_envp_data **envp)
 {
 	char	*old_path;
 	char	buffer[4096];
@@ -90,16 +96,16 @@ int	cd(char *path, t_envp_data *envp)
 
 	cwd = getcwd(buffer, 4096);
 	tmp_path = NULL;
-	if (verif_pwd(&envp) == 1)
-		old_path = ft_strdup(find_line_envp("PWD", envp));
+	if (verif_pwd(envp) == 1)
+		old_path = ft_strdup(find_line_envp("PWD", *envp));
 	else if (cwd)
 		old_path = ft_strdup(cwd);
 	else
 		old_path = NULL;
 	if ((!path || path[0] == '\0' || path[0] == ' ')
-		&& path_not_found(&home_path, &old_path, &envp, path) == -1)
+		&& path_not_found(&home_path, &old_path, envp, path) == -1)
 		return (-1);
-	else if (path[0] == '~' && path_home(&path, &old_path, &tmp_path, &envp)
+	else if (path[0] == '~' && path_home(&path, &old_path, &tmp_path, envp)
 		== -1)
 		return (-1);
 	else if (path_error(&path, &old_path) == -1)

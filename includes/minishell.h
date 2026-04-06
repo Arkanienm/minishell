@@ -104,7 +104,7 @@ void					free_cmd_struct(t_cmd *lst);
 void					ft_free_struct(t_token *lst);
 void					parser(t_token *head, t_cmd **cmd_lst);
 void					ft_echo(int fd, char *content);
-int						cd(char *path, t_envp_data *envp);
+int						cd(char *path, t_envp_data **envp);
 void					print_env(t_envp_data *envp);
 void					export(char *str, t_envp_data **envp);
 int						count_tab_tab(char **envp);

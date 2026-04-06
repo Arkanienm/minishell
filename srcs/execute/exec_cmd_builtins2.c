@@ -41,7 +41,7 @@ int	exec_cd(t_cmd *cmd, t_envp_data **envp)
 	}
 	else
 	{
-		if (cd(cmd->cmd[1], *envp) == -1)
+		if (cd(cmd->cmd[1], envp) == -1)
 			g_status = 1;
 		else
 			g_status = 0;

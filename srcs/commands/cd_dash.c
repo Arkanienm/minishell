@@ -73,7 +73,7 @@ int	cd_dash(t_envp_data **envp)
 		lst_addback_envpdata(envp);
 	str_old = ft_strjoin("OLDPWD=", newpwd->value);
 	str_new = ft_strjoin("PWD=", oldpwd->value);
-	cd(oldpwd->value, *envp);
+	cd(oldpwd->value, envp);
 	export_function(str_old, str_new, envp);
 	print_pwd(1, *envp);
 	return (1);

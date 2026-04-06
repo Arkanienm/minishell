@@ -56,6 +56,7 @@ void	executing_builtin(t_data **data, t_cmd **cmds, t_envp_data **env_str,
 {
 	set_sign_def();
 	redirect((*data), (*cmds));
+	save_fds(&(*exec).fd[0], &(*exec).fd[1]);
 	(*exec).ret = execute_builtin((*cmds), env_str,
 			&(*exec).fd[0], &(*exec).fd[1]);
 }
