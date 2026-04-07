@@ -6,7 +6,7 @@
 /*   By: mageneix <mageneix@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/30 10:47:05 by mageneix          #+#    #+#             */
-/*   Updated: 2026/04/07 14:13:56 by mageneix         ###   ########.fr       */
+/*   Updated: 2026/04/07 15:10:23 by mageneix         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,11 +76,17 @@ static int	return_code_function(int *status)
 	if (WIFEXITED(*status))
 		return (WEXITSTATUS(*status));
 	if (WIFSIGNALED(*status) && WTERMSIG(*status) == SIGINT)
+	{
+		write(1, "\n", 1);
 		return (130);
+	}
 	if (WIFSIGNALED(*status) && WTERMSIG(*status) == SIGPIPE)
 		return (128 + WTERMSIG(*status));
 	if (WIFSIGNALED(*status) && WTERMSIG(*status) == SIGQUIT)
+	{
+		write(1, "\n", 1);
 		return (131);
+	}
 	return (1);
 }
 
