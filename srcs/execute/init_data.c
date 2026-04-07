@@ -6,7 +6,7 @@
 /*   By: mageneix <mageneix@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/30 10:46:58 by mageneix          #+#    #+#             */
-/*   Updated: 2026/04/07 14:14:24 by mageneix         ###   ########.fr       */
+/*   Updated: 2026/04/07 14:16:15 by mageneix         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	init_data(t_data *data, t_envp_data *envp)
 	data->end[0] = -1;
 	data->end[1] = -1;
 	data->envp_tab = NULL;
-	if(envp)
+	if (envp)
 		data->env = envp;
 	if (envp)
 		data->envp_tab = struct_to_envp(envp);
