@@ -6,7 +6,7 @@
 /*   By: mageneix <mageneix@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/30 10:47:12 by mageneix          #+#    #+#             */
-/*   Updated: 2026/04/02 09:14:41 by mageneix         ###   ########.fr       */
+/*   Updated: 2026/04/07 10:24:49 by mageneix         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,10 @@ int	cmd_verif(t_cmd **cmds, t_data **data, char **envp,
 	{
 		if (pipe((*data)->end) == -1)
 		{
-			if(envp)
+			if (envp)
 				free_tab_tab(envp);
 			envp = NULL;
-			if(*envp_struct)
+			if (*envp_struct)
 				free_envp_data(*envp_struct);
 			*envp_struct = NULL;
 			perror_exit("Pipe failed", 1);

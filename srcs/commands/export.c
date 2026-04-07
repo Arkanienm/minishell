@@ -6,11 +6,21 @@
 /*   By: mageneix <mageneix@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/30 10:46:23 by mageneix          #+#    #+#             */
-/*   Updated: 2026/03/30 10:46:23 by mageneix         ###   ########.fr       */
+/*   Updated: 2026/04/07 11:32:56 by mageneix         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
+
+void update_tab_data(t_envp_data *envp, t_envp_data ***data, int *i)
+{
+	if (envp->keyword != NULL)
+	{
+		(*data)[*i] = envp;
+		*i += 1;
+	}
+	envp = envp->next;
+}
 
 void	print_sorted_env(t_envp_data *envp)
 {
@@ -24,29 +34,17 @@ void	print_sorted_env(t_envp_data *envp)
 	size = 0;
 	i = 0;
 	tmp = envp;
-	while (tmp)
-    {
-        if (tmp->keyword != NULL)
-            size++;
-        tmp = tmp->next;
-    }
-	if (size == 0)
-        return ;
+	size = find_num_envp(tmp->keyword, envp);
+	if (size == -1)
+		return ;
 	data = malloc(sizeof(t_envp_data *) * size);
-	if(!data)
+	if (!data)
 		return ;
 	while (envp)
-	{
-		if(envp->keyword != NULL)
-		{
-			data[i] = envp;
-			i++;
-		}
-		envp = envp->next;
-	}
+		update_tab_data(envp, &data, &i);
 	exp_tmp(&verif, &size, data, &tmp);
 	printing_sorted_env(data, size);
-	free (data);
+	free(data);
 	return ;
 }
 

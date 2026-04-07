@@ -6,7 +6,7 @@
 /*   By: mageneix <mageneix@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/30 10:47:05 by mageneix          #+#    #+#             */
-/*   Updated: 2026/04/02 09:14:33 by mageneix         ###   ########.fr       */
+/*   Updated: 2026/04/07 10:25:39 by mageneix         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ int	pipex_loop(t_cmd **current, t_data *data, int *status, t_envp_data **envp)
 
 int	pipex_verif(t_data *data)
 {
-	if(data->envp_tab)
+	if (data->envp_tab)
 		free_tab_tab(data->envp_tab);
 	data->envp_tab = NULL;
 	if (data->should_exit)

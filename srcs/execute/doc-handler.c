@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   doc-handler.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amurtas <amurtas@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mageneix <mageneix@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/30 10:46:45 by mageneix          #+#    #+#             */
-/*   Updated: 2026/04/03 15:06:27 by amurtas          ###   ########.fr       */
+/*   Updated: 2026/04/07 10:40:43 by mageneix         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,16 +53,12 @@ void	heredoc_child(int write_fd, t_redir *redir, t_data *data)
 	close(write_fd);
 	if (data->env)
 		free_envp_data(data->env);
-	data->env = NULL;
 	if (data->cmd)
 		free_cmd_struct(data->cmd);
-	data->cmd = NULL;
 	if (data->envp_tab)
 		free_tab_tab(data->envp_tab);
-	data->envp_tab = NULL;
 	if (data->token)
 		ft_free_struct(data->token);
-	data->token = NULL;
 	exit(g_status);
 }
 

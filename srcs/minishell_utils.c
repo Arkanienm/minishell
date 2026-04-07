@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amurtas <amurtas@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mageneix <mageneix@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/30 10:47:41 by mageneix          #+#    #+#             */
-/*   Updated: 2026/04/03 15:17:53 by amurtas          ###   ########.fr       */
+/*   Updated: 2026/04/07 10:24:31 by mageneix         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,8 @@ void	ft_free_struct(t_token *lst)
 		if (lst->content)
 			free(lst->content);
 		lst->content = NULL;
-		free(lst);
+		if (lst)
+			free(lst);
 		lst = NULL;
 		lst = nnext;
 	}
@@ -89,16 +90,21 @@ void	free_cmd_struct(t_cmd *lst)
 			i = 0;
 			while (lst->cmd[i])
 			{
-				if(lst->cmd)
+				if (lst->cmd)
 					free(lst->cmd[i]);
+				lst->cmd[i] = NULL;
 				i++;
 			}
-			free(lst->cmd);
+			if (lst->cmd)
+				free(lst->cmd);
+			lst->cmd = NULL;
 		}
 		if (lst->redir)
 			ft_free_redir(lst->redir);
-		if(lst)
+		lst->redir = NULL;
+		if (lst)
 			free(lst);
+		lst = NULL;
 		lst = nnext;
 	}
 }

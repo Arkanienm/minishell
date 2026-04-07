@@ -6,7 +6,7 @@
 /*   By: mageneix <mageneix@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/30 10:46:53 by mageneix          #+#    #+#             */
-/*   Updated: 2026/03/31 17:09:13 by mageneix         ###   ########.fr       */
+/*   Updated: 2026/04/07 10:26:27 by mageneix         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,13 +33,13 @@ int	exec_cd_dash(t_cmd *cmd, t_envp_data **envp)
 
 int	exec_cd(t_cmd *cmd, t_envp_data **envp)
 {
-	if(cmd->cmd[1] == NULL)
+	if (cmd->cmd[1] == NULL)
 	{
 		if (cd(NULL, envp) == -1)
 			g_status = 1;
 		else
 			g_status = 0;
-		return 0;
+		return (0);
 	}
 	if (cmd->cmd[1] && cmd->cmd[2])
 	{

@@ -6,7 +6,7 @@
 /*   By: mageneix <mageneix@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/30 10:47:12 by mageneix          #+#    #+#             */
-/*   Updated: 2026/04/02 10:27:28 by mageneix         ###   ########.fr       */
+/*   Updated: 2026/04/07 10:24:24 by mageneix         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,35 +39,41 @@ int	check_cmds(t_data **data, t_cmd **cmds, t_exec *exec)
 	return (1);
 }
 
-int	validate_pid(t_cmd **cmds, t_data **data,
-				t_envp_data **envp_struct, t_exec *exec)
+int	validate_pid(t_cmd **cmds, t_data **data, t_envp_data **envp_struct,
+		t_exec *exec)
 {
 	if (!loop_restore(&(*data), &(*cmds), exec))
 		return (0);
-	(*exec).ret = execute_builtin((*cmds),
-			envp_struct, &(*exec).fd[0], &(*exec).fd[1]);
+	(*exec).ret = execute_builtin((*cmds), envp_struct, &(*exec).fd[0],
+			&(*exec).fd[1]);
 	close_heredoc(&(*data), &(*exec).fd[0], &(*exec).fd[1], &(*exec).ret);
 	restore_fds(&(*exec).fd[0], &(*exec).fd[1]);
 	return (1);
 }
 
 void	executing_builtin(t_data **data, t_cmd **cmds, t_envp_data **env_str,
-							t_exec *exec)
+		t_exec *exec)
 {
 	set_sign_def();
-	redirect((*data), (*cmds));
+	redirect((*data), (*cmds), env_str, (*data)->envp_tab);
 	save_fds(&(*exec).fd[0], &(*exec).fd[1]);
-	(*exec).ret = execute_builtin((*cmds), env_str,
-			&(*exec).fd[0], &(*exec).fd[1]);
+	(*exec).ret = execute_builtin((*cmds), env_str, &(*exec).fd[0],
+			&(*exec).fd[1]);
 }
 
-void	exe_built_pid(t_data **data, t_exec *exec,
-				t_envp_data **envp_struct, char **envp)
+void	exe_built_pid(t_data **data, t_exec *exec, t_envp_data **envp_struct,
+		char **envp)
 {
 	check_pid(&(*data), envp);
 	if ((*data)->pid == 0)
 	{
 		executing_builtin(&(*data), (*exec).cmds, envp_struct, &(*exec));
+		if (exec->fd[0] != -1)
+			close(exec->fd[0]);
+		if (exec->fd[1] != -1)
+			close(exec->fd[1]);
+		exec->fd[0] = -1;
+		exec->fd[1] = -1;
 		exit_pid(&(*data), envp_struct, envp, (*exec).ret);
 	}
 	else
