@@ -6,7 +6,7 @@
 /*   By: mageneix <mageneix@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/30 10:47:05 by mageneix          #+#    #+#             */
-/*   Updated: 2026/04/07 10:25:39 by mageneix         ###   ########.fr       */
+/*   Updated: 2026/04/07 14:13:56 by mageneix         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,6 @@ int	pipex(t_envp_data **envp, t_cmd *cmds, t_token *token)
 	status = 0;
 	data.cmd = cmds;
 	data.token = token;
-	data.env = *envp;
 	set_sign_ignore();
 	if (pipex_loop(&current, &data, &status, envp) == 0)
 		return (130);
@@ -106,6 +105,8 @@ int	pipex(t_envp_data **envp, t_cmd *cmds, t_token *token)
 		setup_signals();
 		return (data.last_status);
 	}
+	if (data.pid == -1)
+		return (g_status);
 	waitpid(data.pid, &status, 0);
 	while (wait(NULL) > 0)
 		;
