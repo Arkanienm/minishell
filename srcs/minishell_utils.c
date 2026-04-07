@@ -6,7 +6,7 @@
 /*   By: mageneix <mageneix@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/30 10:47:41 by mageneix          #+#    #+#             */
-/*   Updated: 2026/04/07 10:24:31 by mageneix         ###   ########.fr       */
+/*   Updated: 2026/04/07 12:05:23 by mageneix         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,26 +36,6 @@ int	verif_cmd_redir(t_token *current)
 	return (1);
 }
 
-void	ft_free_struct(t_token *lst)
-{
-	t_token	*nnext;
-
-	nnext = lst;
-	if (!lst)
-		return ;
-	while (lst)
-	{
-		nnext = lst->next;
-		if (lst->content)
-			free(lst->content);
-		lst->content = NULL;
-		if (lst)
-			free(lst);
-		lst = NULL;
-		lst = nnext;
-	}
-}
-
 void	ft_free_redir(t_redir *lst)
 {
 	t_redir	*nnext;
@@ -73,6 +53,20 @@ void	ft_free_redir(t_redir *lst)
 	}
 }
 
+void	cmd_struct_loop(t_cmd *lst)
+{
+	int	i;
+
+	i = 0;
+	while (lst->cmd[i])
+	{
+		if (lst->cmd)
+			free(lst->cmd[i]);
+		lst->cmd[i] = NULL;
+		i++;
+	}
+}
+
 void	free_cmd_struct(t_cmd *lst)
 {
 	t_cmd	*nnext;
@@ -87,14 +81,7 @@ void	free_cmd_struct(t_cmd *lst)
 		nnext = lst->next;
 		if (lst->cmd)
 		{
-			i = 0;
-			while (lst->cmd[i])
-			{
-				if (lst->cmd)
-					free(lst->cmd[i]);
-				lst->cmd[i] = NULL;
-				i++;
-			}
+			cmd_struct_loop(lst);
 			if (lst->cmd)
 				free(lst->cmd);
 			lst->cmd = NULL;

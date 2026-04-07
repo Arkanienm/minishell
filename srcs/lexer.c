@@ -6,7 +6,7 @@
 /*   By: mageneix <mageneix@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/30 10:47:36 by mageneix          #+#    #+#             */
-/*   Updated: 2026/04/07 10:26:47 by mageneix         ###   ########.fr       */
+/*   Updated: 2026/04/07 12:05:44 by mageneix         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ int	set_len_word(char *str, int i, char **word)
 	int	len;
 
 	if ((str[i] == '>' && str[i + 1] == '>') || (str[i] == '<' && str[i
-			+ 1] == '<'))
+				+ 1] == '<'))
 		len = 2;
 	else
 		len = 1;

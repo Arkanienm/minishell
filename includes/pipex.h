@@ -6,7 +6,7 @@
 /*   By: mageneix <mageneix@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/30 10:45:56 by mageneix          #+#    #+#             */
-/*   Updated: 2026/04/07 10:41:01 by mageneix         ###   ########.fr       */
+/*   Updated: 2026/04/07 12:06:02 by mageneix         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ int				handle_heredoc(t_data *data, t_redir *redir);
 int				apply_redir(t_data *data, t_redir *redir);
 int				execute_builtin(t_cmd *cmd, t_envp_data **envp, int *in,
 					int *out);
-void all_on_null(t_data *data);
+void			all_on_null(t_data *data);
 int				detect_builtin(t_cmd *cmd);
 int				pre_handler_heredoc(t_data *data, t_cmd *cmds);
 int				manage_redir_in(t_data **data, t_redir **redir);
