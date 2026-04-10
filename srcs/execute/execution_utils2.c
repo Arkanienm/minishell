@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution_utils2.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mageneix <mageneix@student.42.fr>          +#+  +:+       +#+        */
+/*   By: amurtas <amurtas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/30 10:47:12 by mageneix          #+#    #+#             */
-/*   Updated: 2026/04/07 11:19:54 by mageneix         ###   ########.fr       */
+/*   Updated: 2026/04/10 15:27:09 by amurtas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ void	close_read(t_data **data, t_cmd **cmds, char *buf)
 		close((*data)->previous_read);
 		(*data)->previous_read = -1;
 	}
-	else if((*cmds)->next && (*data)->previous_read != -1)
+	else if ((*cmds)->next && (*data)->previous_read != -1)
 	{
 		close(((*data)->previous_read));
 		(*data)->previous_read = -1;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mageneix <mageneix@student.42.fr>          +#+  +:+       +#+        */
+/*   By: amurtas <amurtas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/30 10:45:53 by mageneix          #+#    #+#             */
-/*   Updated: 2026/04/07 12:05:58 by mageneix         ###   ########.fr       */
+/*   Updated: 2026/04/10 15:32:27 by amurtas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@
 # define P_GREEN "\001\033[32m\002"
 # define P_CYAN "\001\033[36m\002"
 
-extern int				g_status;
+extern int	g_status;
 
 typedef struct s_envp_data
 {

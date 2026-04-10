@@ -6,7 +6,7 @@
 /*   By: amurtas <amurtas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/30 10:46:43 by mageneix          #+#    #+#             */
-/*   Updated: 2026/03/30 17:52:40 by amurtas          ###   ########.fr       */
+/*   Updated: 2026/04/10 15:32:21 by amurtas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,4 +47,17 @@ void	open_redir_out(t_redir **current, int *out)
 	*out = open((*current)->file, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	if (*out != -1)
 		close(*out);
+}
+
+void	verif_end(t_data **data)
+{
+	(*data)->previous_read = -1;
+	if ((*data)->end[0] != -1)
+		close((*data)->end[0]);
+	(*data)->end[0] = -1;
+	if ((*data)->end[1] != -1)
+		close((*data)->end[1]);
+	(*data)->end[1] = -1;
+	if ((*data)->outfile != -1)
+		close((*data)->outfile);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mageneix <mageneix@student.42.fr>          +#+  +:+       +#+        */
+/*   By: amurtas <amurtas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/30 10:47:05 by mageneix          #+#    #+#             */
-/*   Updated: 2026/04/07 15:10:23 by mageneix         ###   ########.fr       */
+/*   Updated: 2026/04/10 15:30:53 by amurtas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,21 +18,13 @@ int	pipex_loop(t_cmd **current, t_data *data, int *status, t_envp_data **envp)
 	while ((*current))
 	{
 		exec_loop(data, data->envp_tab, (*current), &(*envp));
-		if(data->should_exit)
+		if (data->should_exit)
 			break ;
 		if (g_status == 130)
 		{
 			if (data->previous_read != -1)
 				close(data->previous_read);
-			data->previous_read = -1;
-			if (data->end[0] != -1)
-				close(data->end[0]);
-			data->end[0] = -1;
-			if(data->end[1] != -1)
-				close(data->end[1]);
-			data->end[1] = -1;
-			if (data->outfile != -1)
-				close(data->outfile);
+			verif_end(&data);
 			if (data->pid != -1)
 			{
 				waitpid(data->pid, &(*status), 0);
