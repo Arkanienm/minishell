@@ -6,7 +6,7 @@
 /*   By: mageneix <mageneix@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/30 10:46:05 by mageneix          #+#    #+#             */
-/*   Updated: 2026/04/02 10:40:38 by mageneix         ###   ########.fr       */
+/*   Updated: 2026/04/07 13:58:55 by mageneix         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ int	path_error(char **path, char **old_path)
 	{
 		if (old_path)
 			free((*old_path));
+		g_status = 1;
 		ft_putstr_fd("minishell : cd: No such file or directory\n", 2);
 		return (-1);
 	}

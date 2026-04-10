@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   path.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amurtas <amurtas@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mageneix <mageneix@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/30 10:47:00 by mageneix          #+#    #+#             */
-/*   Updated: 2026/03/30 16:46:41 by amurtas          ###   ########.fr       */
+/*   Updated: 2026/04/07 10:24:58 by mageneix         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,8 +95,8 @@ char	*return_path(char *cmd, char **env)
 			return (ft_strdup(cmd));
 		return (NULL);
 	}
-	if(!env)
-		return(get_path_local(cmd));
+	if (!env)
+		return (get_path_local(cmd));
 	path = find_line_path(env);
 	if (!path)
 	{

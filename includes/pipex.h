@@ -6,7 +6,7 @@
 /*   By: mageneix <mageneix@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/30 10:45:56 by mageneix          #+#    #+#             */
-/*   Updated: 2026/04/02 09:14:23 by mageneix         ###   ########.fr       */
+/*   Updated: 2026/04/07 12:06:02 by mageneix         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,8 @@ char			*ft_strjoin_pipex(char *s1, char *s2);
 void			error_exit(char *error, int exit_code);
 void			cmd_loop(t_data *data, t_cmd *current);
 int				loop_redir(t_data *data, t_redir *redir);
-void			redirect(t_data *data, t_cmd *cmds);
+void			redirect(t_data *data, t_cmd *cmds, t_envp_data **envp_struct,
+					char **envp);
 int				pipex(t_envp_data **envp, t_cmd *cmds, t_token *token);
 void			free_token_struct(t_token *token);
 char			**struct_to_envp(t_envp_data *envp);
@@ -51,6 +52,7 @@ int				handle_heredoc(t_data *data, t_redir *redir);
 int				apply_redir(t_data *data, t_redir *redir);
 int				execute_builtin(t_cmd *cmd, t_envp_data **envp, int *in,
 					int *out);
+void			all_on_null(t_data *data);
 int				detect_builtin(t_cmd *cmd);
 int				pre_handler_heredoc(t_data *data, t_cmd *cmds);
 int				manage_redir_in(t_data **data, t_redir **redir);

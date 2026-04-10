@@ -6,7 +6,7 @@
 /*   By: mageneix <mageneix@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/30 10:47:05 by mageneix          #+#    #+#             */
-/*   Updated: 2026/04/02 09:14:33 by mageneix         ###   ########.fr       */
+/*   Updated: 2026/04/07 15:10:23 by mageneix         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ int	pipex_loop(t_cmd **current, t_data *data, int *status, t_envp_data **envp)
 
 int	pipex_verif(t_data *data)
 {
-	if(data->envp_tab)
+	if (data->envp_tab)
 		free_tab_tab(data->envp_tab);
 	data->envp_tab = NULL;
 	if (data->should_exit)
@@ -85,11 +85,17 @@ static int	return_code_function(int *status)
 	if (WIFEXITED(*status))
 		return (WEXITSTATUS(*status));
 	if (WIFSIGNALED(*status) && WTERMSIG(*status) == SIGINT)
+	{
+		write(1, "\n", 1);
 		return (130);
+	}
 	if (WIFSIGNALED(*status) && WTERMSIG(*status) == SIGPIPE)
 		return (128 + WTERMSIG(*status));
 	if (WIFSIGNALED(*status) && WTERMSIG(*status) == SIGQUIT)
+	{
+		write(1, "\n", 1);
 		return (131);
+	}
 	return (1);
 }
 
@@ -104,7 +110,6 @@ int	pipex(t_envp_data **envp, t_cmd *cmds, t_token *token)
 	status = 0;
 	data.cmd = cmds;
 	data.token = token;
-	data.env = *envp;
 	set_sign_ignore();
 	if (pipex_loop(&current, &data, &status, envp) == 0)
 		return (130);
@@ -115,6 +120,8 @@ int	pipex(t_envp_data **envp, t_cmd *cmds, t_token *token)
 		setup_signals();
 		return (data.last_status);
 	}
+	if (data.pid == -1)
+		return (g_status);
 	waitpid(data.pid, &status, 0);
 	while (wait(NULL) > 0)
 		;

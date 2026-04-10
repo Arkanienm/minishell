@@ -6,7 +6,7 @@
 /*   By: mageneix <mageneix@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/30 10:47:12 by mageneix          #+#    #+#             */
-/*   Updated: 2026/04/03 15:24:32 by mageneix         ###   ########.fr       */
+/*   Updated: 2026/04/07 11:19:54 by mageneix         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,18 +19,7 @@ void	exit_pid(t_data **data, t_envp_data **envp_struct, char **envp, int ret)
 		(*data)->should_exit = 1;
 	(*data)->last_was_builtin = 1;
 	(*data)->last_status = g_status;
-	if(envp)
-		free_tab_tab(envp);
-	envp = NULL;
-	if((*data)->cmd != NULL)
-		free_cmd_struct((*data)->cmd);
-	(*data)->cmd = NULL;
-	if((*data)->token)
-		free_token_struct((*data)->token);
-	(*data)->token = NULL;
-	if(*envp_struct)
-		free_envp_data(*envp_struct);
-	*envp_struct = NULL;
+	close_all(*data, (*data)->cmd, envp_struct, envp);
 	exit(g_status);
 }
 
@@ -94,7 +83,7 @@ void	check_pid(t_data **data, char **envp)
 	(*data)->pid = fork();
 	if ((*data)->pid == -1)
 	{
-		if(envp)
+		if (envp)
 			free_tab_tab(envp);
 		envp = NULL;
 		perror_exit("Fork failed", 1);

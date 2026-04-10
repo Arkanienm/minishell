@@ -6,7 +6,7 @@
 /*   By: mageneix <mageneix@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/30 10:46:21 by mageneix          #+#    #+#             */
-/*   Updated: 2026/03/30 10:46:21 by mageneix         ###   ########.fr       */
+/*   Updated: 2026/04/07 11:52:03 by mageneix         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,4 +88,14 @@ int	check_str_equal(char *str)
 		i++;
 	}
 	return (0);
+}
+
+void	update_tab_data(t_envp_data **envp, t_envp_data ***data, int *i)
+{
+	if ((*envp)->keyword != NULL)
+	{
+		(*data)[*i] = *envp;
+		*i += 1;
+	}
+	(*envp) = (*envp)->next;
 }

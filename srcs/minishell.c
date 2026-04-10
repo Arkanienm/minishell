@@ -6,7 +6,7 @@
 /*   By: mageneix <mageneix@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/30 10:47:43 by mageneix          #+#    #+#             */
-/*   Updated: 2026/04/03 15:38:50 by mageneix         ###   ########.fr       */
+/*   Updated: 2026/04/07 10:26:50 by mageneix         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ int	verif_line(char *line)
 
 void	free_all(t_envp_data *envp)
 {
-	if(envp)
+	if (envp)
 		free_envp_data(envp);
 	envp = NULL;
 }

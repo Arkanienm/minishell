@@ -6,7 +6,7 @@
 /*   By: mageneix <mageneix@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/30 10:45:53 by mageneix          #+#    #+#             */
-/*   Updated: 2026/04/03 15:39:02 by mageneix         ###   ########.fr       */
+/*   Updated: 2026/04/07 12:05:58 by mageneix         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -165,5 +165,17 @@ int						exec_cd(t_cmd *cmd, t_envp_data **envp);
 int						exec_cd_dash(t_cmd *cmd, t_envp_data **envp);
 int						is_n_flag(char *str);
 int						print_and_return(void);
+int						check_path_is_ok(char *path, char *home_path,
+							char *old_path, t_envp_data **envp);
+void					update_oldpwd(int *num_envp, t_envp_data **envp,
+							t_envp_data *current, char *old_path);
+int						find_num_envp(char *to_find, t_envp_data *envp);
+void					update_tab_data(t_envp_data **envp, t_envp_data ***data,
+							int *i);
+int						count_envp_values(t_envp_data *envp);
+;
+void					free_miniloop(t_token **token, t_cmd **cmd,
+							char **line);
+void					free_miniloop_exec(t_token **token, t_cmd **cmd);
 
 #endif

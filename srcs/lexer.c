@@ -6,7 +6,7 @@
 /*   By: mageneix <mageneix@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/30 10:47:36 by mageneix          #+#    #+#             */
-/*   Updated: 2026/03/30 10:47:36 by mageneix         ###   ########.fr       */
+/*   Updated: 2026/04/07 12:05:44 by mageneix         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	ft_error(char *str, t_token *head)
 {
 	g_status = 2;
 	printf("%s\n", str);
-	if(head)
+	if (head)
 		ft_free_struct(head);
 	head = NULL;
 }
@@ -45,8 +45,8 @@ int	set_len_word(char *str, int i, char **word)
 {
 	int	len;
 
-	if ((str[i] == '>' && str[i + 1] == '>' ) || (str[i] == '<'
-			&& str[i + 1] == '<'))
+	if ((str[i] == '>' && str[i + 1] == '>') || (str[i] == '<' && str[i
+				+ 1] == '<'))
 		len = 2;
 	else
 		len = 1;
@@ -69,13 +69,13 @@ char	*extract_word(int i, char *str)
 		while (check_meta_char(str[len], q_state))
 		{
 			q_state = update_quotes(q_state, len, str);
-			len ++;
+			len++;
 		}
 		word = ft_substr(str, i, len - i);
 	}
 	if (q_state != 0)
 	{
-		free (word);
+		free(word);
 		return (NULL);
 	}
 	return (word);

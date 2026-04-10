@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_loop.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amurtas <amurtas@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mageneix <mageneix@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/30 10:47:38 by mageneix          #+#    #+#             */
-/*   Updated: 2026/04/03 15:22:22 by amurtas          ###   ########.fr       */
+/*   Updated: 2026/04/07 12:01:23 by mageneix         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,7 @@ int	parsing_execution(t_cmd **cmd, t_token **token, t_envp_data **envp)
 	if (cmd)
 	{
 		ret = pipex(envp, (*cmd), *token);
+		free_miniloop_exec(token, cmd);
 		if (ret == -42)
 			return (1);
 		if (g_status == 130)
@@ -108,15 +109,7 @@ int	minishell_loop(t_envp_data **envp)
 		token = tokenizer(line);
 		if (token)
 			should_exit = parsing_execution(&cmd, &token, envp);
-		if(token)
-			ft_free_struct(token);
-		token = NULL;
-		if(cmd)
-			free_cmd_struct(cmd);
-		cmd = NULL;
-		if(line)
-			free(line);
-		line = NULL;
+		free_miniloop(&token, &cmd, &line);
 		if (should_exit)
 			break ;
 	}

@@ -1,34 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   env.c                                              :+:      :+:    :+:   */
+/*   export_utils2.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mageneix <mageneix@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/03/30 10:46:15 by mageneix          #+#    #+#             */
-/*   Updated: 2026/04/07 10:25:59 by mageneix         ###   ########.fr       */
+/*   Created: 2026/04/07 11:49:44 by mageneix          #+#    #+#             */
+/*   Updated: 2026/04/07 11:51:53 by mageneix         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-void	print_env(t_envp_data *envp)
+int	count_envp_values(t_envp_data *envp)
 {
+	int	size;
+
+	size = 0;
+	if (!envp)
+		return (0);
 	while (envp)
 	{
-		if (envp->keyword == NULL)
-		{
-			envp = envp->next;
-			continue ;
-		}
-		if (envp->value != NULL)
-		{
-			ft_putstr_fd(envp->keyword, 1);
-			write(1, "=", 1);
-			ft_putstr_fd(envp->value, 1);
-			write(1, "\n", 1);
-		}
+		size++;
 		envp = envp->next;
 	}
-	return ;
+	return (size);
 }

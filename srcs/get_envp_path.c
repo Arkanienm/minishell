@@ -6,7 +6,7 @@
 /*   By: mageneix <mageneix@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/30 10:47:34 by mageneix          #+#    #+#             */
-/*   Updated: 2026/04/03 12:02:39 by mageneix         ###   ########.fr       */
+/*   Updated: 2026/04/07 10:27:02 by mageneix         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,14 +17,14 @@ t_envp_data	*get_envp_path(char **envp)
 	t_envp_data	*data;
 	t_envp_data	*new;
 	t_envp_data	*initial;
-	char *fakeenv[2];
+	char		*fakeenv[2];
 
 	data = malloc(sizeof(t_envp_data));
 	if (!data)
 		return (NULL);
 	data->keyword = NULL;
-    data->value = NULL;
-    data->next = NULL;
+	data->value = NULL;
+	data->next = NULL;
 	initial = data;
 	if (!envp || !envp[0])
 	{

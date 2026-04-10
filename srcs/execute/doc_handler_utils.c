@@ -6,7 +6,7 @@
 /*   By: mageneix <mageneix@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/30 10:46:39 by mageneix          #+#    #+#             */
-/*   Updated: 2026/03/30 10:46:39 by mageneix         ###   ########.fr       */
+/*   Updated: 2026/04/07 14:02:22 by mageneix         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,8 @@ void	perror_exit(char *error_message, int code_exit)
 	exit(code_exit);
 }
 
-void	redirect(t_data *data, t_cmd *cmds)
+void	redirect(t_data *data, t_cmd *cmds, t_envp_data **envp_struct,
+		char **envp)
 {
 	if (data->end[1] != -1)
 	{
@@ -94,5 +95,8 @@ void	redirect(t_data *data, t_cmd *cmds)
 	}
 	cmd_loop(data, cmds);
 	if (loop_redir(data, cmds->redir) == -1)
+	{
+		close_all(data, data->cmd, envp_struct, envp);
 		exit(1);
+	}
 }
