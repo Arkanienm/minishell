@@ -81,6 +81,11 @@ void	close_read(t_data **data, t_cmd **cmds, char *buf)
 		close((*data)->previous_read);
 		(*data)->previous_read = -1;
 	}
+	else if((*cmds)->next && (*data)->previous_read != -1)
+	{
+		close(((*data)->previous_read));
+		(*data)->previous_read = -1;
+	}
 	closing_data(data, cmds);
 }
 

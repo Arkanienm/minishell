@@ -18,10 +18,19 @@ int	pipex_loop(t_cmd **current, t_data *data, int *status, t_envp_data **envp)
 	while ((*current))
 	{
 		exec_loop(data, data->envp_tab, (*current), &(*envp));
+		if(data->should_exit)
+			break ;
 		if (g_status == 130)
 		{
 			if (data->previous_read != -1)
 				close(data->previous_read);
+			data->previous_read = -1;
+			if (data->end[0] != -1)
+				close(data->end[0]);
+			data->end[0] = -1;
+			if(data->end[1] != -1)
+				close(data->end[1]);
+			data->end[1] = -1;
 			if (data->outfile != -1)
 				close(data->outfile);
 			if (data->pid != -1)
@@ -32,7 +41,7 @@ int	pipex_loop(t_cmd **current, t_data *data, int *status, t_envp_data **envp)
 			}
 			if (data->envp_tab)
 				free_tab_tab(data->envp_tab);
-			envp = NULL;
+			data->envp_tab = NULL;
 			setup_signals();
 			return (0);
 		}

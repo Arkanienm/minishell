@@ -102,5 +102,6 @@ void			verif_pid(t_data **data, t_cmd **cmds, char **envp,
 void			closing_data(t_data **data, t_cmd **cmds);
 void			verif_read(t_data **data, t_cmd **cmds, int *null_fd);
 void			open_redir_out(t_redir **current, int *out);
+char	*read_heredoc_line(void);
 
 #endif

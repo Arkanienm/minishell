@@ -42,7 +42,7 @@ int	heredoc_child_loop(int quote, t_data *data, t_redir *redir, int write_fd)
 	char	*line;
 	char	*expanded;
 
-	line = get_next_line(0);
+	line = read_heredoc_line();
 	if (g_status == SIGINT)
 		return (free_and_clear(line));
 	if (!line)
