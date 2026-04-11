@@ -6,7 +6,7 @@
 /*   By: mageneix <mageneix@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/30 10:46:48 by mageneix          #+#    #+#             */
-/*   Updated: 2026/03/30 10:46:48 by mageneix         ###   ########.fr       */
+/*   Updated: 2026/04/11 13:14:16 by mageneix         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,5 +73,17 @@ int	detect_builtin(t_cmd *cmd)
 		return (1);
 	else if (!ft_strcmp(cmd->cmd[0], "exit"))
 		return (1);
+	return (0);
+}
+
+int	status_update(t_data *data, int end[2])
+{
+	if (g_status == 130)
+	{
+		close(end[0]);
+		data->heredoc_fd = -1;
+		setup_signals();
+		return (130);
+	}
 	return (0);
 }

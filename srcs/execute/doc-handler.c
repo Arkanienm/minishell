@@ -6,7 +6,7 @@
 /*   By: mageneix <mageneix@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/30 10:46:45 by mageneix          #+#    #+#             */
-/*   Updated: 2026/04/07 10:40:43 by mageneix         ###   ########.fr       */
+/*   Updated: 2026/04/11 13:11:57 by mageneix         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ void	heredoc_child(int write_fd, t_redir *redir, t_data *data)
 	struct sigaction	sa;
 	int					quote;
 
+	g_status = 0;
 	quote = check_quotes(redir->file);
 	if (quote == 1)
 		removing_quotes(&redir->file);
@@ -77,16 +78,16 @@ int	handle_heredoc(t_data *data, t_redir *redir)
 	}
 	close(end[1]);
 	waitpid(pid, &status, 0);
+	if (WIFEXITED(status))
+		g_status = WEXITSTATUS(status);
 	if (WIFSIGNALED(status) && WTERMSIG(status) == SIGINT)
-		return (free_signal_interrupt(end, data));
-	if (WIFEXITED(status) && WEXITSTATUS(status) == 130)
 	{
-		close(end[0]);
-		data->heredoc_fd = -1;
-		g_status = 130;
-		setup_signals();
-		return (130);
+		g_status = 128 + WTERMSIG(status);
+		if (WTERMSIG(status) == SIGINT)
+			return (free_signal_interrupt(end, data));
 	}
+	if (status_update(data, end) == 130)
+		return (130);
 	data->heredoc_fd = end[0];
 	return (0);
 }

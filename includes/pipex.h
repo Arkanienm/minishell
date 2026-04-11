@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amurtas <amurtas@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mageneix <mageneix@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/30 10:45:56 by mageneix          #+#    #+#             */
-/*   Updated: 2026/04/11 12:42:15 by amurtas          ###   ########.fr       */
+/*   Updated: 2026/04/11 13:14:22 by mageneix         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,5 +106,6 @@ void			verif_read(t_data **data, t_cmd **cmds, int *null_fd);
 void			open_redir_out(t_redir **current, int *out);
 char			*read_heredoc_line(void);
 void			verif_end(t_data **data);
+int				status_update(t_data *data, int end[2]);
 
 #endif
