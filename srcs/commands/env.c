@@ -6,7 +6,7 @@
 /*   By: mageneix <mageneix@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/30 10:46:15 by mageneix          #+#    #+#             */
-/*   Updated: 2026/04/07 10:25:59 by mageneix         ###   ########.fr       */
+/*   Updated: 2026/04/11 13:28:48 by mageneix         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,15 @@ void	print_env(t_envp_data *envp)
 			envp = envp->next;
 			continue ;
 		}
-		if (envp->value != NULL)
+		if(envp->equal == 1)
 		{
 			ft_putstr_fd(envp->keyword, 1);
 			write(1, "=", 1);
+			if(envp->value == NULL)
+				write(1, "\n", 1);
+		}
+		if (envp->value != NULL)
+		{
 			ft_putstr_fd(envp->value, 1);
 			write(1, "\n", 1);
 		}
