@@ -6,7 +6,7 @@
 /*   By: mageneix <mageneix@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/30 10:46:43 by mageneix          #+#    #+#             */
-/*   Updated: 2026/04/07 15:08:44 by mageneix         ###   ########.fr       */
+/*   Updated: 2026/04/11 12:55:46 by mageneix         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ static int	free_and_clear(char *line)
 
 static int	free_and_return(char *line)
 {
+	g_status = 0;
 	free(line);
 	return (1);
 }
