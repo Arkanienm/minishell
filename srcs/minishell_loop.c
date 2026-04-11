@@ -6,7 +6,7 @@
 /*   By: mageneix <mageneix@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/30 10:47:38 by mageneix          #+#    #+#             */
-/*   Updated: 2026/04/07 12:01:23 by mageneix         ###   ########.fr       */
+/*   Updated: 2026/04/10 14:05:11 by mageneix         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,7 @@ int	minishell_loop(t_envp_data **envp)
 	while (1)
 	{
 		cmd = NULL;
-		line = readline(P_GREEN "minishell> " P_RESET);
+		line = readline("minishell> ");
 		if (!verif_line(line))
 			break ;
 		if (*line)

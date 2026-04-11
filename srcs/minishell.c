@@ -6,7 +6,7 @@
 /*   By: mageneix <mageneix@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/30 10:47:43 by mageneix          #+#    #+#             */
-/*   Updated: 2026/04/07 10:26:50 by mageneix         ###   ########.fr       */
+/*   Updated: 2026/04/10 14:05:24 by mageneix         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int	verif_line(char *line)
 {
 	if (!line)
 	{
-		(printf(P_RED "exit\n" P_RESET));
+		(printf("exit\n"));
 		return (0);
 	}
 	return (1);
