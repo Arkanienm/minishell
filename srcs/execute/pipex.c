@@ -3,14 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mageneix <mageneix@student.42.fr>          +#+  +:+       +#+        */
+/*   By: amurtas <amurtas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/30 10:47:05 by mageneix          #+#    #+#             */
-<<<<<<< Updated upstream
-/*   Updated: 2026/04/12 18:14:47 by amurtas          ###   ########.fr       */
-=======
-/*   Updated: 2026/04/11 17:41:43 by mageneix         ###   ########.fr       */
->>>>>>> Stashed changes
+/*   Updated: 2026/04/12 18:22:30 by amurtas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
