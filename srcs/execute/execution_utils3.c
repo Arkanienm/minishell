@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution_utils3.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amurtas <amurtas@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mageneix <mageneix@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/30 10:47:12 by mageneix          #+#    #+#             */
-/*   Updated: 2026/04/12 18:23:17 by amurtas          ###   ########.fr       */
+/*   Updated: 2026/04/12 18:27:23 by mageneix         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,20 +34,20 @@ int	check_cmds(t_data **data, t_cmd **cmds, t_exec *exec)
 		if (redir_loop((*data), &exec->fd[0], &exec->fd[1], (*cmds)) == 0)
 		{
 			if ((*data)->end[0] != -1)
-            {
-                close((*data)->end[0]);
-                (*data)->end[0] = -1;
-            }
-            if ((*data)->end[1] != -1)
-            {
-                close((*data)->end[1]);
-                (*data)->end[1] = -1;
-            }
-            if ((*data)->previous_read != -1)
-            {
-                close((*data)->previous_read);
-                (*data)->previous_read = -1;
-            }
+			{
+				close((*data)->end[0]);
+				(*data)->end[0] = -1;
+			}
+			if ((*data)->end[1] != -1)
+			{
+				close((*data)->end[1]);
+				(*data)->end[1] = -1;
+			}
+			if ((*data)->previous_read != -1)
+			{
+				close((*data)->previous_read);
+				(*data)->previous_read = -1;
+			}
 			return (0);
 		}
 		close_read(data, cmds, exec->buf);
