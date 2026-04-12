@@ -6,7 +6,7 @@
 /*   By: mageneix <mageneix@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/30 10:46:12 by mageneix          #+#    #+#             */
-/*   Updated: 2026/03/30 10:46:12 by mageneix         ###   ########.fr       */
+/*   Updated: 2026/04/11 17:21:27 by mageneix         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,13 @@ void	ft_echo(int fd, char *content)
 
 	i = 0;
 	while (content[i])
-		write(fd, &content[i++], 1);
+	{
+		if (write(fd, &content[i], 1) == -1)
+		{
+			g_status = 141;
+			return ;
+		}
+		i++;
+	}
 	return ;
 }

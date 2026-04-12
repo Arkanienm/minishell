@@ -6,7 +6,11 @@
 /*   By: amurtas <amurtas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/30 10:47:12 by mageneix          #+#    #+#             */
+<<<<<<< Updated upstream
 /*   Updated: 2026/04/12 18:14:29 by amurtas          ###   ########.fr       */
+=======
+/*   Updated: 2026/04/11 19:10:34 by mageneix         ###   ########.fr       */
+>>>>>>> Stashed changes
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,29 +72,30 @@ int	validate_pid(t_cmd **cmds, t_data **data, t_envp_data **envp_struct,
 	return (1);
 }
 
-void	executing_builtin(t_data **data, t_cmd **cmds, t_envp_data **env_str,
-		t_exec *exec)
-{
-	set_sign_def();
-	redirect((*data), (*cmds), env_str, (*data)->envp_tab);
-	save_fds(&(*exec).fd[0], &(*exec).fd[1]);
-	(*exec).ret = execute_builtin((*cmds), env_str, &(*exec).fd[0],
-			&(*exec).fd[1]);
-}
-
 void	exe_built_pid(t_data **data, t_exec *exec, t_envp_data **envp_struct,
 		char **envp)
 {
+	int	saved_in;
+	int	saved_out;
+
 	check_pid(&(*data), envp);
 	if ((*data)->pid == 0)
 	{
-		executing_builtin(&(*data), (*exec).cmds, envp_struct, &(*exec));
-		if (exec->fd[0] != -1)
-			close(exec->fd[0]);
-		if (exec->fd[1] != -1)
-			close(exec->fd[1]);
-		exec->fd[0] = -1;
-		exec->fd[1] = -1;
+		set_signals();
+		if ((*data)->end[0] != -1)
+		{
+			close((*data)->end[0]);
+			(*data)->end[0] = -1;
+		}
+		redirect((*data), (*exec->cmds), envp_struct, envp);
+		saved_in = dup(STDIN_FILENO);
+		saved_out = dup(STDOUT_FILENO);
+		(*exec).ret = execute_builtin((*exec->cmds), envp_struct, &saved_in,
+				&saved_out);
+		if (saved_in != -1)
+			close(saved_in);
+		if (saved_out != -1)
+			close(saved_out);
 		exit_pid(&(*data), envp_struct, envp, (*exec).ret);
 	}
 	else

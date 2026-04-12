@@ -6,7 +6,7 @@
 /*   By: mageneix <mageneix@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/30 10:45:56 by mageneix          #+#    #+#             */
-/*   Updated: 2026/04/11 13:14:22 by mageneix         ###   ########.fr       */
+/*   Updated: 2026/04/11 19:17:12 by mageneix         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,5 +107,10 @@ void			open_redir_out(t_redir **current, int *out);
 char			*read_heredoc_line(void);
 void			verif_end(t_data **data);
 int				status_update(t_data *data, int end[2]);
+void			set_signals(void);
+void			executing_builtin(t_data **data, t_cmd **cmds,
+					t_envp_data **env_str, t_exec *exec);
+void			close_and_pipe(t_data *data, int end[2], pid_t *pid);
+void			verif_free_all(t_data *data);
 
 #endif

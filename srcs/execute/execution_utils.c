@@ -6,7 +6,11 @@
 /*   By: amurtas <amurtas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/30 10:47:12 by mageneix          #+#    #+#             */
+<<<<<<< Updated upstream
 /*   Updated: 2026/04/12 17:59:56 by amurtas          ###   ########.fr       */
+=======
+/*   Updated: 2026/04/11 17:48:23 by mageneix         ###   ########.fr       */
+>>>>>>> Stashed changes
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,11 +47,6 @@ void	closing_data(t_data **data, t_cmd **cmds)
 		(*data)->previous_read = (*data)->end[0];
 		(*data)->end[1] = -1;
 		(*data)->end[0] = -1;
-	}
-	if ((*data)->heredoc_fd != -1)
-	{
-		close((*data)->heredoc_fd);
-		(*data)->heredoc_fd = -1;
 	}
 	g_status = 0;
 }

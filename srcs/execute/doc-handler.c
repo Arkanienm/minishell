@@ -6,7 +6,7 @@
 /*   By: mageneix <mageneix@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/30 10:46:45 by mageneix          #+#    #+#             */
-/*   Updated: 2026/04/11 13:11:57 by mageneix         ###   ########.fr       */
+/*   Updated: 2026/04/11 19:13:34 by mageneix         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,11 @@ void	heredoc_child(int write_fd, t_redir *redir, t_data *data)
 	int					quote;
 
 	g_status = 0;
+	if (data->previous_read != -1)
+	{
+		close(data->previous_read);
+		data->previous_read = -1;
+	}
 	quote = check_quotes(redir->file);
 	if (quote == 1)
 		removing_quotes(&redir->file);
@@ -52,14 +57,7 @@ void	heredoc_child(int write_fd, t_redir *redir, t_data *data)
 		;
 	gnl_clear();
 	close(write_fd);
-	if (data->env)
-		free_envp_data(data->env);
-	if (data->cmd)
-		free_cmd_struct(data->cmd);
-	if (data->envp_tab)
-		free_tab_tab(data->envp_tab);
-	if (data->token)
-		ft_free_struct(data->token);
+	verif_free_all(data);
 	exit(g_status);
 }
 
@@ -69,8 +67,7 @@ int	handle_heredoc(t_data *data, t_redir *redir)
 	pid_t	pid;
 	int		status;
 
-	pipe(end);
-	pid = fork();
+	close_and_pipe(data, end, &pid);
 	if (pid == 0)
 	{
 		close(end[0]);

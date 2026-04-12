@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   doc_handler_utils4.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amurtas <amurtas@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mageneix <mageneix@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/30 10:46:43 by mageneix          #+#    #+#             */
-/*   Updated: 2026/04/10 15:32:21 by amurtas          ###   ########.fr       */
+/*   Updated: 2026/04/11 16:23:46 by mageneix         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ int	opening_in(t_redir **current, int *in)
 		return (0);
 	}
 	close(*in);
+	(*in) = -1;
 	return (1);
 }
 
@@ -40,6 +41,7 @@ void	opening_out(t_redir **current, int *out)
 	*out = open((*current)->file, O_WRONLY | O_CREAT | O_APPEND, 0644);
 	if (*out != -1)
 		close(*out);
+	*out = -1;
 }
 
 void	open_redir_out(t_redir **current, int *out)
@@ -47,6 +49,7 @@ void	open_redir_out(t_redir **current, int *out)
 	*out = open((*current)->file, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	if (*out != -1)
 		close(*out);
+	*out = -1;
 }
 
 void	verif_end(t_data **data)
@@ -60,4 +63,5 @@ void	verif_end(t_data **data)
 	(*data)->end[1] = -1;
 	if ((*data)->outfile != -1)
 		close((*data)->outfile);
+	(*data)->outfile = -1;
 }

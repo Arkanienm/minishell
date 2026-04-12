@@ -1,39 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   env.c                                              :+:      :+:    :+:   */
+/*   doc_handler_utils5.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mageneix <mageneix@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/03/30 10:46:15 by mageneix          #+#    #+#             */
-/*   Updated: 2026/04/11 17:58:53 by mageneix         ###   ########.fr       */
+/*   Created: 2026/03/30 10:46:43 by mageneix          #+#    #+#             */
+/*   Updated: 2026/04/11 19:14:27 by mageneix         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
+#include "../../includes/pipex.h"
 
-void	print_env(t_envp_data *envp)
+void	close_and_pipe(t_data *data, int end[2], pid_t *pid)
 {
-	while (envp)
+	if (data->heredoc_fd != -1)
 	{
-		if (envp->keyword == NULL)
-		{
-			envp = envp->next;
-			continue ;
-		}
-		if (envp->equal == 1)
-		{
-			ft_putstr_fd(envp->keyword, 1);
-			write(1, "=", 1);
-			if (envp->value == NULL)
-				write(1, "\n", 1);
-		}
-		if (envp->value != NULL)
-		{
-			ft_putstr_fd(envp->value, 1);
-			write(1, "\n", 1);
-		}
-		envp = envp->next;
+		close(data->heredoc_fd);
+		data->heredoc_fd = -1;
 	}
-	return ;
+	pipe(end);
+	*pid = fork();
+}
+
+void	verif_free_all(t_data *data)
+{
+	if (data->env)
+		free_envp_data(data->env);
+	if (data->cmd)
+		free_cmd_struct(data->cmd);
+	if (data->envp_tab)
+		free_tab_tab(data->envp_tab);
+	if (data->token)
+		ft_free_struct(data->token);
 }
