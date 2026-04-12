@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mageneix <mageneix@student.42.fr>          +#+  +:+       +#+        */
+/*   By: amurtas <amurtas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/30 10:46:07 by mageneix          #+#    #+#             */
-/*   Updated: 2026/04/07 10:55:04 by mageneix         ###   ########.fr       */
+/*   Updated: 2026/04/12 18:11:48 by amurtas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int	find_num_envp(char *to_find, t_envp_data *envp)
 	int	i;
 
 	i = 0;
-	while (envp && (strncmp(to_find, envp->keyword, ft_strlen(to_find)) != 0
+	while (envp && (ft_strncmp(to_find, envp->keyword, ft_strlen(to_find)) != 0
 			|| ft_strlen(to_find) != ft_strlen(envp->keyword)))
 	{
 		i++;
@@ -30,7 +30,7 @@ int	find_num_envp(char *to_find, t_envp_data *envp)
 
 char	*find_line_envp(char *to_find, t_envp_data *envp)
 {
-	while (envp && (strncmp(to_find, envp->keyword, ft_strlen(to_find)) != 0
+	while (envp && (ft_strncmp(to_find, envp->keyword, ft_strlen(to_find)) != 0
 			|| ft_strlen(to_find) != ft_strlen(envp->keyword)))
 		envp = envp->next;
 	if (envp != NULL)
@@ -62,10 +62,10 @@ void	update_var(t_envp_data **envp, char buffer[4096], char *old_path)
 	cwd = getcwd(buffer, 4096);
 	while (current)
 	{
-		if (strncmp("PWD", current->keyword, ft_strlen("PWD")) == 0
+		if (ft_strncmp("PWD", current->keyword, ft_strlen("PWD")) == 0
 			&& ft_strlen("PWD") == ft_strlen(current->keyword))
 			update_value(&num_envp, current, cwd, envp);
-		if (strncmp("OLDPWD", current->keyword, ft_strlen("OLDPWD")) == 0
+		if (ft_strncmp("OLDPWD", current->keyword, ft_strlen("OLDPWD")) == 0
 			&& ft_strlen("OLDPWD") == ft_strlen(current->keyword))
 			update_oldpwd(&num_envp, envp, current, old_path);
 		current = current->next;

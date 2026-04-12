@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd_utils.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mageneix <mageneix@student.42.fr>          +#+  +:+       +#+        */
+/*   By: amurtas <amurtas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/30 10:46:05 by mageneix          #+#    #+#             */
-/*   Updated: 2026/04/07 13:58:55 by mageneix         ###   ########.fr       */
+/*   Updated: 2026/04/12 18:10:27 by amurtas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ int	find_index_in_array(char **env_array, char *keyword)
 	len = ft_strlen(keyword);
 	while (env_array && env_array[i])
 	{
-		if (strncmp(env_array[i], keyword, len) == 0
+		if (ft_strncmp(env_array[i], keyword, len) == 0
 			&& env_array[i][len] == '=')
 			return (i);
 		i++;

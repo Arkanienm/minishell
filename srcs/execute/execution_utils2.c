@@ -6,7 +6,7 @@
 /*   By: amurtas <amurtas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/30 10:47:12 by mageneix          #+#    #+#             */
-/*   Updated: 2026/04/10 15:27:09 by amurtas          ###   ########.fr       */
+/*   Updated: 2026/04/12 18:00:52 by amurtas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,11 @@ void	close_heredoc(t_data **data, int *in, int *out, int *ret)
 		close((*data)->end[0]);
 	if ((*data)->end[1] != -1)
 		close((*data)->end[1]);
+	if ((*data)->previous_read != -1)
+    {
+        close((*data)->previous_read);
+        (*data)->previous_read = -1;
+    }
 	if ((*data)->heredoc_fd != -1)
 	{
 		close((*data)->heredoc_fd);
@@ -76,6 +81,11 @@ void	close_read(t_data **data, t_cmd **cmds, char *buf)
 		(*data)->previous_read = -1;
 	}
 	closing_data(data, cmds);
+	if (!(*cmds)->next && (*data)->previous_read != -1)
+    {
+        close((*data)->previous_read);
+        (*data)->previous_read = -1;
+    }
 }
 
 void	check_pid(t_data **data, char **envp)
