@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   quotes_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mageneix <mageneix@student.42.fr>          +#+  +:+       +#+        */
+/*   By: amurtas <amurtas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/30 10:47:50 by mageneix          #+#    #+#             */
-/*   Updated: 2026/03/30 10:47:50 by mageneix         ###   ########.fr       */
+/*   Updated: 2026/04/15 15:17:22 by amurtas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ void	replace(int q_state, t_token *current, char *s1)
 
 	i = 0;
 	a = 0;
-	while (current->content[i])
+	while (current->content && current->content[i])
 	{
 		q_state_new = update_quotes(q_state, i, current->content);
 		if (current->content[i] && q_state == q_state_new)

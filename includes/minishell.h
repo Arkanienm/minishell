@@ -6,7 +6,7 @@
 /*   By: amurtas <amurtas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/30 10:45:53 by mageneix          #+#    #+#             */
-/*   Updated: 2026/04/10 15:32:27 by amurtas          ###   ########.fr       */
+/*   Updated: 2026/04/15 16:01:16 by amurtas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,9 @@ typedef struct s_exec
 
 t_envp_data				*get_envp_path(char **envp);
 void					ft_free_struct(t_token *lst);
+char					*final_string(int len, char *s2, t_token *current,
+							char *key);
+void					replace_status(t_token *current, int *i);
 int						update_quotes(int q_state, int len, char *str);
 int						check_meta_char(char c, int q_state);
 t_token					*tokenizer(char *str);

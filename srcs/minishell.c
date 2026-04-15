@@ -6,7 +6,7 @@
 /*   By: amurtas <amurtas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/30 10:47:43 by mageneix          #+#    #+#             */
-/*   Updated: 2026/04/11 12:43:17 by amurtas          ###   ########.fr       */
+/*   Updated: 2026/04/15 15:40:19 by amurtas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int	verif_line(char *line)
 {
 	if (!line)
 	{
-		(printf(P_RED "exit\n" P_RESET));
+		(printf("exit\n"));
 		return (0);
 	}
 	return (1);

@@ -6,7 +6,7 @@
 /*   By: amurtas <amurtas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/30 10:47:38 by mageneix          #+#    #+#             */
-/*   Updated: 2026/04/11 12:43:47 by amurtas          ###   ########.fr       */
+/*   Updated: 2026/04/15 15:40:12 by amurtas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,7 @@ int	minishell_loop(t_envp_data **envp)
 	while (1)
 	{
 		cmd = NULL;
-		line = readline(P_GREEN "minishell> " P_RESET);
+		line = readline("minishell> ");
 		if (!verif_line(line))
 			break ;
 		if (*line)
