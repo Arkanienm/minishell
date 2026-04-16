@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   doc_handler_utils2.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mageneix <mageneix@student.42.fr>          +#+  +:+       +#+        */
+/*   By: amurtas <amurtas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/30 10:46:41 by mageneix          #+#    #+#             */
-/*   Updated: 2026/03/30 10:46:41 by mageneix         ###   ########.fr       */
+/*   Updated: 2026/04/16 15:08:16 by amurtas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,10 +101,10 @@ char	*expander_heredoc(char *line, t_envp_data *env)
 	{
 		if (line[i] == '$')
 		{
-			if (line[i + 1] == '?')
+			if (line && line[i + 1] == '?')
 				replace_status_heredoc(&line, &i);
-			else if (line[i + 1] != ' ' && line[i + 1] != '\0' && line[i
-					+ 1] != 39)
+			else if (line && line[i + 1] != ' ' && line[i + 1] != '\0' && line
+				[i + 1] != 39)
 				replace_word_heredoc(&line, &i, env);
 		}
 		i++;

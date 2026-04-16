@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mageneix <mageneix@student.42.fr>          +#+  +:+       +#+        */
+/*   By: amurtas <amurtas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/30 10:47:41 by mageneix          #+#    #+#             */
-/*   Updated: 2026/04/07 12:05:23 by mageneix         ###   ########.fr       */
+/*   Updated: 2026/04/16 15:36:55 by amurtas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,8 @@ int	verif_cmd_redir(t_token *current)
 {
 	if (current->type != WORD && !current->next)
 	{
-		ft_putstr_fd("bash: syntax error near unexpected token `newline'\n", 2);
+		ft_putstr_fd(
+			"minishell: syntax error near unexpected token `newline'\n", 2);
 		return (-1);
 	}
 	if (!current->next)
@@ -27,8 +28,8 @@ int	verif_cmd_redir(t_token *current)
 	{
 		if (current->type == WORD && current->next->type != WORD)
 		{
-			ft_putstr_fd("bash: syntax error near unexpected token `newline'",
-				2);
+			ft_putstr_fd(
+				"minishell: syntax error near unexpected token `newline'", 2);
 			ft_putstr_fd("\n", 2);
 			return (-1);
 		}
@@ -97,13 +98,13 @@ void	free_cmd_struct(t_cmd *lst)
 void	write_redir_error(t_token *current)
 {
 	if (current->next->type == PIPE)
-		ft_putstr_fd("bash: syntax error near unexpected token `|'\n", 2);
+		ft_putstr_fd("minishell: syntax error near unexpected token `|'\n", 2);
 	else if (current->next->type == REDIR_IN)
-		ft_putstr_fd("bash: syntax error near unexpected token `<'\n", 2);
+		ft_putstr_fd("minishell: syntax error near unexpected token `<'\n", 2);
 	else if (current->next->type == REDIR_OUT)
-		ft_putstr_fd("bash: syntax error near unexpected token `>'\n", 2);
+		ft_putstr_fd("minishell: syntax error near unexpected token `>'\n", 2);
 	else if (current->next->type == APPEND)
-		ft_putstr_fd("bash: syntax error near unexpected token `>>'\n", 2);
+		ft_putstr_fd("minishell: syntax error near unexpected token `>>'\n", 2);
 	else if (current->next->type == HEREDOC)
-		ft_putstr_fd("bash: syntax error near unexpected token `<<'\n", 2);
+		ft_putstr_fd("minishell: syntax error near unexpected token `<<'\n", 2);
 }

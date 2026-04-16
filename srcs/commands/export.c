@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mageneix <mageneix@student.42.fr>          +#+  +:+       +#+        */
+/*   By: amurtas <amurtas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/30 10:46:23 by mageneix          #+#    #+#             */
-/*   Updated: 2026/04/07 11:49:29 by mageneix         ###   ########.fr       */
+/*   Updated: 2026/04/16 15:13:51 by amurtas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,7 @@ void	export(char *str, t_envp_data **envp)
 	}
 	if (!check_alnum(str) || str[0] == '=')
 	{
-		ft_putstr_fd("bash: export: `", 2);
+		ft_putstr_fd("minishell: export: `", 2);
 		ft_putstr_fd(str, 2);
 		ft_putstr_fd("': not a valid identifier\n", 2);
 		g_status = 1;

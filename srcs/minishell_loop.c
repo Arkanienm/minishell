@@ -6,7 +6,7 @@
 /*   By: amurtas <amurtas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/30 10:47:38 by mageneix          #+#    #+#             */
-/*   Updated: 2026/04/15 15:40:12 by amurtas          ###   ########.fr       */
+/*   Updated: 2026/04/16 15:36:19 by amurtas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,8 @@ int	verif_redir(t_token *token)
 		return (print_and_return());
 	else if (current->type != WORD)
 	{
-		ft_putstr_fd("bash: syntax error near unexpected token `newline'\n", 2);
+		ft_putstr_fd(
+			"minishell: syntax error near unexpected token `newline'\n", 2);
 		g_status = 2;
 		return (-1);
 	}

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd_dash.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mageneix <mageneix@student.42.fr>          +#+  +:+       +#+        */
+/*   By: amurtas <amurtas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/30 10:46:02 by mageneix          #+#    #+#             */
-/*   Updated: 2026/04/03 15:54:26 by mageneix         ###   ########.fr       */
+/*   Updated: 2026/04/16 15:34:45 by amurtas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ int	cd_dash(t_envp_data **envp)
 		lst_addback_envpdata(envp);
 	str_old = ft_strjoin("OLDPWD=", newpwd->value);
 	str_new = ft_strjoin("PWD=", oldpwd->value);
-	if(cd(oldpwd->value, envp) != -1)
+	if (cd(oldpwd->value, envp) != -1)
 	{
 		print_pwd(1, *envp);
 		export_function(str_old, str_new, envp);

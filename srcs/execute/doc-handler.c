@@ -3,36 +3,59 @@
 /*                                                        :::      ::::::::   */
 /*   doc-handler.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mageneix <mageneix@student.42.fr>          +#+  +:+       +#+        */
+/*   By: amurtas <amurtas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/30 10:46:45 by mageneix          #+#    #+#             */
-/*   Updated: 2026/04/11 19:13:34 by mageneix         ###   ########.fr       */
+/*   Updated: 2026/04/16 15:35:14 by amurtas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/pipex.h"
 #include "includes/minishell.h"
 
-int	check_quotes(char *file)
+int	quotes_loop(char **file, char **new, char *q_char, int *q_found)
 {
-	int	len;
+	int	i;
+	int	j;
 
-	len = ft_strlen(file);
-	if (file[0] == '\'' && file[len - 1] == '\'')
-		return (1);
-	else if (file[0] == '\"' && file[len - 1] == '\"')
-		return (1);
-	return (0);
+	j = 0;
+	i = 0;
+	while ((*file)[i])
+	{
+		if (((*file)[i] == '\'' || (*file)[i] == '\"') && (*q_char) == 0)
+		{
+			(*q_char) = (*file)[i];
+			(*q_found) = 1;
+		}
+		else if ((*file)[i] == (*q_char))
+			(*q_char) = 0;
+		else
+			(*new)[j++] = (*file)[i];
+		i++;
+	}
+	return (j);
 }
 
-static void	removing_quotes(char **redir_file)
+int	clean_delimiter(char **file)
 {
-	char	*s1;
+	int		i;
+	int		j;
+	int		q_found;
+	char	*new;
+	char	q_char;
 
-	s1 = malloc(sizeof(char) * ft_strlen((*redir_file)) + 1);
-	ft_strlcpy(s1, ((*redir_file) + 1), ft_strlen((*redir_file)) - 1);
-	free((*redir_file));
-	(*redir_file) = s1;
+	i = 0;
+	j = 0;
+	q_found = 0;
+	q_char = 0;
+	new = malloc(ft_strlen(*file) + 1);
+	if (!new)
+		return (0);
+	j = quotes_loop(file, &new, &q_char, &q_found);
+	new[j] = '\0';
+	free(*file);
+	*file = new;
+	return (q_found);
 }
 
 void	heredoc_child(int write_fd, t_redir *redir, t_data *data)
@@ -46,9 +69,7 @@ void	heredoc_child(int write_fd, t_redir *redir, t_data *data)
 		close(data->previous_read);
 		data->previous_read = -1;
 	}
-	quote = check_quotes(redir->file);
-	if (quote == 1)
-		removing_quotes(&redir->file);
+	quote = clean_delimiter(&redir->file);
 	sa.sa_handler = handle_sigint_heredoc;
 	sigemptyset(&sa.sa_mask);
 	sa.sa_flags = 0;

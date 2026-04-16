@@ -6,7 +6,7 @@
 /*   By: amurtas <amurtas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/30 10:47:43 by mageneix          #+#    #+#             */
-/*   Updated: 2026/04/15 15:40:19 by amurtas          ###   ########.fr       */
+/*   Updated: 2026/04/16 15:13:56 by amurtas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	ft_free_data(t_envp_data *data)
 
 int	print_and_return(void)
 {
-	ft_putstr_fd("bash: syntax error near unexpected token `|'\n", 2);
+	ft_putstr_fd("minishell: syntax error near unexpected token `|'\n", 2);
 	g_status = 2;
 	return (-1);
 }
