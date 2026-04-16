@@ -70,9 +70,7 @@ void	cmd_struct_loop(t_cmd *lst)
 void	free_cmd_struct(t_cmd *lst)
 {
 	t_cmd	*nnext;
-	int		i;
 
-	i = 0;
 	nnext = lst;
 	if (!lst)
 		return ;
